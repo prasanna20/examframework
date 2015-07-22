@@ -1,0 +1,78 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.fyshadows.examframework.examframework.Configuringactivity"
+    android:background="#D64526">
+
+    <TextView
+        android:id="@+id/Welcomemessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:paddingTop="50dp"
+        android:paddingBottom="30dp"
+        android:layout_marginBottom="30dp"
+        android:gravity="center_horizontal"
+        android:text=""
+        android:textSize="16sp"
+        android:textColor="#FFFFFF" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="BETA"
+        android:textSize="14dp"
+
+        android:layout_centerInParent="true"
+        android:textColor="#FFFFFF"
+        android:id="@+id/beta"
+        android:layout_above="@+id/Founder"
+       />
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/Founder"
+        android:layout_centerHorizontal="true"
+        android:paddingBottom="15dp"
+        android:paddingRight="10dp"
+        android:indeterminateDrawable="@drawable/progress" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="IBPS"
+        android:textSize="50sp"
+        android:gravity="center"
+        android:textColor="#FFFFFF"
+        android:id="@+id/ibps"
+        android:layout_marginTop="-100dp"/>
+
+
+
+    <TextView
+        android:id="@+id/Founder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:paddingBottom="30dp"
+        android:layout_marginBottom="30dp"
+        android:gravity="center_horizontal"
+        android:text="Designed with love in India !"
+        android:textSize="16sp"
+        android:textColor="#FFFFFF" />
+
+    <com.yyxqsg.bsyduo229750.AdView
+        android:id="@+id/myAdView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_alignParentBottom="true"
+        />
+
+</RelativeLayout>

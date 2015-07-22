@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+
+
+
+    <TextView
+        android:id="@+id/actionbar_questcategory"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:textStyle="bold"
+        android:text="category"
+        android:layout_centerVertical="true"
+        android:textColor="#ffffff"
+        android:background="@color/actionbar"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:layout_alignParentLeft="true"
+        android:gravity="center_vertical"
+        android:layout_toRightOf="@+id/actionbar_queststat"
+        android:layout_toEndOf="@+id/actionbar_queststat" />
+
+
+    <TextView
+        android:id="@+id/actionbar_queststat"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:textStyle="bold"
+        android:text="stat"
+        android:layout_alignParentRight="true"
+        android:gravity="center_vertical"
+        android:background="@color/actionbar"
+        android:layout_centerVertical="true"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:textColor="#ffffff"
+        />
+
+
+
+</RelativeLayout>

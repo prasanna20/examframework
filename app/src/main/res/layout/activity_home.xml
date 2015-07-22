@@ -1,0 +1,127 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.fyshadows.examframework.examframework.HomeActivity">
+
+
+    <com.yyxqsg.bsyduo229750.AdView
+        android:id="@+id/myAdViewtop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_alignParentTop="true"
+        />
+
+    <Button
+    android:id="@+id/Start"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginRight="10dp"
+    android:layout_marginTop="40dp"
+        android:layout_below="@+id/myAdViewtop"
+    android:layout_centerHorizontal="true"
+      android:textColor="#ffffff"
+        android:textSize="23dp"
+    android:background = "@drawable/roundedbutton"
+    android:text="Start" />
+
+
+    <Button
+        android:id="@+id/Score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="40dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/Start"
+        android:textColor="#ffffff"
+        android:textSize="23dp"
+        android:background = "@drawable/roundedbuttonyellow"
+        android:text="Score" />
+
+    <Button
+        android:id="@+id/Reset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="40dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/Score"
+        android:textColor="#ffffff"
+        android:textSize="23dp"
+        android:background = "@drawable/roundedbuttongreen"
+        android:text="Reset" />
+
+    <TextView
+        android:id="@+id/LabelTimer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/Reset"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:clickable="true"
+        android:text="Set timer"
+        android:textSize="20dp"
+        />
+
+    <TableLayout android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/LabelTimer"
+        android:layout_centerHorizontal="true"
+        >
+
+    <TableRow>
+        <Button
+            android:id="@+id/plus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/Score"
+            android:background = "@drawable/roundedbuttonblue"
+            android:textSize="30dp"
+            android:text="+" />
+
+        <TextView
+            android:id="@+id/settimer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/Score"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="0"
+            android:textSize="30dp"
+            android:editable="false"/>
+
+        <Button
+            android:id="@+id/minus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/Score"
+            android:background = "@drawable/roundedbuttonblue"
+            android:textSize="30dp"
+            android:text="-" />
+
+
+    </TableRow>
+
+    </TableLayout>
+
+    <com.yyxqsg.bsyduo229750.AdView
+        android:id="@+id/myAdView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_alignParentBottom="true"
+        />
+
+</RelativeLayout>

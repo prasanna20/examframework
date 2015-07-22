@@ -1,0 +1,434 @@
+package com.fyshadows.examframework.examframework;
+
+import android.content.ContentValues;
+import android.content.Context;
+import android.content.ContextWrapper;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
+import java.io.File;
+import java.util.ArrayList;
+
+/**
+ * Created by Prasanna on 16-03-2015.
+ */
+public class Exam_database extends SQLiteOpenHelper {
+
+    public Exam_database(Context context) {
+
+        super(context, "exam_database", null, 2);// version number is given at
+
+    }
+
+    private boolean doesDatabaseExist(ContextWrapper context) {
+        File dbFile = context.getDatabasePath("exam_database");
+        return dbFile.exists();
+    }
+
+    @Override
+    public void onCreate(SQLiteDatabase myDB) {
+
+        myDB.execSQL("CREATE TABLE if not exists EF_mob_UserDetails(mail_id varchar(250),GCM_registration_id TEXT );");
+        myDB.execSQL("CREATE TABLE if not exists EF_mob_MasterQuestion(Questionno int,Question text,Choice1 varchar(350),Choice2 varchar(350),Choice3 varchar(350),Choice4 varchar(350),Choice5 varchar(350),Correct_ans varchar(350),Category,answered_flag int,time_taken int);");
+        myDB.execSQL("CREATE TABLE if not exists EF_mob_QuestionTimer(Timervalue int);");
+
+       /*
+       Answered_flag
+       0   -    Not attempted yet
+       1   -    correct answer
+       2   -    wrong answer
+       3   -    Skip answer
+       */
+
+
+    }
+
+
+    @Override
+    public void onUpgrade(SQLiteDatabase myDB, int oldVersion, int newVersion) {
+
+    myDB.execSQL("CREATE TABLE if not exists EF_mob_QuestionTimer(Timervalue int);");
+    Log.i("table created", "table created");
+
+    }
+
+    // Register admin
+    public void StoreUserDetails(String email, String gcm) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put("mail_id", email);
+        values.put("GCM_registration_id", gcm);
+
+        // Inserting Row
+        db.insert("EF_mob_UserDetails", null, values);
+
+        // Closing database connection
+        if (db.isOpen()) {
+            db.close();
+        }
+    }
+
+    //insert question details
+    public void InsertQuestionDetails(int QuestionNo, String Question, String Choice1, String Choice2, String Choice3, String Choice4,String Choice5, String Correct_Ans,String Category) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        //db.delete("PP_mob_PPmasterdetails", null, null);
+        ContentValues values = new ContentValues();
+
+        Log.i("data inserted", "data 1");
+        values.put("QuestionNo", QuestionNo);
+        values.put("Question", Question);
+        values.put("Choice1", Choice1);
+        values.put("Choice2", Choice2);
+        values.put("Choice3", Choice3);
+        values.put("Choice4", Choice4);
+        values.put("Choice5", Choice5);
+        values.put("Correct_Ans", Correct_Ans);
+        values.put("Category", Category);
+        values.put("answered_flag", 0);
+        values.put("time_taken", 0);
+
+        db.insert("EF_mob_MasterQuestion", null, values);
+
+        if (db.isOpen()) {
+            db.close();
+        }
+    }
+
+    //Timer end
+    public void InsertTimer(int Timervalue) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        Log.i("data inserted", "data 1");
+        values.put("Timervalue", Timervalue);
+
+        db.insert("EF_mob_QuestionTimer", null, values);
+        Log.i("TImer", "Inserted");
+        if (db.isOpen()) {
+            db.close();
+        }
+    }
+
+    public int getTimer() {
+        int Timer = 0;
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selectQuery = "SELECT  Timervalue FROM EF_mob_QuestionTimer";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+
+        if (null != cursor && cursor.moveToFirst()) {
+
+            int _Timervalue = cursor.getColumnIndex("Timervalue");
+
+
+            if (cursor.moveToFirst()) {
+                Timer = cursor.getInt(_Timervalue);
+            } else {
+                Timer = 36;
+            }
+        }
+        else
+        {
+            InsertTimer(36);
+            Timer=36;
+        }
+        Log.i("TImer",String.valueOf(Timer));
+        return Timer;
+    }
+
+    public void updateTimer(int Timervalue) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+
+        String sql = "UPDATE EF_mob_QuestionTimer  SET Timervalue =" + Timervalue ;
+        db.execSQL(sql);
+
+
+        if (db.isOpen()) {
+            db.close();
+        }
+    }
+
+    //Timer End
+
+    public void deletemastertable() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete("EF_mob_MasterQuestion", null, null);
+        if (db.isOpen()) {
+            db.close();
+        }
+    }
+
+
+    //get questions
+    public ArrayList<storequestiondetails> getQuestionDetails() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ArrayList<storequestiondetails> list = new ArrayList<storequestiondetails>();
+
+        String selectQuery = "SELECT  Questionno, Question, Choice1, Choice2, Choice3, Choice4,Choice5, Correct_Ans,Category  FROM EF_mob_MasterQuestion where answered_flag = 0 order by Questionno asc";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+
+        if (null != cursor && cursor.moveToFirst()) {
+
+            int _QuestionNo = cursor.getColumnIndex("Questionno");
+            int _Question = cursor.getColumnIndex("Question");
+            int _Choice1 = cursor.getColumnIndex("Choice1");
+            int _Choice2 = cursor.getColumnIndex("Choice2");
+            int _Choice3 = cursor.getColumnIndex("Choice3");
+            int _Choice4 = cursor.getColumnIndex("Choice4");
+            int _Choice5 = cursor.getColumnIndex("Choice5");
+            int _Correct_Ans = cursor.getColumnIndex("Correct_ans");
+            int _Category = cursor.getColumnIndex("Category");
+
+            if (cursor.moveToFirst()) {
+                do {
+                    int QuestionNo = cursor.getInt(_QuestionNo);
+                    String Question = cursor.getString(_Question);
+                    String Choice1 = cursor.getString(_Choice1);
+                    String Choice2 = cursor.getString(_Choice2);
+                    String Choice3 = cursor.getString(_Choice3);
+                    String Choice4 = cursor.getString(_Choice4);
+                    String Choice5 = cursor.getString(_Choice5);
+                    String Correct_Ans = cursor.getString(_Correct_Ans);
+                    String Category= cursor.getString(_Category);
+                    list.add(getdata(QuestionNo, Question, Choice1, Choice2, Choice3, Choice4,Choice5, Correct_Ans,Category));
+
+                } while (cursor.moveToNext());
+
+
+            }
+        }
+        return list;
+
+    }
+
+    private storequestiondetails getdata(int QuestionNo, String Question, String Choice1, String Choice2, String Choice3, String Choice4, String Choice5, String Correct_Ans,String Category) {
+        return new storequestiondetails(QuestionNo, Question, Choice1, Choice2, Choice3, Choice4,Choice5, Correct_Ans,Category);
+    }
+
+    //get total question count
+    //get questions
+    public int getQuestionCount() {
+        int QuestionCount = 0;
+        SQLiteDatabase db = this.getWritableDatabase();
+        ArrayList<storequestiondetails> list = new ArrayList<storequestiondetails>();
+
+        String selectQuery = "SELECT  count(*) cnt  FROM EF_mob_MasterQuestion where Questionno is not null ";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+
+        if (null != cursor && cursor.moveToFirst()) {
+
+            int _Questioncnt = cursor.getColumnIndex("cnt");
+
+
+            if (cursor.moveToFirst()) {
+                QuestionCount = cursor.getInt(_Questioncnt);
+            } else {
+                QuestionCount = 0;
+            }
+        }
+        return QuestionCount;
+
+    }
+
+    // update score details
+    public void updateScore(int questionnumber, int _answer_flag, int _timetaken) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+
+        String sql = "UPDATE EF_mob_MasterQuestion  SET answered_flag =" + _answer_flag + " , time_taken =" + _timetaken + " WHERE  Questionno   = '" + questionnumber + "'";
+        db.execSQL(sql);
+
+
+        if (db.isOpen()) {
+            db.close();
+        }
+    }
+
+
+    // reset
+    public void Resetquestion() {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+
+        String sql = "UPDATE EF_mob_MasterQuestion  SET answered_flag =" + 0 + " , time_taken =" + 0;
+        db.execSQL(sql);
+
+
+        if (db.isOpen()) {
+            db.close();
+        }
+    }
+
+    //get score
+    public String getscore() {
+        int QuestionCount = 0;
+        int correctanswer = 0;
+        SQLiteDatabase db = this.getWritableDatabase();
+        QuestionCount = getattemptedcount();
+        String selectQuery = "SELECT count(*) cnt  FROM EF_mob_MasterQuestion where answered_flag = 1 ";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (null != cursor && cursor.moveToFirst()) {
+
+            int _correctanswer = cursor.getColumnIndex("cnt");
+
+            if (cursor.moveToFirst()) {
+                correctanswer = cursor.getInt(_correctanswer);
+            } else {
+                correctanswer = 0;
+            }
+        }
+
+        return String.valueOf(correctanswer) + '/' + String.valueOf(QuestionCount);
+
+    }
+
+    //get average
+    public String getAverage() {
+        int QuestionCount = 0;
+        int average = 0;
+        int sumtimetaken = 0;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        QuestionCount = getattemptedcount();
+
+        String selectQuery = "SELECT   sum("+ getTimer() +"-time_taken) sum  FROM EF_mob_MasterQuestion where answered_flag  > 0";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+
+        if (null != cursor && cursor.moveToFirst()) {
+
+            int _sumtimetaken = cursor.getColumnIndex("sum");
+
+
+            if (cursor.moveToFirst()) {
+                sumtimetaken = cursor.getInt(_sumtimetaken);
+            } else {
+                sumtimetaken = 0;
+            }
+        }
+
+        if (sumtimetaken > 0 && QuestionCount > 0) {
+            average = sumtimetaken / QuestionCount;
+        }
+
+        return  String.valueOf(average) ;
+
+    }
+
+
+    public int getattemptedcount() {
+        int QuestionCount = 0;
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String selectQuery = "SELECT count(*) cnt FROM EF_mob_MasterQuestion where answered_flag in (1,2)";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+
+        if (null != cursor && cursor.moveToFirst()) {
+
+            int _Questioncnt = cursor.getColumnIndex("cnt");
+            if (cursor.moveToFirst()) {
+                QuestionCount = cursor.getInt(_Questioncnt);
+            } else {
+                QuestionCount = 0;
+            }
+        }
+
+        return QuestionCount;
+    }
+
+
+    //get score
+    public String getSkippedCount() {
+        int skippedCount = 0;
+        SQLiteDatabase db = this.getWritableDatabase();
+        String selectQuery = "SELECT count(*) cnt  FROM EF_mob_MasterQuestion where answered_flag = 3 ";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (null != cursor && cursor.moveToFirst()) {
+
+            int _correctanswer = cursor.getColumnIndex("cnt");
+
+            if (cursor.moveToFirst()) {
+                skippedCount = cursor.getInt(_correctanswer);
+            } else {
+                skippedCount = 0;
+            }
+        }
+
+        return String.valueOf(skippedCount);
+
+    }
+
+    public int getmaxquestionnumber() {
+        int LastQuestionNum = 0;
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String selectQuery = "SELECT max(Questionno) maxi FROM EF_mob_MasterQuestion";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+
+        if (null != cursor && cursor.moveToFirst()) {
+
+            int _Questioncnt = cursor.getColumnIndex("maxi");
+            if (cursor.moveToFirst()) {
+                LastQuestionNum = cursor.getInt(_Questioncnt);
+            } else {
+                LastQuestionNum = 0;
+            }
+        }
+
+        return LastQuestionNum;
+    }
+
+    public String getCategoryscore(String category) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        int totalquestion=0;
+        int answeredcnt=0;
+
+        String selectQuery = "SELECT  count(*) cnt  FROM EF_mob_MasterQuestion where category = '"+ category +"'  and  answered_flag in (1,2,3) ";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+
+        if (null != cursor && cursor.moveToFirst()) {
+
+            int _totalquestion = cursor.getColumnIndex("cnt");
+
+
+            if (cursor.moveToFirst()) {
+                totalquestion = cursor.getInt(_totalquestion);
+            } else {
+                totalquestion = 0;
+            }
+
+        }
+
+         selectQuery = "SELECT  count(*) cnt  FROM EF_mob_MasterQuestion where category='"+ category +"' and  answered_flag in (1)";
+         cursor = db.rawQuery(selectQuery, null);
+
+
+        if (null != cursor && cursor.moveToFirst()) {
+
+            int _answeredcnt = cursor.getColumnIndex("cnt");
+
+
+            if (cursor.moveToFirst()) {
+                answeredcnt = cursor.getInt(_answeredcnt);
+            } else {
+                answeredcnt = 0;
+            }
+
+        }
+        return String.valueOf(answeredcnt) + " Out of " + String.valueOf(totalquestion);
+    }
+
+}

@@ -1,0 +1,66 @@
+<resources>
+    <string name="app_name">IBPS Mock Exam</string>
+
+
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_configuringactivity">Welcome</string>
+    //for displaying advertisement
+
+    //   --Replace this in prod
+    <string name="banner_ad_unit_id">ca-app-pub-7106902264495033/2221908904</string>
+
+    // ConfiguringAvtivity.java
+
+    <string name="welcome">Warm Welcome ! First time configuration will take some time. Please sit back and relax. </string>
+
+    <string name="welcomeback">Warm Welcome ! All the best </string>
+
+    // questionhome.java
+
+    <string name="Timer">Timer </string>
+
+    //questionhome.xml
+    <string name="show_answer"> Show Answer </string>
+    <string name="next"> Next </string>
+    <string name="skip"> Skip </string>
+    <color name="actionbar">#0099CC</color>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="correct_Message">Awesome!</string>
+    <string name="title_activity_scoreactivity">Score</string>
+
+
+    //score activity
+    <string name="score_actionbarname">Score</string>
+
+    //correct answer message
+    <string-array name="correct">
+        <item>Awesome!</item>
+        <item>Magnificent!</item>
+        <item>Remarkable!</item>
+        <item>Impressive!</item>
+        <item>Amazing!</item>
+        <item>Superb!</item>
+        <item>Stunning!</item>
+        <item>Outstanding!</item>
+        <item>Excellent!</item>
+        <item>Spectacular!</item>
+    </string-array>
+
+    //Wrong answer message
+    <string-array name="wrong">
+        <item>Dont Give Up..</item>
+        <item>Never Back down..</item>
+        <item>You can..</item>
+        <item>Try Try Try..</item>
+        <item>Just Missed..</item>
+        <item>Be confident..</item>
+        <item>Believe in you..</item>
+        <item>Concentrate..</item>
+        <item>Trust Youself..</item>
+        <item>Try Hard..</item>
+    </string-array>
+
+
+
+
+</resources>
