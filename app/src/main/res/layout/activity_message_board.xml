@@ -1,0 +1,37 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.fyshadows.examframework.examframework.MessageBoard">
+
+    <TextView android:text="Message Board" android:layout_width="wrap_content"
+        android:id="@+id/txtTitle"
+    android:layout_height="wrap_content"
+    android:paddingTop="30dp" android:layout_centerHorizontal="true"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
+        android:textSize="20dp"
+    android:textStyle="bold"
+    android:paddingBottom="5dp"/>
+
+    <TextView android:text="Dream is not that which you see while sleeping it is something that does not let you sleep" android:layout_width="wrap_content"
+        android:id="@+id/txtMessage"
+        android:layout_height="wrap_content"
+        android:paddingTop="30dp" android:layout_centerHorizontal="true"
+        android:layout_below="@+id/txtTitle"
+        android:textSize="20dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingBottom="5dp"
+        android:textStyle="italic"/>
+
+    <com.yyxqsg.bsyduo229750.AdView
+        android:id="@+id/myAdView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_alignParentBottom="true"
+        />
+</RelativeLayout>

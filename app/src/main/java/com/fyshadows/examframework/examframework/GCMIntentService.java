@@ -7,6 +7,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -25,7 +26,8 @@ public class GCMIntentService extends GCMBaseIntentService {
 	private static final String TAG = "Exam";
 
 	JSONParser jsonParser = new JSONParser();
-  public static  String  identify;
+     public static  String  identify;
+
 
 
 
@@ -79,10 +81,12 @@ public class GCMIntentService extends GCMBaseIntentService {
     protected void onMessage(Context context, Intent intent) {
         identify = intent.getExtras().getString("identify");
         if (identify.trim().equals("notification")) {
-            String message = "";
-            String receivedmessage = "";
-            receivedmessage = intent.getExtras().getString("message");
-            generateNotification(context, receivedmessage);
+               String MessageTitle = "";
+               String MessageText = "";
+
+            MessageTitle = intent.getExtras().getString("MessageTitle");
+            MessageText = intent.getExtras().getString("MessageText");
+            generateNotification(context, MessageTitle,MessageText);
 
         }
     }
@@ -141,28 +145,43 @@ public class GCMIntentService extends GCMBaseIntentService {
         return account;
     }
 
-    private static void generateNotification(Context context, String message) {
+    private static void generateNotification(Context context,String MessageTitle, String MessageText) {
 
-            int icon = R.mipmap.ic_launcher;
-            long when = System.currentTimeMillis();
-            NotificationManager notificationManager = (NotificationManager) context
-                    .getSystemService(Context.NOTIFICATION_SERVICE);
-            Notification notification = new Notification(icon, message, when);
-            notificationfromscreen = "notify";
-            String title = context.getString(R.string.app_name);
-        Intent notificationIntent = new Intent(context,
-                Configuringactivity.class);
-            PendingIntent intent = PendingIntent.getActivity(context, 0,
-                    notificationIntent, 0);
-            notification.setLatestEventInfo(context, title, message, intent);
-            notification.flags |= Notification.FLAG_AUTO_CANCEL;
 
-            // Play default notification sound
-            notification.defaults |= Notification.DEFAULT_SOUND;
+        int icon = R.mipmap.ic_launcher;
+        long when = System.currentTimeMillis();
 
-            // Vibrate if vibrate is enabled
-            notification.defaults |= Notification.DEFAULT_VIBRATE;
-            notificationManager.notify(0, notification);
+        NotificationManager notificationManager = (NotificationManager) context
+                .getSystemService(Context.NOTIFICATION_SERVICE);
+        Notification notification = new Notification(icon, MessageText, when);
+
+        String title = context.getString(R.string.app_name);
+
+        Intent notificationIntent = new Intent(context, MessageBoard.class);
+        Bundle bundle = new Bundle();
+        bundle.clear();
+        bundle.putString("MessageTitle", MessageTitle);
+        Log.i("Message", MessageTitle);
+        bundle.putString("MessageText", MessageText);
+        Log.i("Message2", MessageText);
+
+        notificationIntent.putExtras(bundle);
+
+        // set intent so it does not start a new activity
+        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+                | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        int iUniqueId = (int) (System.currentTimeMillis() & 0xfffffff);
+        PendingIntent contentIntent = PendingIntent.getActivity(context, iUniqueId, notificationIntent, 0);
+        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        notification.setLatestEventInfo(context, title, MessageText, contentIntent);
+        notification.flags |= Notification.FLAG_AUTO_CANCEL;
+
+        // Play default notification sound
+        notification.defaults |= Notification.DEFAULT_SOUND;
+
+        // Vibrate if vibrate is enabled
+        notification.defaults |= Notification.DEFAULT_VIBRATE;
+        notificationManager.notify(0, notification);
 
     }
 
