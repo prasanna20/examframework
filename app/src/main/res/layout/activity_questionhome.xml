@@ -39,10 +39,10 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/primerdivisor"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="8dp"
                 android:clickable="true"
                 android:text="Tap question to expand"
-                android:textSize="14sp"
+                android:textSize="12sp"
 
                 />
 
@@ -56,11 +56,11 @@
                 android:paddingRight="15dp"
                 android:layout_centerHorizontal="true"
                 android:ellipsize="end"
-                android:maxLines="3"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp"
+                android:maxLines="4"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
                 android:text="We fear to ask question to you!"
-                android:textSize="20dp" />
+                android:textSize="17dp" />
 
             <View
                 android:id="@+id/primerdivisor1"
@@ -77,8 +77,9 @@
                 android:layout_below="@+id/primerdivisor1"
                 android:layout_centerHorizontal="true"
                 android:background="#f2f2f2"
+                android:maxLines="2"
                 android:text="A"
-                android:textSize="20dp"
+                android:textSize="18dp"
 
                 />
 
@@ -97,8 +98,9 @@
                 android:layout_below="@+id/primerdivisor2"
                 android:layout_centerHorizontal="true"
                 android:background="#efeded"
+                android:maxLines="2"
                 android:text="B"
-                android:textSize="20dp"
+                android:textSize="18dp"
 
                 />
 
@@ -117,8 +119,9 @@
                 android:layout_below="@+id/primerdivisor3"
                 android:layout_centerHorizontal="true"
                 android:background="#f2f2f2"
+                android:maxLines="2"
                 android:text="C"
-                android:textSize="20dp"
+                android:textSize="18dp"
 
                 />
 
@@ -128,7 +131,7 @@
                 android:layout_height="2dp"
                 android:layout_below="@+id/txtanswer3"
                 android:background="#ffffff"
-                android:paddingBottom="10dp" />
+                android:paddingBottom="18dp" />
 
             <Button
                 android:id="@+id/txtanswer4"
@@ -137,8 +140,9 @@
                 android:layout_below="@+id/primerdivisor4"
                 android:layout_centerHorizontal="true"
                 android:background="#efeded"
+                android:maxLines="2"
                 android:text="D"
-                android:textSize="20dp"
+                android:textSize="18dp"
 
                 />
 
@@ -158,8 +162,9 @@
                 android:layout_below="@+id/primerdivisor5"
                 android:layout_centerHorizontal="true"
                 android:background="#f2f2f2"
+                android:maxLines="2"
                 android:text="E"
-                android:textSize="20dp"
+                android:textSize="18dp"
 
                 />
 
@@ -171,14 +176,6 @@
                 android:background="#ffffff"
                 android:paddingBottom="30dp" />
 
-            <!--  <Button
-                  android:id="@+id/Nextquestion"
-                  android:layout_width="wrap_content"
-                  android:layout_height="60dp"
-                  android:layout_alignParentLeft="true"
-                  android:text="@string/skip"
-                  android:layout_below="@+id/primerdivisor5" />-->
-
             <Button
                 android:id="@+id/showanswer"
                 android:layout_width="fill_parent"
@@ -186,21 +183,14 @@
                 android:layout_below="@+id/primerdivisor6"
                 android:text="@string/show_answer" />
 
-
-
         </RelativeLayout>
 
-
-
     </ScrollView>
-
-
-
 
         <RelativeLayout
             android:id="@+id/top_layout"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="match_parent"
             android:background="#88666666"
             android:layout_alignParentBottom="true">
 
@@ -252,7 +242,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
+           android:layout_alignParentTop="true"
+            android:paddingTop="20dp"
             android:paddingLeft="3dp"
             android:paddingRight="2dp"
             android:layout_marginTop="30dp"
@@ -260,8 +251,7 @@
             android:clickable="true"
             android:text="Sorry .. Something went wrong.."
             android:textColor="#000000"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textSize="20sp"/>
 
 
     </RelativeLayout>
