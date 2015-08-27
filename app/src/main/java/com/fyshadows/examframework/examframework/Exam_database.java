@@ -10,15 +10,17 @@ import android.util.Log;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by Prasanna on 16-03-2015.
  */
+
 public class Exam_database extends SQLiteOpenHelper {
 
     public Exam_database(Context context) {
 
-        super(context, "exam_database", null, 2);// version number is given at
+        super(context, "exam_database", null, 3);// version number is given at
 
     }
 
@@ -31,8 +33,14 @@ public class Exam_database extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase myDB) {
 
         myDB.execSQL("CREATE TABLE if not exists EF_mob_UserDetails(mail_id varchar(250),GCM_registration_id TEXT );");
+
         myDB.execSQL("CREATE TABLE if not exists EF_mob_MasterQuestion(Questionno int,Question text,Choice1 varchar(350),Choice2 varchar(350),Choice3 varchar(350),Choice4 varchar(350),Choice5 varchar(350),Correct_ans varchar(350),Category,answered_flag int,time_taken int);");
+
         myDB.execSQL("CREATE TABLE if not exists EF_mob_QuestionTimer(Timervalue int);");
+
+        myDB.execSQL("CREATE TABLE if not exists EF_mob_DailyQues(id  int,quesDate date,QuesNo int ,Ques text,Choice1 varchar(350),Choice2 varchar(350),Choice3 varchar(350),Choice4 varchar(350),Choice5 varchar(350),CorrectAns varchar(350),Category,answeredFlag int,timeTaken int,Rank int);");
+
+        myDB.execSQL("CREATE TABLE if not exists EF_mob_DailyArticle(ArticleNo int, ArticleDate Date,Topic varchar(300),ArticleDesc text);");
 
        /*
        Answered_flag
@@ -42,16 +50,19 @@ public class Exam_database extends SQLiteOpenHelper {
        3   -    Skip answer
        */
 
-
     }
 
 
     @Override
     public void onUpgrade(SQLiteDatabase myDB, int oldVersion, int newVersion) {
 
-    myDB.execSQL("CREATE TABLE if not exists EF_mob_QuestionTimer(Timervalue int);");
-    Log.i("table created", "table created");
+      myDB.execSQL("CREATE TABLE if not exists EF_mob_QuestionTimer(Timervalue int);");
 
+        myDB.execSQL("CREATE TABLE if not exists EF_mob_DailyQues(id  int,quesDate date,QuesNo int ,Ques text,Choice1 varchar(350),Choice2 varchar(350),Choice3 varchar(350),Choice4 varchar(350),Choice5 varchar(350),CorrectAns varchar(350),Category,answeredFlag int,timeTaken int,Rank int);");
+
+        myDB.execSQL("CREATE TABLE if not exists EF_mob_DailyArticle(ArticleNo int, ArticleDate Date,Topic varchar(300),ArticleDesc text);");
+
+      Log.i("table created", "table created");
     }
 
     // Register admin
@@ -77,7 +88,6 @@ public class Exam_database extends SQLiteOpenHelper {
         //db.delete("PP_mob_PPmasterdetails", null, null);
         ContentValues values = new ContentValues();
 
-        Log.i("data inserted", "data 1");
         values.put("QuestionNo", QuestionNo);
         values.put("Question", Question);
         values.put("Choice1", Choice1);
@@ -91,6 +101,55 @@ public class Exam_database extends SQLiteOpenHelper {
         values.put("time_taken", 0);
 
         db.insert("EF_mob_MasterQuestion", null, values);
+
+        if (db.isOpen()) {
+            db.close();
+        }
+    }
+
+    //Insert Daily Question details
+    public void InsertDailyQuestionDetails(
+            int id  ,String quesDate ,int QuesNo  ,String Ques ,String Choice1 ,String Choice2 ,String Choice3,String Choice4 ,String Choice5 ,int CorrectAns,String Category ) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        //int answeredFlag ,int timeTaken ,int Rank
+        ContentValues values = new ContentValues();
+
+        values.put("id", id);
+        values.put("quesDate", quesDate);
+        values.put("QuesNo", QuesNo);
+        values.put("Ques", Ques);
+        values.put("Choice1", Choice1);
+        values.put("Choice2", Choice2);
+        values.put("Choice3", Choice3);
+        values.put("Choice4", Choice4);
+        values.put("Choice5", Choice5);
+        values.put("CorrectAns", CorrectAns);
+        values.put("Category", Category);
+        values.put("answeredFlag", 0);
+        values.put("timeTaken", 0);
+        values.put("Rank", 0);
+
+        db.insert("EF_mob_DailyQues", null, values);
+
+        if (db.isOpen()) {
+            db.close();
+        }
+    }
+
+
+
+    //Insert Daily Question details
+    public void InsertDailyArticle( int ArticleNo ,String ArticleDate ,String Topic ,String ArticleDesc ) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        //int answeredFlag ,int timeTaken ,int Rank
+        ContentValues values = new ContentValues();
+
+        values.put("ArticleNo", ArticleNo);
+        values.put("ArticleDate", ArticleDate);
+        values.put("Topic", Topic);
+        values.put("ArticleDesc", ArticleDesc);
+
+        db.insert("EF_mob_DailyArticle", null, values);
 
         if (db.isOpen()) {
             db.close();
@@ -374,6 +433,48 @@ public class Exam_database extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         String selectQuery = "SELECT max(Questionno) maxi FROM EF_mob_MasterQuestion";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+
+        if (null != cursor && cursor.moveToFirst()) {
+
+            int _Questioncnt = cursor.getColumnIndex("maxi");
+            if (cursor.moveToFirst()) {
+                LastQuestionNum = cursor.getInt(_Questioncnt);
+            } else {
+                LastQuestionNum = 0;
+            }
+        }
+
+        return LastQuestionNum;
+    }
+
+    public int getMaxDailyQuestionNumber() {
+        int LastQuestionNum = 0;
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String selectQuery = "SELECT max(id) maxi FROM EF_mob_DailyQues";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+
+        if (null != cursor && cursor.moveToFirst()) {
+
+            int _Questioncnt = cursor.getColumnIndex("maxi");
+            if (cursor.moveToFirst()) {
+                LastQuestionNum = cursor.getInt(_Questioncnt);
+            } else {
+                LastQuestionNum = 0;
+            }
+        }
+
+        return LastQuestionNum;
+    }
+
+    public int getMaxDailyArticle() {
+        int LastQuestionNum = 0;
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String selectQuery = "SELECT max(ArticleNo) maxi FROM EF_mob_DailyArticle";
         Cursor cursor = db.rawQuery(selectQuery, null);
 
 
