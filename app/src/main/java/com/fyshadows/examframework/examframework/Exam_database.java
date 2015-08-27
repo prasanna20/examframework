@@ -38,7 +38,7 @@ public class Exam_database extends SQLiteOpenHelper {
 
         myDB.execSQL("CREATE TABLE if not exists EF_mob_QuestionTimer(Timervalue int);");
 
-        myDB.execSQL("CREATE TABLE if not exists EF_mob_DailyQues(id  int,quesDate date,QuesNo int ,Ques text,Choice1 varchar(350),Choice2 varchar(350),Choice3 varchar(350),Choice4 varchar(350),Choice5 varchar(350),CorrectAns varchar(350),Category,answeredFlag int,timeTaken int,Rank int);");
+        myDB.execSQL("CREATE TABLE if not exists EF_mob_DailyQues(id  int,quesDate date,QuesNo int ,Ques text,Choice1 varchar(350),Choice2 varchar(350),Choice3 varchar(350),Choice4 varchar(350),Choice5 varchar(350),CorrectAns varchar(350),Category varchar(250),answeredFlag int,timeTaken int,Rank int);");
 
         myDB.execSQL("CREATE TABLE if not exists EF_mob_DailyArticle(ArticleNo int, ArticleDate Date,Topic varchar(300),ArticleDesc text);");
 
@@ -220,6 +220,35 @@ public class Exam_database extends SQLiteOpenHelper {
         if (db.isOpen()) {
             db.close();
         }
+    }
+
+    //Get Exam Dates
+    public ArrayList<String> getDailyExamDate()
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ArrayList<String> list = new ArrayList<String>();
+        String selectQuery = "SELECT  distinct quesDate FROM EF_mob_DailyQues order by id desc";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+
+        if (null != cursor && cursor.moveToFirst()) {
+
+            int _Date = cursor.getColumnIndex("quesDate");
+
+
+            if (cursor.moveToFirst()) {
+                do {
+                    String Date = cursor.getString(_Date);
+
+                    list.add(Date);
+
+                } while (cursor.moveToNext());
+
+
+            }
+        }
+        return list;
+
     }
 
 

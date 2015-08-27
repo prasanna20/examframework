@@ -85,6 +85,12 @@
             android:name=".MessageBoard"
             android:label="@string/title_activity_message_board" >
         </activity>
+        <activity
+            android:name=".DailyExamQuestion"
+            android:label="@string/title_activity_daily_exam_question"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Holo.Light.DarkActionBar">
+        </activity>
     </application>
 
 </manifest>

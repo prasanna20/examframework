@@ -114,6 +114,19 @@
 
     </TableRow>
 
+        <Button
+            android:id="@+id/btnDailyExam"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="40dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/minus"
+            android:textColor="#ffffff"
+            android:textSize="23dp"
+            android:background = "@drawable/roundedbuttongreen"
+            android:text="Daily Exam" />
+
     </TableLayout>
 
     <com.yyxqsg.bsyduo229750.AdView

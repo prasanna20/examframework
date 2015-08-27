@@ -1,0 +1,80 @@
+package ExamFramework_Adapter;
+
+import android.app.Activity;
+import android.graphics.Color;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.TextView;
+
+import com.fyshadows.examframework.examframework.Exam_database;
+import com.fyshadows.examframework.examframework.R;
+
+import java.util.List;
+
+/**
+ * Created by Prasanna on 28-08-2015.
+ */
+public class DailyExamAdapter extends ArrayAdapter<String> {
+    private final Activity context;
+    private static List<String> list = null;
+
+
+    Exam_database db;
+
+
+    public DailyExamAdapter(Activity context,
+                              List<String> list) {
+        super(context, R.layout.dailyexamview, list);
+        this.context = context;
+        this.list = list;
+    }
+
+    @Override
+    public int getCount() {
+        Log.i("a", "a" + list.size());
+        return list.size();
+    }
+
+    public static String getDailyExamDetailsPosition(int position) {
+        return list.get(position);
+    }
+
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        db= new Exam_database(parent.getContext());
+        View view = null;
+        Log.i("a", "into get view");
+        if (convertView == null) {
+            LayoutInflater inflator = context.getLayoutInflater();
+            view = inflator.inflate(R.layout.dailyexamview, null);
+            final ViewHolder viewHolder = new ViewHolder();
+            viewHolder.Date = (TextView) view.findViewById(R.id.txtDate);
+            viewHolder.Date.setTextColor(Color.BLACK);
+            view.setTag(viewHolder);
+        } else {
+            view = convertView;
+        }
+
+        ViewHolder holder = (ViewHolder) view.getTag();
+        if (!list.get(position).toString().trim().equalsIgnoreCase("")) {
+            holder.Date.setText(list.get(position).toString());
+        }
+
+
+        return view;
+
+
+    }
+
+    static class ViewHolder {
+
+        protected TextView Date;
+
+
+    }
+
+}

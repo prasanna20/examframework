@@ -24,6 +24,7 @@ public class HomeActivity extends ActionBarActivity {
     Button reset;
     Button plus;
     Button minus;
+    Button DailyExam;
     TextView timer;
     Exam_database db;
     SharedPreferences prefs;
@@ -136,7 +137,14 @@ public class HomeActivity extends ActionBarActivity {
             }
         });
 
-
+        DailyExam = (Button) findViewById(R.id.btnDailyExam);
+        DailyExam.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(HomeActivity.this, DailyExamQuestion.class);
+                startActivity(i);
+            }
+        });
 
 
 

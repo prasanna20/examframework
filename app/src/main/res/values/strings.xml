@@ -62,6 +62,7 @@
     <string name="title_activity_message_board">MessageBoard</string>
 
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_daily_exam_question">DailyExamQuestion</string>
 
 
 

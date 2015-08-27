@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/feed_bg"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/feed_item_margin"
+        android:layout_marginRight="@dimen/feed_item_margin"
+        android:layout_marginTop="@dimen/feed_item_margin"
+        android:background="@drawable/bg_parent_rounded_corner"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/feed_item_padding_top_bottom"
+        android:paddingTop="@dimen/feed_item_padding_top_bottom" >
+
+              <TextView
+                  android:id="@+id/txtDate"
+                  android:layout_width="180dp"
+                  android:layout_height="wrap_content"
+                  android:layout_alignParentTop="true"
+                  android:paddingLeft="10dp"
+                  android:paddingTop="5dp"
+                  android:paddingBottom="5dp"
+                  android:textSize="@dimen/feed_item_profile_name"
+                  android:text="Dart Part"
+                  android:textStyle="bold" />
+
+
+
+
+        <TextView
+            android:id="@+id/txtArticle"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingRight="5dp"
+            android:text="Today Article"
+            android:layout_alignParentRight="true"
+            android:layout_alignRight="@id/txtDate"
+            android:textSize="@dimen/feed_item_profile_name"/>
+
+
+    </RelativeLayout>
+
+
+
+</RelativeLayout>
+
