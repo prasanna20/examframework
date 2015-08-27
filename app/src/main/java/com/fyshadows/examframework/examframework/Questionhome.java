@@ -83,7 +83,6 @@ public class Questionhome extends ActionBarActivity {
         //Initialize Airpush
         main=new Main(this);
 
-
         //for calling Smartwall ad
         main.startInterstitialAd(AdConfig.AdType.smartwall);
 

@@ -40,6 +40,9 @@ public class HomeActivity extends ActionBarActivity {
         //Initialize Airpush
         main=new Main(this);
 
+        //for calling Smartwall ad
+        main.startInterstitialAd(AdConfig.AdType.smartwall);
+
         //for calling banner 360
         main.start360BannerAd(this);
 

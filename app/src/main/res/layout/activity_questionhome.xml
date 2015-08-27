@@ -190,7 +190,7 @@
         <RelativeLayout
             android:id="@+id/top_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="200dp"
             android:background="#88666666"
             android:layout_alignParentBottom="true">
 
@@ -242,8 +242,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-           android:layout_alignParentTop="true"
-            android:paddingTop="20dp"
+            android:layout_centerVertical="true"
             android:paddingLeft="3dp"
             android:paddingRight="2dp"
             android:layout_marginTop="30dp"
@@ -251,7 +250,8 @@
             android:clickable="true"
             android:text="Sorry .. Something went wrong.."
             android:textColor="#000000"
-            android:textSize="20sp"/>
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
 
     </RelativeLayout>

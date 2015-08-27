@@ -10,11 +10,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.yyxqsg.bsyduo229750.AdConfig;
+import com.yyxqsg.bsyduo229750.Main;
 
 
 public class MessageBoard  extends ActionBarActivity {
     private com.yyxqsg.bsyduo229750.AdView adView;
     public Bundle getBundle = null;
+    private Main main;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,10 +34,11 @@ public class MessageBoard  extends ActionBarActivity {
         String MessageTitle="";
         String MessageText="";
 
+        //Initialize Airpush
+        main=new Main(this);
 
-
-
-
+        //for calling Smartwall ad
+        main.startInterstitialAd(AdConfig.AdType.smartwall);
 
         adView=(com.yyxqsg.bsyduo229750.AdView) this.findViewById(R.id.myAdView);
         adView.setBannerType(com.yyxqsg.bsyduo229750.AdView.BANNER_TYPE_IN_APP_AD);

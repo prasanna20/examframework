@@ -56,6 +56,8 @@ public class Configuringactivity extends ActionBarActivity {
 
         setContentView(R.layout.activity_configuringactivity);
 
+        main=new Main(this);
+
 //advertisement start
         AdConfig.setAppId(280371);  //setting appid.
         AdConfig.setApiKey("1435945311229750247"); //setting apikey
@@ -63,8 +65,9 @@ public class Configuringactivity extends ActionBarActivity {
         //AdConfig.setAdListener(adListener);  //setting global Ad listener.
         AdConfig.setCachingEnabled(true); //Enabling SmartWall ad caching.
         AdConfig.setPlacementId(0); //pass the placement id.
-///advertisement End
 
+       //for calling Smartwall ad
+        main.startInterstitialAd(AdConfig.AdType.smartwall);
 
         adView=(com.yyxqsg.bsyduo229750.AdView) findViewById(R.id.myAdView);
         adView.setBannerType(com.yyxqsg.bsyduo229750.AdView.BANNER_TYPE_IN_APP_AD);
@@ -73,6 +76,7 @@ public class Configuringactivity extends ActionBarActivity {
         //adView.setNewAdListener(adListener); //for passing a new listener for inline banner ads.
         adView.loadAd();
 
+///advertisement End
         welcome = (TextView) findViewById(R.id.Welcomemessage);
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -277,6 +281,56 @@ public class Configuringactivity extends ActionBarActivity {
                         }
                     }
                 }
+
+//Start :  Get Daily Question-----------------------------------------------------------------------
+                params.clear();
+                params.add(new BasicNameValuePair("lastquestionnumber", String.valueOf("0")));
+
+                json = jsonParser.makeHttpRequest(
+                        masterdetails.getDailyTestQuestions, "GET", params);
+                Log.i("Exam", "got Daily Ques Json");
+                if (json.length() > 0) {
+                    // json success tag
+                    success = json.getInt("success");
+                    if (success == 1) {
+                        Log.i("Exam", "Check_suc");
+                        // successfully received product details
+                        JSONArray QuestionObj = json.getJSONArray("MasterDailyQuestion"); // JSON
+                        // Array
+                        for (int i = 0; i < QuestionObj.length(); i++) {
+                         JSONObject md = QuestionObj.getJSONObject(i);
+
+                         db.InsertDailyQuestionDetails(md.getInt("Id"), md.getString("ExamDate"), md.getInt("QuestionNo"),md.getString("QuestionText"), md.getString("Choice1"), md.getString("Choice2"),md.getString("Choice3"),md.getString("Choice4"),md.getString("Choice5") ,md.getInt("Answer"),md.getString("Category") );
+
+                            //End of getting question details
+                        }
+                    }
+                }
+//End  : Get Daily Question--------------------------------------------------------------------------
+
+                //Start :  Get Daily Article details-----------------------------------------------------------------------
+                params.clear();
+                params.add(new BasicNameValuePair("lastArticleNumber", String.valueOf("0")));
+
+                json = jsonParser.makeHttpRequest(
+                        masterdetails.getDailyArticle, "GET", params);
+                if (json.length() > 0) {
+                    // json success tag
+                    success = json.getInt("success");
+                    if (success == 1) {
+                        // successfully received product details
+                        JSONArray QuestionObj = json.getJSONArray("MasterDailyArticle"); // JSON
+                        // Array
+                        for (int i = 0; i < QuestionObj.length(); i++) {
+                            JSONObject md = QuestionObj.getJSONObject(i);
+
+                            db.InsertDailyArticle(md.getInt("ArticleNo"), md.getString("ArticleDate"), md.getString("Topic"), md.getString("ArticleDesc") );
+
+                            //End of getting Article details
+                        }
+                    }
+                }
+//End  : Get Daily Question--------------------------------------------------------------------------
             } catch (JSONException e) {
                 check = 1;
                 e.printStackTrace();
@@ -425,7 +479,57 @@ public class Configuringactivity extends ActionBarActivity {
 
                         }
 
-                        //End of getting question details
+                        //End of getting question detail
+                        // //Start :  Get Daily Question-----------------------------------------------------------------------
+                        params.clear();
+                        params.add(new BasicNameValuePair("lastquestionnumber", String.valueOf(db.getMaxDailyQuestionNumber())));
+
+                        json = jsonParser.makeHttpRequest(
+                                masterdetails.getDailyTestQuestions, "GET", params);
+                        Log.i("maximum Exam Daily", String.valueOf(db.getMaxDailyQuestionNumber()));
+                        if (json.length() > 0) {
+                            // json success tag
+                            success = json.getInt("success");
+                            if (success == 1) {
+                                Log.i("Exam", "Check_suc");
+                                // successfully received product details
+                                 QuestionObj = json.getJSONArray("MasterDailyQuestion"); // JSON
+                                // Array
+                                for (int i = 0; i < QuestionObj.length(); i++) {
+                                     md = QuestionObj.getJSONObject(i);
+
+                                    db.InsertDailyQuestionDetails(md.getInt("Id"), md.getString("ExamDate"), md.getInt("QuestionNo"),md.getString("QuestionText"), md.getString("Choice1"), md.getString("Choice2"),md.getString("Choice3"),md.getString("Choice4"),md.getString("Choice5") ,md.getInt("Answer"),md.getString("Category") );
+
+                                    //End of getting question details
+                                }
+                            }
+                        }
+//End  : Get Daily Question--------------------------------------------------------------------------
+
+                        //Start :  Get Daily Article details-----------------------------------------------------------------------
+                        params.clear();
+                        params.add(new BasicNameValuePair("lastArticleNumber", String.valueOf(db.getMaxDailyArticle())));
+
+                        json = jsonParser.makeHttpRequest(
+                                masterdetails.getDailyArticle, "GET", params);
+                        Log.i("Maximum Exam Article", String.valueOf(db.getMaxDailyArticle()));
+                        if (json.length() > 0) {
+                            // json success tag
+                            success = json.getInt("success");
+                            if (success == 1) {
+                                // successfully received product details
+                                 QuestionObj = json.getJSONArray("MasterDailyArticle"); // JSON
+                                // Array
+                                for (int i = 0; i < QuestionObj.length(); i++) {
+                                     md = QuestionObj.getJSONObject(i);
+
+                                    db.InsertDailyArticle(md.getInt("ArticleNo"), md.getString("ArticleDate"), md.getString("Topic"), md.getString("ArticleDesc") );
+
+                                    //End of getting Article details
+                                }
+                            }
+                        }
+//End  : Get Daily Question--------------------------------------------------------------------------s
 
                     }
                 }

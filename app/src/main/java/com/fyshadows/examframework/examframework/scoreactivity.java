@@ -33,10 +33,7 @@ public class scoreactivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scoreactivity);
 
-
         //Advertisement Start
-
-
 
         //Initialize Airpush
         main=new Main(this);
