@@ -1,7 +1,9 @@
 package ExamFramework_Adapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,9 +12,13 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.fyshadows.examframework.examframework.Exam_database;
+import com.fyshadows.examframework.examframework.HomeActivity;
+import com.fyshadows.examframework.examframework.Questionhome;
 import com.fyshadows.examframework.examframework.R;
 
 import java.util.List;
+
+import ExamFramework_Data.DailyExam;
 
 /**
  * Created by Prasanna on 28-08-2015.
@@ -44,7 +50,7 @@ public class DailyExamAdapter extends ArrayAdapter<String> {
 
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         db= new Exam_database(parent.getContext());
         View view = null;
         Log.i("a", "into get view");
@@ -65,16 +71,32 @@ public class DailyExamAdapter extends ArrayAdapter<String> {
         }
 
 
+        holder.Date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                Log.i("Selected Date",list.get(position).toString());
+                Intent i = new Intent(context, Questionhome.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt("FromScreen", 1);
+                bundle.putString("ExamDate", list.get(position).toString());
+                i.putExtras(bundle);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        | Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(i);
+
+            }
+
+        });
+
         return view;
 
 
     }
 
     static class ViewHolder {
-
         protected TextView Date;
-
-
     }
 
 }

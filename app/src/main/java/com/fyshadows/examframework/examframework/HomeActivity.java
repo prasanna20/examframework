@@ -176,6 +176,9 @@ public class HomeActivity extends ActionBarActivity {
     // user defined functions
     public void homeactivity() {
         Intent i = new Intent(HomeActivity.this, Questionhome.class);
+        Bundle bundle = new Bundle();
+        bundle.putInt("FromScreen", 0);
+        i.putExtras(bundle);
         startActivity(i);
     }
 

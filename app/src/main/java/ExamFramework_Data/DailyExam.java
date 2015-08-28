@@ -5,20 +5,17 @@ package ExamFramework_Data;
  */
 public class DailyExam {
 
-    private  int id,QuesNo,answeredFlag,timeTaken,Rank;
-    private String Ques,Choice1,Choice2,Choice3,Choice4,Choice5,CorrectAns;
+    private  int id,QuesNo,answeredFlag,timeTaken,Rank,CorrectAns;
+    private String Ques,Choice1,Choice2,Choice3,Choice4,Choice5,Category;
 
     public DailyExam() {
     }
 
-    public DailyExam(int id,int QuesNo,int answeredFlag,int timeTaken, int Rank,String Ques,String Choice1,String Choice2,String Choice3,String Choice4,String Choice5,String CorrectAns)
-    {
+    public DailyExam(int id,int QuesNo,String Ques,String Choice1,String Choice2,String Choice3,String Choice4,String Choice5,int CorrectAns,String Category)
+        {
         super();
         this.id=id;
         this.QuesNo=QuesNo;
-        this.answeredFlag=answeredFlag;
-        this.timeTaken=timeTaken;
-        this.Rank=Rank;
         this.Ques=Ques;
         this.Choice1=Choice1;
         this.Choice2=Choice2;
@@ -26,6 +23,7 @@ public class DailyExam {
         this.Choice4=Choice4;
         this.Choice5=Choice5;
         this.CorrectAns=CorrectAns;
+        this.Category=Category;
 
     }
 
@@ -79,9 +77,12 @@ public class DailyExam {
 
     public void setChoice5(String Choice5) {this.Choice5 = Choice5;}
 
-    public String getCorrectAns() {return CorrectAns;}
+    public int getCorrectAns() {return CorrectAns;}
 
-    public void setCorrectAns(String CorrectAns) {this.CorrectAns = CorrectAns;}
+    public void setCorrectAns(int CorrectAns) {this.CorrectAns = CorrectAns;}
 
+    public String getCategory() {return Category;}
+
+    public void setCategory(String Category) {this.Category = Category;}
 
 }

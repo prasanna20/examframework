@@ -22,13 +22,15 @@ import com.yyxqsg.bsyduo229750.Main;
 import java.util.ArrayList;
 import java.util.Random;
 
+import ExamFramework_Data.DailyExam;
+
 
 public class Questionhome extends ActionBarActivity {
 
     private CountDownTimer countDownTimer;
     private boolean timerHasStarted = false;
     public TextView txt_timer;
-    private  int startTime ;
+    private int startTime;
     private final long interval = 1 * 1000;
     RelativeLayout messagelayout;
     RelativeLayout questiondetails_layout;
@@ -37,19 +39,22 @@ public class Questionhome extends ActionBarActivity {
     Button Nextquestion;
     Exam_database ed = new Exam_database(this);
     ArrayList<storequestiondetails> sd;
+    ArrayList<DailyExam> DailyExam;
     int rowcount = 0;
     public int disable = 0;
     public int answered = 0;
     boolean isRunning = false;
+    public int FromScreen = 0;
+    public String ExamDate;
 
-   static int settimer=masterdetails.timer;
+    static int settimer = masterdetails.timer;
 
 
     //store correct answer and questionnumber
     public String Correctanswer;
     public int QuestionNumber;
     public String Category;
-    public  Boolean course_completed_flag=false;
+    public Boolean course_completed_flag = false;
 
     public int totalquestions = 0;
 
@@ -66,7 +71,7 @@ public class Questionhome extends ActionBarActivity {
     public TextView actionbar_queststat;
     public TextView actionbar_questcategory;
     public String[] myString;
-    public   Resources res;
+    public Resources res;
     private static final Random rgenerator = new Random();
     Exam_database db = new Exam_database(Questionhome.this);
 
@@ -81,12 +86,12 @@ public class Questionhome extends ActionBarActivity {
         //Advertisement Start
 
         //Initialize Airpush
-        main=new Main(this);
+        main = new Main(this);
 
         //for calling Smartwall ad
         main.startInterstitialAd(AdConfig.AdType.smartwall);
 
-        adView=(com.yyxqsg.bsyduo229750.AdView) findViewById(R.id.myAdView);
+        adView = (com.yyxqsg.bsyduo229750.AdView) findViewById(R.id.myAdView);
         adView.setBannerType(com.yyxqsg.bsyduo229750.AdView.BANNER_TYPE_IN_APP_AD);
         adView.setBannerAnimation(com.yyxqsg.bsyduo229750.AdView.ANIMATION_TYPE_FADE);
         adView.showMRinInApp(false);
@@ -100,7 +105,7 @@ public class Questionhome extends ActionBarActivity {
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setCustomView(R.layout.actionbar_questionhome);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-         res = getResources();
+        res = getResources();
 
         startTime = db.getTimer() * 1000;
 //setting question
@@ -121,14 +126,12 @@ public class Questionhome extends ActionBarActivity {
         txt_timer.setText(txt_timer.getText() + String.valueOf(startTime / 1000));
         countDownTimer.start();
 
-//total question count
-        totalquestions = db.getQuestionCount();
 
 //setting the message layout invisible
         messagelayout = (RelativeLayout) findViewById(R.id.top_layout);
         messagelayout.setVisibility(View.INVISIBLE);
 
-        questiondetails_layout= (RelativeLayout) findViewById(R.id.questiondetails_layout);
+        questiondetails_layout = (RelativeLayout) findViewById(R.id.questiondetails_layout);
         questiondetails_layout.setVisibility(View.INVISIBLE);
 
 
@@ -142,7 +145,11 @@ public class Questionhome extends ActionBarActivity {
                 countDownTimer.cancel();
                 if (answered == 0) {
                     //to store the skip
-                    db.updateScore(QuestionNumber, 3, Integer.parseInt(txt_timer.getText().toString()));
+                    if(FromScreen==1)
+                    {
+
+                    }
+                    db.updateScore(QuestionNumber, 3, Integer.parseInt(txt_timer.getText().toString()),FromScreen);
                 }
                 showanswer();
                 showmessage(3);
@@ -150,7 +157,7 @@ public class Questionhome extends ActionBarActivity {
         });
 
 //next textview clicked
-        nextmessage  = (TextView) findViewById(R.id.nextmessage);
+        nextmessage = (TextView) findViewById(R.id.nextmessage);
         nextmessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -184,7 +191,7 @@ public class Questionhome extends ActionBarActivity {
         txtquestion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-           Log.i("exam","clicked");
+                Log.i("exam", "clicked");
                 questiondetails_layout.setVisibility(View.VISIBLE);
 
             }
@@ -207,37 +214,6 @@ public class Questionhome extends ActionBarActivity {
             }
         });
 
-        //next question button clicked
-
-     /*   Nextquestion = (Button) findViewById(R.id.Nextquestion);
-        Nextquestion.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isRunning) {
-                    countDownTimer.cancel();
-                }
-                if (answered == 0) {
-                    db.updateScore(QuestionNumber, 3, Integer.parseInt(txt_timer.getText().toString()));
-                }
-                sd.remove(0);
-                if (!sd.isEmpty()) {
-
-                    setquestion();
-                    countDownTimer.start();
-                } else {
-
-                    if (isRunning) {
-                        countDownTimer.cancel();
-                    }
-                    Nextquestionoverlay.setVisibility(View.INVISIBLE);
-                    messagelayout.setVisibility(View.VISIBLE);
-                    displaymessage.setText("Awesome ! You completed the course !");
-
-                }
-
-            }
-        });*/
-
 
         txtanswer1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -248,11 +224,11 @@ public class Questionhome extends ActionBarActivity {
                     if (Correctanswer.equalsIgnoreCase(txtanswer1.getText().toString())) {
                         txtanswer1.setBackgroundColor(Color.GREEN);
                         showmessage(1);
-                        db.updateScore(QuestionNumber, 1, Integer.parseInt(txt_timer.getText().toString()));
+                        db.updateScore(QuestionNumber, 1, Integer.parseInt(txt_timer.getText().toString()),FromScreen);
                     } else {
                         txtanswer1.setBackgroundColor(Color.RED);
                         showmessage(2);
-                        db.updateScore(QuestionNumber, 2, Integer.parseInt(txt_timer.getText().toString()));
+                        db.updateScore(QuestionNumber, 2, Integer.parseInt(txt_timer.getText().toString()),FromScreen);
                         showanswer();
                     }
                     answered = 1;
@@ -271,11 +247,11 @@ public class Questionhome extends ActionBarActivity {
                     if (Correctanswer.equalsIgnoreCase(txtanswer2.getText().toString())) {
                         showmessage(1);
                         txtanswer2.setBackgroundColor(Color.GREEN);
-                        db.updateScore(QuestionNumber, 1, Integer.parseInt(txt_timer.getText().toString()));
+                        db.updateScore(QuestionNumber, 1, Integer.parseInt(txt_timer.getText().toString()),FromScreen);
                     } else {
                         txtanswer2.setBackgroundColor(Color.RED);
                         showmessage(2);
-                        db.updateScore(QuestionNumber, 2, Integer.parseInt(txt_timer.getText().toString()));
+                        db.updateScore(QuestionNumber, 2, Integer.parseInt(txt_timer.getText().toString()),FromScreen);
 
                         showanswer();
                     }
@@ -294,12 +270,12 @@ public class Questionhome extends ActionBarActivity {
                     if (Correctanswer.equalsIgnoreCase(txtanswer3.getText().toString())) {
                         showmessage(1);
                         txtanswer3.setBackgroundColor(Color.GREEN);
-                        db.updateScore(QuestionNumber, 1, Integer.parseInt(txt_timer.getText().toString()));
+                        db.updateScore(QuestionNumber, 1, Integer.parseInt(txt_timer.getText().toString()),FromScreen);
                     } else {
                         txtanswer3.setBackgroundColor(Color.RED);
                         showmessage(2);
                         showanswer();
-                        db.updateScore(QuestionNumber, 2, Integer.parseInt(txt_timer.getText().toString()));
+                        db.updateScore(QuestionNumber, 2, Integer.parseInt(txt_timer.getText().toString()),FromScreen);
                     }
                     disable = 1;
                     answered = 1;
@@ -318,11 +294,11 @@ public class Questionhome extends ActionBarActivity {
 
                         showmessage(1);
                         txtanswer4.setBackgroundColor(Color.GREEN);
-                        db.updateScore(QuestionNumber, 1, Integer.parseInt(txt_timer.getText().toString()));
+                        db.updateScore(QuestionNumber, 1, Integer.parseInt(txt_timer.getText().toString()),FromScreen);
                     } else {
                         txtanswer4.setBackgroundColor(Color.RED);
                         showmessage(2);
-                        db.updateScore(QuestionNumber, 2, Integer.parseInt(txt_timer.getText().toString()));
+                        db.updateScore(QuestionNumber, 2, Integer.parseInt(txt_timer.getText().toString()),FromScreen);
                         showanswer();
                     }
                     disable = 1;
@@ -340,11 +316,11 @@ public class Questionhome extends ActionBarActivity {
                     if (Correctanswer.equalsIgnoreCase(txtanswer5.getText().toString())) {
                         txtanswer5.setBackgroundColor(Color.GREEN);
                         showmessage(1);
-                        db.updateScore(QuestionNumber, 1, Integer.parseInt(txt_timer.getText().toString()));
+                        db.updateScore(QuestionNumber, 1, Integer.parseInt(txt_timer.getText().toString()),FromScreen);
                     } else {
                         txtanswer5.setBackgroundColor(Color.RED);
                         showmessage(2);
-                        db.updateScore(QuestionNumber, 2, Integer.parseInt(txt_timer.getText().toString()));
+                        db.updateScore(QuestionNumber, 2, Integer.parseInt(txt_timer.getText().toString()),FromScreen);
                         showanswer();
                     }
                     answered = 1;
@@ -353,19 +329,35 @@ public class Questionhome extends ActionBarActivity {
             }
         });
 
-        //get question data from database
-        sd = ed.getQuestionDetails();
-        rowcount = sd.size();
-        Log.i("check", String.valueOf(rowcount));
+        Bundle bundle = getIntent().getExtras();
+        FromScreen = bundle.getInt("FromScreen");
+
+        if (FromScreen == 0) {
+            //total question count
+            totalquestions = db.getQuestionCount();
+            //get question data from database
+            sd = ed.getQuestionDetails();
+            rowcount = sd.size();
+            Log.i("check", String.valueOf(rowcount));
+        } else if (FromScreen == 1) {
+            ExamDate = bundle.getString("ExamDate");
+            Log.i("Into Home Activity", ExamDate);
+            //totalquestions = db.getQuestionCount();
+            //get question data from database
+            DailyExam = ed.getDailyExamQuestion(ExamDate);
+            totalquestions=DailyExam.size();
+            rowcount = DailyExam.size();
+        }
+
 
 //set values to text view
-        if (!sd.isEmpty()) {
-            setquestion();
+        if ((FromScreen == 0 && !sd.isEmpty()) || (FromScreen==1 && !DailyExam.isEmpty())) {
+            setquestion(FromScreen);
         } else {
             txtquestion.setText("you competed the exam. Please reset it to start from first.");
             txtquestion_details.setText("you competed the exam. Please reset it to start from first.");
             messagelayout.setVisibility(View.INVISIBLE);
-           // Nextquestion.setVisibility(View.INVISIBLE);
+            // Nextquestion.setVisibility(View.INVISIBLE);
             showanswer.setVisibility(View.INVISIBLE);
             txtanswer1.setVisibility(View.INVISIBLE);
             txtanswer2.setVisibility(View.INVISIBLE);
@@ -374,7 +366,6 @@ public class Questionhome extends ActionBarActivity {
             txtanswer5.setVisibility(View.INVISIBLE);
             txt_timer.setVisibility(View.INVISIBLE);
             actionbar_queststat.setText("Congrats");
-
 
         }
 
@@ -398,14 +389,13 @@ public class Questionhome extends ActionBarActivity {
 
         switch (item.getItemId()) {
             case android.R.id.home:
-                finish();
+                Intent i = new Intent(Questionhome.this, DailyExamQuestion.class);
+                startActivity(i);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
-
-
 
 
     public class MyCountDownTimer extends CountDownTimer {
@@ -417,7 +407,7 @@ public class Questionhome extends ActionBarActivity {
         public void onFinish() {
             isRunning = false;
             txt_timer.setText("Time's up!");
-            db.updateScore(QuestionNumber, 3, settimer);
+            db.updateScore(QuestionNumber, 3, settimer,FromScreen);
             showanswer();
             showmessage(4);
         }
@@ -432,7 +422,7 @@ public class Questionhome extends ActionBarActivity {
     }
 
 
-    public void setquestion() {
+    public void setquestion(int Fromflag) {
 
         disable = 0;
         answered = 0;
@@ -442,23 +432,60 @@ public class Questionhome extends ActionBarActivity {
         txtanswer4.setBackgroundColor(Color.parseColor("#D1D1D1"));
         txtanswer5.setBackgroundColor(Color.parseColor("#ffffff"));
 
-        QuestionNumber = sd.get(0).getQuestionNo();
+
 
         //Fraud text to increase count
         //actionbar_queststat.setText(QuestionNumber + " of " + totalquestions);
-        actionbar_queststat.setText(QuestionNumber + " of 1000");
+        if (Fromflag == 0)
 
-        txtquestion.setText(sd.get(0).getQuestion());
-        txtquestion_details.setText(sd.get(0).getQuestion());
-        txtanswer1.setText(sd.get(0).getChoice1());
-        txtanswer2.setText(sd.get(0).getChoice2());
-        txtanswer3.setText(sd.get(0).getChoice3());
-        txtanswer4.setText(sd.get(0).getChoice4());
-        txtanswer5.setText(sd.get(0).getChoice5());
-        Category= sd.get(0).getCategory();
-        actionbar_questcategory.setText(Category);
-        Correctanswer = sd.get(0).getCorrect_Ans();
+        {
+            QuestionNumber = sd.get(0).getQuestionNo();
+            actionbar_queststat.setText(QuestionNumber + " of 1000");
 
+            txtquestion.setText(sd.get(0).getQuestion());
+            txtquestion_details.setText(sd.get(0).getQuestion());
+            txtanswer1.setText(sd.get(0).getChoice1());
+            txtanswer2.setText(sd.get(0).getChoice2());
+            txtanswer3.setText(sd.get(0).getChoice3());
+            txtanswer4.setText(sd.get(0).getChoice4());
+            txtanswer5.setText(sd.get(0).getChoice5());
+            Category = sd.get(0).getCategory();
+            actionbar_questcategory.setText(Category);
+            Correctanswer = sd.get(0).getCorrect_Ans();
+        } else if (Fromflag == 1) {
+            QuestionNumber =DailyExam.get(0).getQuesNo();
+            actionbar_queststat.setText( QuestionNumber + " of " + totalquestions);
+            txtquestion.setText(DailyExam.get(0).getQues());
+            txtquestion_details.setText(DailyExam.get(0).getQues());
+            txtanswer1.setText(DailyExam.get(0).getChoice1());
+            txtanswer2.setText(DailyExam.get(0).getChoice2());
+            txtanswer3.setText(DailyExam.get(0).getChoice3());
+            txtanswer4.setText(DailyExam.get(0).getChoice4());
+            txtanswer5.setText(DailyExam.get(0).getChoice5());
+            Category = DailyExam.get(0).getCategory();
+            actionbar_questcategory.setText(Category);
+
+            if(DailyExam.get(0).getCorrectAns()==1)
+            {
+                Correctanswer=DailyExam.get(0).getChoice1();
+            }
+            else if(DailyExam.get(0).getCorrectAns()==2)
+            {
+                Correctanswer=DailyExam.get(0).getChoice2();
+            }
+            else if(DailyExam.get(0).getCorrectAns()==3)
+            {
+                Correctanswer=DailyExam.get(0).getChoice3();
+            }
+            else if(DailyExam.get(0).getCorrectAns()==4)
+            {
+                Correctanswer=DailyExam.get(0).getChoice4();
+            }
+            else if(DailyExam.get(0).getCorrectAns()==5)
+            {
+                Correctanswer=DailyExam.get(0).getChoice5();
+            }
+        }
     }
 
     public void showanswer() {
@@ -475,33 +502,26 @@ public class Questionhome extends ActionBarActivity {
         }
     }
 
-    public void showmessage(int indicator)
-    {
+    public void showmessage(int indicator) {
         messagelayout.setVisibility(View.VISIBLE);
         showanswer.setVisibility(View.INVISIBLE);
-        if(indicator==1) {
+        if (indicator == 1) {
 
             myString = res.getStringArray(R.array.correct);
 
             String q = myString[rgenerator.nextInt(myString.length)];
 
             displaymessage.setText(q);
-        }
-        else if(indicator==2)
-        {
+        } else if (indicator == 2) {
             myString = res.getStringArray(R.array.wrong);
 
             String q = myString[rgenerator.nextInt(myString.length)];
 
             displaymessage.setText(q);
 
-        }
-        else if (indicator==3)
-        {
+        } else if (indicator == 3) {
             displaymessage.setText("Learn it and Rock it");
-        }
-        else if (indicator==4)
-        {
+        } else if (indicator == 4) {
             displaymessage.setText("Time Never Wait!");
         }
     }
@@ -511,15 +531,21 @@ public class Questionhome extends ActionBarActivity {
         startActivity(i);
     }
 
-    public void nexttap()
-    {
-        if(!course_completed_flag) {
+    public void nexttap() {
+        if (!course_completed_flag) {
             if (isRunning) {
                 countDownTimer.cancel();
             }
-            sd.remove(0);
-            if (!sd.isEmpty()) {
-                setquestion();
+            if(FromScreen==0)
+            {
+                sd.remove(0);
+            }else if (FromScreen==1)
+            {
+                DailyExam.remove(0);
+            }
+
+            if ((FromScreen == 0 && !sd.isEmpty()) || (FromScreen==1 && !DailyExam.isEmpty())) {
+                setquestion(FromScreen);
                 messagelayout.setVisibility(View.INVISIBLE);
                 showanswer.setVisibility(View.VISIBLE);
                 countDownTimer.start();
@@ -529,11 +555,8 @@ public class Questionhome extends ActionBarActivity {
                 showanswer.setVisibility(View.INVISIBLE);
                 displaymessage.setText("Awesome ! You completed the course !");
                 course_completed_flag = true;
-                //Nextquestionoverlay.setText("Score");
             }
-        }
-        else
-        {
+        } else {
             scoreactivity();
         }
     }

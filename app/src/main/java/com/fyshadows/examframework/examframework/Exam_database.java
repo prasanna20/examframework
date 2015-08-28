@@ -12,6 +12,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 
+import ExamFramework_Data.DailyExam;
+
 /**
  * Created by Prasanna on 16-03-2015.
  */
@@ -56,13 +58,13 @@ public class Exam_database extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase myDB, int oldVersion, int newVersion) {
 
-      myDB.execSQL("CREATE TABLE if not exists EF_mob_QuestionTimer(Timervalue int);");
+        myDB.execSQL("CREATE TABLE if not exists EF_mob_QuestionTimer(Timervalue int);");
 
         myDB.execSQL("CREATE TABLE if not exists EF_mob_DailyQues(id  int,quesDate date,QuesNo int ,Ques text,Choice1 varchar(350),Choice2 varchar(350),Choice3 varchar(350),Choice4 varchar(350),Choice5 varchar(350),CorrectAns varchar(350),Category,answeredFlag int,timeTaken int,Rank int);");
 
         myDB.execSQL("CREATE TABLE if not exists EF_mob_DailyArticle(ArticleNo int, ArticleDate Date,Topic varchar(300),ArticleDesc text);");
 
-      Log.i("table created", "table created");
+        Log.i("table created", "table created");
     }
 
     // Register admin
@@ -83,7 +85,7 @@ public class Exam_database extends SQLiteOpenHelper {
     }
 
     //insert question details
-    public void InsertQuestionDetails(int QuestionNo, String Question, String Choice1, String Choice2, String Choice3, String Choice4,String Choice5, String Correct_Ans,String Category) {
+    public void InsertQuestionDetails(int QuestionNo, String Question, String Choice1, String Choice2, String Choice3, String Choice4, String Choice5, String Correct_Ans, String Category) {
         SQLiteDatabase db = this.getWritableDatabase();
         //db.delete("PP_mob_PPmasterdetails", null, null);
         ContentValues values = new ContentValues();
@@ -109,7 +111,7 @@ public class Exam_database extends SQLiteOpenHelper {
 
     //Insert Daily Question details
     public void InsertDailyQuestionDetails(
-            int id  ,String quesDate ,int QuesNo  ,String Ques ,String Choice1 ,String Choice2 ,String Choice3,String Choice4 ,String Choice5 ,int CorrectAns,String Category ) {
+            int id, String quesDate, int QuesNo, String Ques, String Choice1, String Choice2, String Choice3, String Choice4, String Choice5, int CorrectAns, String Category) {
         SQLiteDatabase db = this.getWritableDatabase();
         //int answeredFlag ,int timeTaken ,int Rank
         ContentValues values = new ContentValues();
@@ -137,9 +139,8 @@ public class Exam_database extends SQLiteOpenHelper {
     }
 
 
-
     //Insert Daily Question details
-    public void InsertDailyArticle( int ArticleNo ,String ArticleDate ,String Topic ,String ArticleDesc ) {
+    public void InsertDailyArticle(int ArticleNo, String ArticleDate, String Topic, String ArticleDesc) {
         SQLiteDatabase db = this.getWritableDatabase();
         //int answeredFlag ,int timeTaken ,int Rank
         ContentValues values = new ContentValues();
@@ -189,13 +190,11 @@ public class Exam_database extends SQLiteOpenHelper {
             } else {
                 Timer = 36;
             }
-        }
-        else
-        {
+        } else {
             InsertTimer(36);
-            Timer=36;
+            Timer = 36;
         }
-        Log.i("TImer",String.valueOf(Timer));
+        Log.i("TImer", String.valueOf(Timer));
         return Timer;
     }
 
@@ -203,7 +202,7 @@ public class Exam_database extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
 
-        String sql = "UPDATE EF_mob_QuestionTimer  SET Timervalue =" + Timervalue ;
+        String sql = "UPDATE EF_mob_QuestionTimer  SET Timervalue =" + Timervalue;
         db.execSQL(sql);
 
 
@@ -223,8 +222,7 @@ public class Exam_database extends SQLiteOpenHelper {
     }
 
     //Get Exam Dates
-    public ArrayList<String> getDailyExamDate()
-    {
+    public ArrayList<String> getDailyExamDate() {
         SQLiteDatabase db = this.getWritableDatabase();
         ArrayList<String> list = new ArrayList<String>();
         String selectQuery = "SELECT  distinct quesDate FROM EF_mob_DailyQues order by id desc";
@@ -283,8 +281,8 @@ public class Exam_database extends SQLiteOpenHelper {
                     String Choice4 = cursor.getString(_Choice4);
                     String Choice5 = cursor.getString(_Choice5);
                     String Correct_Ans = cursor.getString(_Correct_Ans);
-                    String Category= cursor.getString(_Category);
-                    list.add(getdata(QuestionNo, Question, Choice1, Choice2, Choice3, Choice4,Choice5, Correct_Ans,Category));
+                    String Category = cursor.getString(_Category);
+                    list.add(getdata(QuestionNo, Question, Choice1, Choice2, Choice3, Choice4, Choice5, Correct_Ans, Category));
 
                 } while (cursor.moveToNext());
 
@@ -295,8 +293,60 @@ public class Exam_database extends SQLiteOpenHelper {
 
     }
 
-    private storequestiondetails getdata(int QuestionNo, String Question, String Choice1, String Choice2, String Choice3, String Choice4, String Choice5, String Correct_Ans,String Category) {
-        return new storequestiondetails(QuestionNo, Question, Choice1, Choice2, Choice3, Choice4,Choice5, Correct_Ans,Category);
+    //Get Exam Daily Questions---------------------------------------------------------------------------------
+
+    //get questions
+    public ArrayList<DailyExam> getDailyExamQuestion(String ExamDate) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ArrayList<DailyExam> list = new ArrayList<DailyExam>();
+
+        String selectQuery = "SELECT id,quesDate ,QuesNo  ,Ques ,Choice1 ,Choice2 ,Choice3 ,Choice4 ,Choice5 ,CorrectAns ,Category   FROM EF_mob_DailyQues where quesDate = '" + ExamDate + "' order by QuesNo asc";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+
+        if (null != cursor && cursor.moveToFirst()) {
+
+            int _id = cursor.getColumnIndex("id");
+            int _QuesNo = cursor.getColumnIndex("QuesNo");
+            int _quesDate = cursor.getColumnIndex("quesDate");
+            int _Ques = cursor.getColumnIndex("Ques");
+            int _Choice1 = cursor.getColumnIndex("Choice1");
+            int _Choice2 = cursor.getColumnIndex("Choice2");
+            int _Choice3 = cursor.getColumnIndex("Choice3");
+            int _Choice4 = cursor.getColumnIndex("Choice4");
+            int _Choice5 = cursor.getColumnIndex("Choice5");
+            int _CorrectAns = cursor.getColumnIndex("CorrectAns");
+            int _Category = cursor.getColumnIndex("Category");
+
+            if (cursor.moveToFirst()) {
+                do {
+                    int id = cursor.getInt(_id);
+                    int QuesNo = cursor.getInt(_QuesNo);
+                    String quesDate = cursor.getString(_quesDate);
+                    String Ques = cursor.getString(_Ques);
+                    String Choice1 = cursor.getString(_Choice1);
+                    String Choice2 = cursor.getString(_Choice2);
+                    String Choice3 = cursor.getString(_Choice3);
+                    String Choice4 = cursor.getString(_Choice4);
+                    String Choice5 = cursor.getString(_Choice5);
+                    int CorrectAns = cursor.getInt(_CorrectAns);
+                    String Category = cursor.getString(_Category);
+
+                    list.add(new DailyExam(id, QuesNo, Ques, Choice1, Choice2, Choice3, Choice4, Choice5, CorrectAns, Category));
+
+                } while (cursor.moveToNext());
+
+            }
+        }
+        return list;
+
+    }
+
+
+    //End Get exam Daily Question------------------------------------------------------------------------------
+
+    private storequestiondetails getdata(int QuestionNo, String Question, String Choice1, String Choice2, String Choice3, String Choice4, String Choice5, String Correct_Ans, String Category) {
+        return new storequestiondetails(QuestionNo, Question, Choice1, Choice2, Choice3, Choice4, Choice5, Correct_Ans, Category);
     }
 
     //get total question count
@@ -326,11 +376,14 @@ public class Exam_database extends SQLiteOpenHelper {
     }
 
     // update score details
-    public void updateScore(int questionnumber, int _answer_flag, int _timetaken) {
+    public void updateScore(int questionnumber, int _answer_flag, int _timetaken, int FromScreen) {
         SQLiteDatabase db = this.getWritableDatabase();
-
-
-        String sql = "UPDATE EF_mob_MasterQuestion  SET answered_flag =" + _answer_flag + " , time_taken =" + _timetaken + " WHERE  Questionno   = '" + questionnumber + "'";
+        String sql = "";
+        if (FromScreen == 0) {
+            sql = "UPDATE EF_mob_MasterQuestion  SET answered_flag =" + _answer_flag + " , time_taken =" + _timetaken + " WHERE  Questionno   = '" + questionnumber + "'";
+        } else if (FromScreen == 1) {
+            sql = "UPDATE EF_mob_DailyQues  SET answeredFlag =" + _answer_flag + " , timeTaken =" + _timetaken + " WHERE  id   = '" + questionnumber + "'";
+        }
         db.execSQL(sql);
 
 
@@ -388,7 +441,7 @@ public class Exam_database extends SQLiteOpenHelper {
 
         QuestionCount = getattemptedcount();
 
-        String selectQuery = "SELECT   sum("+ getTimer() +"-time_taken) sum  FROM EF_mob_MasterQuestion where answered_flag  > 0";
+        String selectQuery = "SELECT   sum(" + getTimer() + "-time_taken) sum  FROM EF_mob_MasterQuestion where answered_flag  > 0";
         Cursor cursor = db.rawQuery(selectQuery, null);
 
 
@@ -408,7 +461,7 @@ public class Exam_database extends SQLiteOpenHelper {
             average = sumtimetaken / QuestionCount;
         }
 
-        return  String.valueOf(average) ;
+        return String.valueOf(average);
 
     }
 
@@ -522,10 +575,10 @@ public class Exam_database extends SQLiteOpenHelper {
 
     public String getCategoryscore(String category) {
         SQLiteDatabase db = this.getWritableDatabase();
-        int totalquestion=0;
-        int answeredcnt=0;
+        int totalquestion = 0;
+        int answeredcnt = 0;
 
-        String selectQuery = "SELECT  count(*) cnt  FROM EF_mob_MasterQuestion where category = '"+ category +"'  and  answered_flag in (1,2,3) ";
+        String selectQuery = "SELECT  count(*) cnt  FROM EF_mob_MasterQuestion where category = '" + category + "'  and  answered_flag in (1,2,3) ";
         Cursor cursor = db.rawQuery(selectQuery, null);
 
 
@@ -542,8 +595,8 @@ public class Exam_database extends SQLiteOpenHelper {
 
         }
 
-         selectQuery = "SELECT  count(*) cnt  FROM EF_mob_MasterQuestion where category='"+ category +"' and  answered_flag in (1)";
-         cursor = db.rawQuery(selectQuery, null);
+        selectQuery = "SELECT  count(*) cnt  FROM EF_mob_MasterQuestion where category='" + category + "' and  answered_flag in (1)";
+        cursor = db.rawQuery(selectQuery, null);
 
 
         if (null != cursor && cursor.moveToFirst()) {
