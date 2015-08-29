@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.fyshadows.examframework.examframework.DailyArticle;
 import com.fyshadows.examframework.examframework.Exam_database;
 import com.fyshadows.examframework.examframework.HomeActivity;
 import com.fyshadows.examframework.examframework.Questionhome;
@@ -60,6 +61,8 @@ public class DailyExamAdapter extends ArrayAdapter<String> {
             final ViewHolder viewHolder = new ViewHolder();
             viewHolder.Date = (TextView) view.findViewById(R.id.txtDate);
             viewHolder.Date.setTextColor(Color.BLACK);
+            viewHolder.Article = (TextView) view.findViewById(R.id.txtArticle);
+            viewHolder.Article.setTextColor(Color.BLACK);
             view.setTag(viewHolder);
         } else {
             view = convertView;
@@ -90,6 +93,24 @@ public class DailyExamAdapter extends ArrayAdapter<String> {
 
         });
 
+        holder.Article.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                Log.i("Selected Date",list.get(position).toString());
+                Intent i = new Intent(context, DailyArticle.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("ExamDate", list.get(position).toString());
+                i.putExtras(bundle);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        | Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(i);
+
+            }
+
+        });
+
         return view;
 
 
@@ -97,6 +118,7 @@ public class DailyExamAdapter extends ArrayAdapter<String> {
 
     static class ViewHolder {
         protected TextView Date;
+        protected TextView Article;
     }
 
 }

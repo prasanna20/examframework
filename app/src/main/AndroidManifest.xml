@@ -89,6 +89,12 @@
             android:name=".DailyExamQuestion"
             android:label="@string/title_activity_daily_exam_question"
             android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Holo.Light.DarkActionBar" >
+        </activity>
+        <activity
+            android:name=".DailyArticle"
+            android:label="@string/title_activity_daily_article"
+            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Holo.Light.DarkActionBar">
         </activity>
     </application>

@@ -390,7 +390,10 @@ public class Questionhome extends ActionBarActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 Intent i = new Intent(Questionhome.this, DailyExamQuestion.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(i);
+
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

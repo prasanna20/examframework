@@ -12,6 +12,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 
+import ExamFramework_Data.DailyArticleData;
 import ExamFramework_Data.DailyExam;
 
 /**
@@ -250,6 +251,8 @@ public class Exam_database extends SQLiteOpenHelper {
     }
 
 
+
+
     //get questions
     public ArrayList<storequestiondetails> getQuestionDetails() {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -295,7 +298,6 @@ public class Exam_database extends SQLiteOpenHelper {
 
     //Get Exam Daily Questions---------------------------------------------------------------------------------
 
-    //get questions
     public ArrayList<DailyExam> getDailyExamQuestion(String ExamDate) {
         SQLiteDatabase db = this.getWritableDatabase();
         ArrayList<DailyExam> list = new ArrayList<DailyExam>();
@@ -344,6 +346,46 @@ public class Exam_database extends SQLiteOpenHelper {
 
 
     //End Get exam Daily Question------------------------------------------------------------------------------
+
+
+    //Start :- Get Daily Article Data---------------------------------------------------------------------------------
+    public ArrayList<DailyArticleData> getDailyArticle(String ExamDate) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ArrayList<DailyArticleData> list = new ArrayList<DailyArticleData>();
+
+        String selectQuery = "SELECT ArticleNo , ArticleDate ,Topic ,ArticleDesc FROM EF_mob_DailyArticle where ArticleDate = '" + ExamDate + "'";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+
+        if (null != cursor && cursor.moveToFirst()) {
+
+            int _ArticleNo = cursor.getColumnIndex("ArticleNo");
+            int _ArticleDate = cursor.getColumnIndex("ArticleDate");
+            int _Topic = cursor.getColumnIndex("Topic");
+            int _ArticleDesc = cursor.getColumnIndex("ArticleDesc");
+
+            if (cursor.moveToFirst()) {
+                do {
+                    int ArticleNo = cursor.getInt(_ArticleNo);
+                    String ArticleDate = cursor.getString(_ArticleDate);
+                    String Topic = cursor.getString(_Topic);
+                    String ArticleDesc = cursor.getString(_ArticleDesc);
+
+
+                    list.add(new DailyArticleData(ArticleNo, ArticleDate, Topic, ArticleDesc));
+
+                } while (cursor.moveToNext());
+
+            }
+        }
+        return list;
+
+    }
+
+
+    //End Get Daily Article------------------------------------------------------------------------------
+
+
 
     private storequestiondetails getdata(int QuestionNo, String Question, String Choice1, String Choice2, String Choice3, String Choice4, String Choice5, String Correct_Ans, String Category) {
         return new storequestiondetails(QuestionNo, Question, Choice1, Choice2, Choice3, Choice4, Choice5, Correct_Ans, Category);

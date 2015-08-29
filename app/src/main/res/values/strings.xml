@@ -63,6 +63,7 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_daily_exam_question">DailyExamQuestion</string>
+    <string name="title_activity_daily_article">DailyArticle</string>
 
 
 

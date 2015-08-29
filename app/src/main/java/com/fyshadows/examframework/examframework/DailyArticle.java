@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
@@ -14,41 +13,44 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import ExamFramework_Adapter.DailyArticleAdapter;
 import ExamFramework_Adapter.DailyExamAdapter;
-import ExamFramework_Data.DailyExam;
+import ExamFramework_Data.DailyArticleData;
 
-public class DailyExamQuestion  extends ListActivity {
+public class DailyArticle extends ListActivity {
+
     private ListView listView;
-    DailyExamAdapter adapter;
-    private List<String> ExamData;
+    DailyArticleAdapter adapter;
+    private List<ExamFramework_Data.DailyArticleData> DailyArticleData;
     Exam_database db = new Exam_database(this);
-    List<String> list = new ArrayList<String>();
+    List<ExamFramework_Data.DailyArticleData> list = new ArrayList<ExamFramework_Data.DailyArticleData>();
     int scrolly = 0;
     int first = 0;
-    TextView txtNoExam;
+    public String ExamDate;
+    TextView  txtNoArticle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.activity_daily_exam_question);
-
+        setContentView(R.layout.activity_daily_article);
 
         getActionBar().setDisplayShowTitleEnabled(false);
         getActionBar().setDisplayShowCustomEnabled(true);
-        getActionBar().setCustomView(R.layout.actionbar_dailyexam);
+        getActionBar().setCustomView(R.layout.actionbar_dailyarticle);
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
-        txtNoExam=(TextView) this.findViewById(R.id.txtNoExam);
+        Bundle bundle = getIntent().getExtras();
+        ExamDate = bundle.getString("ExamDate");
 
+       txtNoArticle = (TextView) this.findViewById(R.id.txtNoArticle);
 
         ListView myListView = (ListView) findViewById(android.R.id.list);
-        list = db.getDailyExamDate();
+        list = db.getDailyArticle(ExamDate);
         int index = 0;
         int top = 0;
 
         if (!list.isEmpty()) {
-            adapter = new DailyExamAdapter(this, list);
+            adapter = new DailyArticleAdapter(this, list);
             setListAdapter(adapter);
             adapter.notifyDataSetChanged();
             if (first == 0) {
@@ -59,24 +61,27 @@ public class DailyExamQuestion  extends ListActivity {
                 //  myListView.setSelection(scrolly);
                 myListView.setSelectionFromTop(index, top);
             }
-
-            txtNoExam.setVisibility(View.INVISIBLE);
-
+            txtNoArticle.setVisibility(View.INVISIBLE)  ;
         }
         else
         {
-            txtNoExam.setVisibility(View.VISIBLE);
+
+            txtNoArticle.setVisibility(View.VISIBLE)  ;
+
         }
+
+
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_daily_exam_question, menu);
-        return super.onCreateOptionsMenu(menu);
-
+        getMenuInflater().inflate(R.menu.menu_daily_article, menu);
+        return true;
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -87,7 +92,7 @@ public class DailyExamQuestion  extends ListActivity {
 
         switch (item.getItemId()) {
             case android.R.id.home:
-                Intent i = new Intent(DailyExamQuestion.this, HomeActivity.class);
+                Intent i = new Intent(DailyArticle.this, DailyExamQuestion.class);
                 startActivity(i);
                 return true;
             default:
