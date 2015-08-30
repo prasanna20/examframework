@@ -17,6 +17,7 @@ public class masterdetails {
     static String getNewQuestions="http://collegemateapp.com/ExamFrameWork/getNewQuestions.php";
     static String getDailyTestQuestions="http://collegemateapp.com/ExamFrameWork/getDailyTestQuestions.php";
     static String getDailyArticle="http://collegemateapp.com/ExamFrameWork/getDailyArticle.php";
+    public static String getnews="http://collegemateapp.com/ExamFrameWork/getnews.php";
 
     public static boolean isOnline(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context

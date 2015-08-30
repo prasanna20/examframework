@@ -389,7 +389,13 @@ public class Questionhome extends ActionBarActivity {
 
         switch (item.getItemId()) {
             case android.R.id.home:
-                Intent i = new Intent(Questionhome.this, DailyExamQuestion.class);
+                Intent i;
+                if(FromScreen==0) {
+                     i = new Intent(Questionhome.this, HomeActivity.class);
+                }
+                else {
+                     i = new Intent(Questionhome.this, DailyExamQuestion.class);
+                }
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
                         | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(i);
@@ -423,6 +429,7 @@ public class Questionhome extends ActionBarActivity {
         }
 
     }
+
 
 
     public void setquestion(int Fromflag) {

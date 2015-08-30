@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.ads.AdRequest;
@@ -25,6 +26,7 @@ public class HomeActivity extends ActionBarActivity {
     Button plus;
     Button minus;
     Button DailyExam;
+    ImageButton vn;
     TextView timer;
     Exam_database db;
     SharedPreferences prefs;
@@ -146,6 +148,16 @@ public class HomeActivity extends ActionBarActivity {
             }
         });
 
+        vn = (ImageButton) findViewById(R.id.vn);
+        vn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(HomeActivity.this , ViewNotification.class);
+                startActivity(i);
+
+            }
+        });
+
 
 
     }
@@ -186,6 +198,8 @@ public class HomeActivity extends ActionBarActivity {
         Intent i = new Intent(HomeActivity.this, scoreactivity.class);
         startActivity(i);
     }
+
+
 
     public void resetexam() {
         Toast.makeText(getBaseContext(), "Exam reset successfull", Toast.LENGTH_LONG).show();

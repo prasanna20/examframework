@@ -8,18 +8,28 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import org.apache.http.NameValuePair;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import ExamFramework_Data.DailyArticleData;
 import ExamFramework_Data.DailyExam;
+import ExamFramework_Data.notificationtable;
 
 /**
  * Created by Prasanna on 16-03-2015.
  */
 
 public class Exam_database extends SQLiteOpenHelper {
+
+
+    JSONParser jsonParser = new JSONParser();
 
     public Exam_database(Context context) {
 
@@ -656,4 +666,59 @@ public class Exam_database extends SQLiteOpenHelper {
         return String.valueOf(answeredcnt) + " Out of " + String.valueOf(totalquestion);
     }
 
-}
+    // Getting the chat from table of the user
+    public List<notificationtable> Getnotitification() {
+        List<notificationtable> list = new ArrayList<notificationtable>();
+        try {
+            int success;
+            List<NameValuePair> params = new ArrayList<NameValuePair>();
+            Log.i("News", "came in");
+            JSONObject json = jsonParser.makeHttpRequest(
+                    masterdetails.getnews, "GET", params);
+
+            if (json.length() > 0) {
+                // json success tag
+                success = json.getInt("success");
+                if (success == 1) {
+                    // successfully received product details
+                    JSONArray objNews = json.getJSONArray("News"); // JSON
+                    // Array
+                    for (int i = 0; i < objNews.length(); i++) {
+
+                        String news_text = "";
+                        String timestamp = "";
+                        String newsid = "";
+
+
+                        JSONObject md = objNews.getJSONObject(i);
+
+                        newsid = md.getString("news_id");
+                        news_text = md.getString("news_text");
+                        timestamp = md.getString("timestamp");
+
+                        Log.i("News", news_text);
+                        Log.i("News", timestamp);
+
+
+                        list.add(getnot(news_text, timestamp,
+                                newsid));
+
+
+                        //End of getting question details
+                    }
+                }
+            }
+        } catch (JSONException e) {
+
+            e.printStackTrace();
+            Log.i("exception", e.getMessage());
+        }
+        return list;
+    }
+        private notificationtable getnot(String message, String timestamp,
+                String notificationid) {
+            return new notificationtable(notificationid, message, timestamp);
+        }
+
+
+    }

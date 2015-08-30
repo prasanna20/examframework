@@ -19,30 +19,34 @@
 
     <Button
         android:id="@+id/Start"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/myAdViewtop"
         android:layout_alignParentLeft="true"
-        android:layout_marginRight="10dp"
+        android:layout_marginRight="5dp"
         android:layout_marginTop="40dp"
+        android:paddingRight="2dp"
+        android:paddingLeft="2dp"
         android:background="@drawable/roundedbutton"
-        android:text="Start"
+        android:text="Start Exam"
         android:textColor="#ffffff"
-        android:textSize="23dp" />
+        android:textSize="22dp" />
 
     <Button
         android:id="@+id/btnDailyExam"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/myAdViewtop"
-        android:layout_marginRight="10dp"
+        android:layout_marginRight="5dp"
         android:layout_marginTop="40dp"
+        android:paddingRight="2dp"
+        android:paddingLeft="2dp"
         android:layout_toRightOf="@+id/Start"
         android:layout_alignParentRight="true"
         android:background="@drawable/roundedbutton"
         android:text="Daily Exam"
         android:textColor="#ffffff"
-        android:textSize="23dp" />
+        android:textSize="22dp" />
 
 
     <Button
@@ -132,7 +136,7 @@
 
     </TableLayout>
 
-    <com.yyxqsg.bsyduo229750.AdView
+  <com.yyxqsg.bsyduo229750.AdView
         android:id="@+id/myAdView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

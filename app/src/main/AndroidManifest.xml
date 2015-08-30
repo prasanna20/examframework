@@ -82,8 +82,9 @@
         <service android:name=".GCMIntentService" />
 
         <activity
-            android:name=".MessageBoard"
-            android:label="@string/title_activity_message_board" >
+            android:name=".ViewNotification"
+            android:label="View Notification"
+            android:theme="@android:style/Theme.Holo.Light.DarkActionBar">
         </activity>
         <activity
             android:name=".DailyExamQuestion"

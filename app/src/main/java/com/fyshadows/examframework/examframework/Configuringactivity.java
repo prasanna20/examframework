@@ -470,7 +470,7 @@ public class Configuringactivity extends ActionBarActivity {
                                     }
                                 }
                             } catch (JSONException e) {
-                                e.printStackTrace();
+                                Log.i("exam", "we have not got any new set of question");
                             }
                             //download new question to database ends
                         } else {
