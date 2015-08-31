@@ -26,6 +26,8 @@ public class scoreactivity extends ActionBarActivity {
     TextView Computer;
     private Main main; //Declare here
     private com.yyxqsg.bsyduo229750.AdView adView;
+    public int FromScreen = 0;
+    public String ExamDate="";
 
 
     @Override
@@ -63,30 +65,39 @@ public class scoreactivity extends ActionBarActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
 
+        Bundle bundle = getIntent().getExtras();
+        FromScreen = bundle.getInt("FromScreen");
+
+        if(FromScreen==1)
+        {
+            ExamDate = bundle.getString("ExamDate");
+        }
+
+
 
         score = (TextView) this.findViewById(R.id.score);
-        score.setText( db.getscore());
+        score.setText( db.getscore(FromScreen,ExamDate));
 
         average = (TextView) this.findViewById(R.id.average);
-        average.setText(db.getAverage());
+        average.setText(db.getAverage(FromScreen,ExamDate));
 
         skippedCount = (TextView) this.findViewById(R.id.skippedCount);
-        skippedCount.setText(  db.getSkippedCount());
+        skippedCount.setText(  db.getSkippedCount(FromScreen,ExamDate));
 
         quantitativescore= (TextView) this.findViewById(R.id.quantitativescore);
-        quantitativescore.setText(  db.getCategoryscore("Quantitative apps"));
+        quantitativescore.setText(  db.getCategoryscore("Quantitative apps",FromScreen,ExamDate));
 
         English= (TextView) this.findViewById(R.id.English);
-        English.setText( db.getCategoryscore("English language"));
+        English.setText( db.getCategoryscore("English language",FromScreen,ExamDate));
 
         Reasoning= (TextView) this.findViewById(R.id.Reasoning);
-        Reasoning.setText( db.getCategoryscore("Reasoning"));
+        Reasoning.setText( db.getCategoryscore("Reasoning",FromScreen,ExamDate));
 
         General= (TextView) this.findViewById(R.id.General);
-        General.setText( db.getCategoryscore("General awareness"));
+        General.setText( db.getCategoryscore("General awareness",FromScreen,ExamDate));
 
         Computer= (TextView) this.findViewById(R.id.Computer);
-        Computer.setText( db.getCategoryscore("Computer knowledge"));
+        Computer.setText( db.getCategoryscore("Computer knowledge",FromScreen,ExamDate));
 
 
     }

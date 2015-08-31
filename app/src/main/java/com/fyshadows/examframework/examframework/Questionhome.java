@@ -145,10 +145,6 @@ public class Questionhome extends ActionBarActivity {
                 countDownTimer.cancel();
                 if (answered == 0) {
                     //to store the skip
-                    if(FromScreen==1)
-                    {
-
-                    }
                     db.updateScore(QuestionNumber, 3, Integer.parseInt(txt_timer.getText().toString()),FromScreen);
                 }
                 showanswer();
@@ -538,6 +534,15 @@ public class Questionhome extends ActionBarActivity {
 
     public void scoreactivity() {
         Intent i = new Intent(Questionhome.this, scoreactivity.class);
+        Bundle bundle = new Bundle();
+        if(FromScreen==0) {
+            bundle.putInt("FromScreen", FromScreen);
+        }
+        else {
+            bundle.putInt("FromScreen", FromScreen);
+            bundle.putString("Date Activity",ExamDate);
+        }
+        i.putExtras(bundle);
         startActivity(i);
     }
 

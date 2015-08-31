@@ -460,12 +460,19 @@ public class Exam_database extends SQLiteOpenHelper {
     }
 
     //get score
-    public String getscore() {
+    public String getscore(int FromScreen,String ExamDate) {
         int QuestionCount = 0;
         int correctanswer = 0;
+        String selectQuery=null;
         SQLiteDatabase db = this.getWritableDatabase();
-        QuestionCount = getattemptedcount();
-        String selectQuery = "SELECT count(*) cnt  FROM EF_mob_MasterQuestion where answered_flag = 1 ";
+        QuestionCount = getattemptedcount(FromScreen,ExamDate);
+        if(FromScreen==0) {
+            selectQuery = "SELECT count(*) cnt  FROM EF_mob_MasterQuestion where answered_flag = 1 ";
+        }
+        else
+        {
+            selectQuery = "SELECT count(*) cnt  FROM EF_mob_DailyQues where quesDate = '"+ExamDate+"' and answeredFlag=1";
+        }
         Cursor cursor = db.rawQuery(selectQuery, null);
 
         if (null != cursor && cursor.moveToFirst()) {
@@ -484,16 +491,22 @@ public class Exam_database extends SQLiteOpenHelper {
     }
 
     //get average
-    public String getAverage() {
+    public String getAverage(int FromScreen,String ExamDate) {
         int QuestionCount = 0;
         int average = 0;
         int sumtimetaken = 0;
-
+        String selectQuery="";
         SQLiteDatabase db = this.getWritableDatabase();
 
-        QuestionCount = getattemptedcount();
+        QuestionCount = getattemptedcount(FromScreen,ExamDate);
+    if(FromScreen==0) {
+        selectQuery = "SELECT   sum(" + getTimer() + "-time_taken) sum  FROM EF_mob_MasterQuestion where answered_flag  > 0";
+    }
+        else
+    {
+        selectQuery = "SELECT   sum(" + getTimer() + "-time_taken) sum  FROM  EF_mob_DailyQues where quesDate = '"+ExamDate+"' and answeredFlag  > 0";
+    }
 
-        String selectQuery = "SELECT   sum(" + getTimer() + "-time_taken) sum  FROM EF_mob_MasterQuestion where answered_flag  > 0";
         Cursor cursor = db.rawQuery(selectQuery, null);
 
 
@@ -518,11 +531,17 @@ public class Exam_database extends SQLiteOpenHelper {
     }
 
 
-    public int getattemptedcount() {
+    public int getattemptedcount(int FromScreen,String ExamDate) {
         int QuestionCount = 0;
+        String selectQuery="";
         SQLiteDatabase db = this.getWritableDatabase();
+    if(FromScreen==0) {
+        selectQuery = "SELECT count(*) cnt FROM EF_mob_MasterQuestion where answered_flag in (1,2)";
+    }
+    else {
+        selectQuery = "SELECT count(*) cnt FROM EF_mob_DailyQues where quesDate = '"+ExamDate+"' and answeredFlag in (1,2)";
+    }
 
-        String selectQuery = "SELECT count(*) cnt FROM EF_mob_MasterQuestion where answered_flag in (1,2)";
         Cursor cursor = db.rawQuery(selectQuery, null);
 
 
@@ -541,10 +560,17 @@ public class Exam_database extends SQLiteOpenHelper {
 
 
     //get score
-    public String getSkippedCount() {
+    public String getSkippedCount(int FromScreen,String ExamDate) {
         int skippedCount = 0;
+        String selectQuery="";
         SQLiteDatabase db = this.getWritableDatabase();
-        String selectQuery = "SELECT count(*) cnt  FROM EF_mob_MasterQuestion where answered_flag = 3 ";
+        if(FromScreen==0) {
+            selectQuery = "SELECT count(*) cnt  FROM EF_mob_MasterQuestion where answered_flag = 3 ";
+        }
+        else
+        {
+            selectQuery = "SELECT count(*) cnt  FROM EF_mob_DailyQues where quesDate = '"+ExamDate+"' and answeredFlag = 3 ";
+        }
         Cursor cursor = db.rawQuery(selectQuery, null);
 
         if (null != cursor && cursor.moveToFirst()) {
@@ -625,12 +651,21 @@ public class Exam_database extends SQLiteOpenHelper {
         return LastQuestionNum;
     }
 
-    public String getCategoryscore(String category) {
+    public String getCategoryscore(String category,int FromScreen, String ExamDate) {
         SQLiteDatabase db = this.getWritableDatabase();
         int totalquestion = 0;
         int answeredcnt = 0;
+        String selectQuery="";
 
-        String selectQuery = "SELECT  count(*) cnt  FROM EF_mob_MasterQuestion where category = '" + category + "'  and  answered_flag in (1,2,3) ";
+        if(FromScreen==0)
+        {
+            selectQuery = "SELECT  count(*) cnt  FROM EF_mob_MasterQuestion where category = '" + category + "'  and  answered_flag in (1,2,3) ";
+        }
+        else
+        {
+            selectQuery = "SELECT  count(*) cnt  FROM EF_mob_DailyQues where Category = '" + category + "'  and  answeredFlag in (1,2,3) ";
+        }
+
         Cursor cursor = db.rawQuery(selectQuery, null);
 
 
