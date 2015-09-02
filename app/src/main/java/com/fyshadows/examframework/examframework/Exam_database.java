@@ -71,7 +71,7 @@ public class Exam_database extends SQLiteOpenHelper {
 
         myDB.execSQL("CREATE TABLE if not exists EF_mob_QuestionTimer(Timervalue int);");
 
-        myDB.execSQL("CREATE TABLE if not exists EF_mob_DailyQues(id  int,quesDate date,QuesNo int ,Ques text,Choice1 varchar(350),Choice2 varchar(350),Choice3 varchar(350),Choice4 varchar(350),Choice5 varchar(350),CorrectAns varchar(350),Category,answeredFlag int,timeTaken int,Rank int);");
+        myDB.execSQL("CREATE TABLE if not exists EF_mob_DailyQues(id  int,quesDate date,QuesNo int ,Ques text,Choice1 varchar(350),Choice2 varchar(350),Choice3 varchar(350),Choice4 varchar(350),Choice5 varchar(350),CorrectAns varchar(350),Category varchar(250),answeredFlag int,timeTaken int,Rank int);");
 
         myDB.execSQL("CREATE TABLE if not exists EF_mob_DailyArticle(ArticleNo int, ArticleDate Date,Topic varchar(300),ArticleDesc text);");
 
@@ -173,11 +173,10 @@ public class Exam_database extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        Log.i("data inserted", "data 1");
         values.put("Timervalue", Timervalue);
 
         db.insert("EF_mob_QuestionTimer", null, values);
-        Log.i("TImer", "Inserted");
+
         if (db.isOpen()) {
             db.close();
         }
@@ -205,7 +204,7 @@ public class Exam_database extends SQLiteOpenHelper {
             InsertTimer(36);
             Timer = 36;
         }
-        Log.i("TImer", String.valueOf(Timer));
+
         return Timer;
     }
 
@@ -436,6 +435,8 @@ public class Exam_database extends SQLiteOpenHelper {
         } else if (FromScreen == 1) {
             sql = "UPDATE EF_mob_DailyQues  SET answeredFlag =" + _answer_flag + " , timeTaken =" + _timetaken + " WHERE  id   = '" + questionnumber + "'";
         }
+
+        Log.i("Prasanna",sql);
         db.execSQL(sql);
 
 
@@ -471,7 +472,7 @@ public class Exam_database extends SQLiteOpenHelper {
         }
         else
         {
-            selectQuery = "SELECT count(*) cnt  FROM EF_mob_DailyQues where quesDate = '"+ExamDate+"' and answeredFlag=1";
+            selectQuery = "SELECT count(*) cnt  FROM EF_mob_DailyQues where quesDate = '" + ExamDate + "' and answeredFlag=1";
         }
         Cursor cursor = db.rawQuery(selectQuery, null);
 
@@ -504,7 +505,7 @@ public class Exam_database extends SQLiteOpenHelper {
     }
         else
     {
-        selectQuery = "SELECT   sum(" + getTimer() + "-time_taken) sum  FROM  EF_mob_DailyQues where quesDate = '"+ExamDate+"' and answeredFlag  > 0";
+        selectQuery = "SELECT   sum(" + getTimer() + "-timeTaken) sum  FROM  EF_mob_DailyQues where quesDate = '" + ExamDate + "' and answeredFlag  > 0";
     }
 
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -520,6 +521,9 @@ public class Exam_database extends SQLiteOpenHelper {
             } else {
                 sumtimetaken = 0;
             }
+        }
+        else {
+            Log.i("Timer","no value");
         }
 
         if (sumtimetaken > 0 && QuestionCount > 0) {
@@ -539,7 +543,7 @@ public class Exam_database extends SQLiteOpenHelper {
         selectQuery = "SELECT count(*) cnt FROM EF_mob_MasterQuestion where answered_flag in (1,2)";
     }
     else {
-        selectQuery = "SELECT count(*) cnt FROM EF_mob_DailyQues where quesDate = '"+ExamDate+"' and answeredFlag in (1,2)";
+        selectQuery = "SELECT count(*) cnt FROM EF_mob_DailyQues where quesDate = '" + ExamDate + "' and answeredFlag in (1,2)";
     }
 
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -554,7 +558,12 @@ public class Exam_database extends SQLiteOpenHelper {
                 QuestionCount = 0;
             }
         }
+        else
+        {
+            Log.i("Prasanna","No attempted ques");
 
+        }
+        Log.i("Prasanna",selectQuery);
         return QuestionCount;
     }
 
@@ -569,7 +578,7 @@ public class Exam_database extends SQLiteOpenHelper {
         }
         else
         {
-            selectQuery = "SELECT count(*) cnt  FROM EF_mob_DailyQues where quesDate = '"+ExamDate+"' and answeredFlag = 3 ";
+            selectQuery = "SELECT count(*) cnt  FROM EF_mob_DailyQues where quesDate = '" + ExamDate + "' and answeredFlag = 3 ";
         }
         Cursor cursor = db.rawQuery(selectQuery, null);
 
@@ -581,8 +590,11 @@ public class Exam_database extends SQLiteOpenHelper {
                 skippedCount = cursor.getInt(_correctanswer);
             } else {
                 skippedCount = 0;
+                Log.i("Prasanna","No Skipped Count");
             }
         }
+
+        Log.i("Prasanna",String.valueOf(skippedCount));
 
         return String.valueOf(skippedCount);
 
@@ -663,7 +675,7 @@ public class Exam_database extends SQLiteOpenHelper {
         }
         else
         {
-            selectQuery = "SELECT  count(*) cnt  FROM EF_mob_DailyQues where Category = '" + category + "'  and  answeredFlag in (1,2,3) ";
+            selectQuery = "SELECT  count(*) cnt  FROM EF_mob_DailyQues where Category = '" + category + "' and quesDate = '" + ExamDate + "'  and  answeredFlag in (1,2,3) ";
         }
 
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -682,7 +694,15 @@ public class Exam_database extends SQLiteOpenHelper {
 
         }
 
-        selectQuery = "SELECT  count(*) cnt  FROM EF_mob_MasterQuestion where category='" + category + "' and  answered_flag in (1)";
+        if(FromScreen==0)
+        {
+            selectQuery = "SELECT  count(*) cnt  FROM EF_mob_MasterQuestion where category='" + category + "' and  answered_flag in (1)";
+        }
+        else
+        {
+            selectQuery = "SELECT  count(*) cnt  FROM EF_mob_DailyQues where Category = '" + category + "' and quesDate = '" + ExamDate + "'  and  answeredFlag in (1) ";
+        }
+
         cursor = db.rawQuery(selectQuery, null);
 
 

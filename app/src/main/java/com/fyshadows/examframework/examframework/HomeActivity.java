@@ -196,6 +196,9 @@ public class HomeActivity extends ActionBarActivity {
 
     public void scoreactivity() {
         Intent i = new Intent(HomeActivity.this, scoreactivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putInt("FromScreen", 0);
+        i.putExtras(bundle);
         startActivity(i);
     }
 

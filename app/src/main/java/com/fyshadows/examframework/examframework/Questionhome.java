@@ -459,7 +459,7 @@ public class Questionhome extends ActionBarActivity {
             actionbar_questcategory.setText(Category);
             Correctanswer = sd.get(0).getCorrect_Ans();
         } else if (Fromflag == 1) {
-            QuestionNumber =DailyExam.get(0).getQuesNo();
+            QuestionNumber =DailyExam.get(0).getid();
             actionbar_queststat.setText( QuestionNumber + " of " + totalquestions);
             txtquestion.setText(DailyExam.get(0).getQues());
             txtquestion_details.setText(DailyExam.get(0).getQues());
@@ -540,7 +540,7 @@ public class Questionhome extends ActionBarActivity {
         }
         else {
             bundle.putInt("FromScreen", FromScreen);
-            bundle.putString("Date Activity",ExamDate);
+            bundle.putString("ExamDate",ExamDate);
         }
         i.putExtras(bundle);
         startActivity(i);
