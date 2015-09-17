@@ -235,7 +235,8 @@ public class Exam_database extends SQLiteOpenHelper {
     public ArrayList<String> getDailyExamDate() {
         SQLiteDatabase db = this.getWritableDatabase();
         ArrayList<String> list = new ArrayList<String>();
-        String selectQuery = "SELECT  distinct quesDate FROM EF_mob_DailyQues order by id desc";
+        String selectQuery = "SELECT  distinct quesDate FROM EF_mob_DailyQues where quesDate < date('now') order by id desc";
+        Log.i("DateQuery",selectQuery);
         Cursor cursor = db.rawQuery(selectQuery, null);
 
 
@@ -258,8 +259,6 @@ public class Exam_database extends SQLiteOpenHelper {
         return list;
 
     }
-
-
 
 
     //get questions
@@ -395,7 +394,6 @@ public class Exam_database extends SQLiteOpenHelper {
     //End Get Daily Article------------------------------------------------------------------------------
 
 
-
     private storequestiondetails getdata(int QuestionNo, String Question, String Choice1, String Choice2, String Choice3, String Choice4, String Choice5, String Correct_Ans, String Category) {
         return new storequestiondetails(QuestionNo, Question, Choice1, Choice2, Choice3, Choice4, Choice5, Correct_Ans, Category);
     }
@@ -436,7 +434,7 @@ public class Exam_database extends SQLiteOpenHelper {
             sql = "UPDATE EF_mob_DailyQues  SET answeredFlag =" + _answer_flag + " , timeTaken =" + _timetaken + " WHERE  id   = '" + questionnumber + "'";
         }
 
-        Log.i("Prasanna",sql);
+        Log.i("Prasanna", sql);
         db.execSQL(sql);
 
 
@@ -461,18 +459,18 @@ public class Exam_database extends SQLiteOpenHelper {
     }
 
     //get score
-    public String getscore(int FromScreen,String ExamDate) {
+    public String getscore(int FromScreen, String ExamDate) {
         int QuestionCount = 0;
         int correctanswer = 0;
-        String selectQuery=null;
+        String selectQuery = null;
         SQLiteDatabase db = this.getWritableDatabase();
-        QuestionCount = getattemptedcount(FromScreen,ExamDate);
-        if(FromScreen==0) {
+
+        if (FromScreen == 0) {
+            QuestionCount = getattemptedcount(FromScreen, ExamDate);
             selectQuery = "SELECT count(*) cnt  FROM EF_mob_MasterQuestion where answered_flag = 1 ";
-        }
-        else
-        {
-            selectQuery = "SELECT count(*) cnt  FROM EF_mob_DailyQues where quesDate = '" + ExamDate + "' and answeredFlag=1";
+        } else {
+            QuestionCount = getDailyExamCount(ExamDate);
+            selectQuery = "SELECT count(*) cnt  FROM EF_mob_DailyQues where quesDate = '" + ExamDate + "' and answeredFlag = 1";
         }
         Cursor cursor = db.rawQuery(selectQuery, null);
 
@@ -492,21 +490,19 @@ public class Exam_database extends SQLiteOpenHelper {
     }
 
     //get average
-    public String getAverage(int FromScreen,String ExamDate) {
+    public String getAverage(int FromScreen, String ExamDate) {
         int QuestionCount = 0;
         int average = 0;
         int sumtimetaken = 0;
-        String selectQuery="";
+        String selectQuery = "";
         SQLiteDatabase db = this.getWritableDatabase();
 
-        QuestionCount = getattemptedcount(FromScreen,ExamDate);
-    if(FromScreen==0) {
-        selectQuery = "SELECT   sum(" + getTimer() + "-time_taken) sum  FROM EF_mob_MasterQuestion where answered_flag  > 0";
-    }
-        else
-    {
-        selectQuery = "SELECT   sum(" + getTimer() + "-timeTaken) sum  FROM  EF_mob_DailyQues where quesDate = '" + ExamDate + "' and answeredFlag  > 0";
-    }
+        QuestionCount = getattemptedcount(FromScreen, ExamDate);
+        if (FromScreen == 0) {
+            selectQuery = "SELECT   sum(" + getTimer() + "-time_taken) sum  FROM EF_mob_MasterQuestion where answered_flag  > 0";
+        } else {
+            selectQuery = "SELECT   sum(" + getTimer() + "-timeTaken) sum  FROM  EF_mob_DailyQues where quesDate = '" + ExamDate + "' and answeredFlag  > 0";
+        }
 
         Cursor cursor = db.rawQuery(selectQuery, null);
 
@@ -521,9 +517,8 @@ public class Exam_database extends SQLiteOpenHelper {
             } else {
                 sumtimetaken = 0;
             }
-        }
-        else {
-            Log.i("Timer","no value");
+        } else {
+            Log.i("Timer", "no value");
         }
 
         if (sumtimetaken > 0 && QuestionCount > 0) {
@@ -535,16 +530,15 @@ public class Exam_database extends SQLiteOpenHelper {
     }
 
 
-    public int getattemptedcount(int FromScreen,String ExamDate) {
+    public int getattemptedcount(int FromScreen, String ExamDate) {
         int QuestionCount = 0;
-        String selectQuery="";
+        String selectQuery = "";
         SQLiteDatabase db = this.getWritableDatabase();
-    if(FromScreen==0) {
-        selectQuery = "SELECT count(*) cnt FROM EF_mob_MasterQuestion where answered_flag in (1,2)";
-    }
-    else {
-        selectQuery = "SELECT count(*) cnt FROM EF_mob_DailyQues where quesDate = '" + ExamDate + "' and answeredFlag in (1,2)";
-    }
+        if (FromScreen == 0) {
+            selectQuery = "SELECT count(*) cnt FROM EF_mob_MasterQuestion where answered_flag in (1,2)";
+        } else {
+            selectQuery = "SELECT count(*) cnt FROM EF_mob_DailyQues where quesDate = '" + ExamDate + "' and answeredFlag in (1,2)";
+        }
 
         Cursor cursor = db.rawQuery(selectQuery, null);
 
@@ -557,27 +551,50 @@ public class Exam_database extends SQLiteOpenHelper {
             } else {
                 QuestionCount = 0;
             }
-        }
-        else
-        {
-            Log.i("Prasanna","No attempted ques");
+        } else {
+            Log.i("Prasanna", "No attempted ques");
 
         }
-        Log.i("Prasanna",selectQuery);
+        Log.i("Prasanna", selectQuery);
+        return QuestionCount;
+    }
+
+    //DAily exam question count
+    public int getDailyExamCount(String ExamDate) {
+        int QuestionCount = 0;
+        String selectQuery = "";
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        selectQuery = "SELECT count(*) cnt FROM EF_mob_DailyQues where quesDate = '" + ExamDate + "'";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+
+        if (null != cursor && cursor.moveToFirst()) {
+
+            int _Questioncnt = cursor.getColumnIndex("cnt");
+            if (cursor.moveToFirst()) {
+                QuestionCount = cursor.getInt(_Questioncnt);
+            } else {
+                QuestionCount = 0;
+            }
+        } else {
+            Log.i("Prasanna", "No attempted ques");
+
+        }
+        Log.i("Prasanna", selectQuery);
         return QuestionCount;
     }
 
 
     //get score
-    public String getSkippedCount(int FromScreen,String ExamDate) {
+    public String getSkippedCount(int FromScreen, String ExamDate) {
         int skippedCount = 0;
-        String selectQuery="";
+        String selectQuery = "";
         SQLiteDatabase db = this.getWritableDatabase();
-        if(FromScreen==0) {
+        if (FromScreen == 0) {
             selectQuery = "SELECT count(*) cnt  FROM EF_mob_MasterQuestion where answered_flag = 3 ";
-        }
-        else
-        {
+        } else {
             selectQuery = "SELECT count(*) cnt  FROM EF_mob_DailyQues where quesDate = '" + ExamDate + "' and answeredFlag = 3 ";
         }
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -590,11 +607,11 @@ public class Exam_database extends SQLiteOpenHelper {
                 skippedCount = cursor.getInt(_correctanswer);
             } else {
                 skippedCount = 0;
-                Log.i("Prasanna","No Skipped Count");
+                Log.i("Prasanna", "No Skipped Count");
             }
         }
 
-        Log.i("Prasanna",String.valueOf(skippedCount));
+        Log.i("Prasanna", String.valueOf(skippedCount));
 
         return String.valueOf(skippedCount);
 
@@ -663,18 +680,15 @@ public class Exam_database extends SQLiteOpenHelper {
         return LastQuestionNum;
     }
 
-    public String getCategoryscore(String category,int FromScreen, String ExamDate) {
+    public String getCategoryscore(String category, int FromScreen, String ExamDate) {
         SQLiteDatabase db = this.getWritableDatabase();
         int totalquestion = 0;
         int answeredcnt = 0;
-        String selectQuery="";
+        String selectQuery = "";
 
-        if(FromScreen==0)
-        {
+        if (FromScreen == 0) {
             selectQuery = "SELECT  count(*) cnt  FROM EF_mob_MasterQuestion where category = '" + category + "'  and  answered_flag in (1,2,3) ";
-        }
-        else
-        {
+        } else {
             selectQuery = "SELECT  count(*) cnt  FROM EF_mob_DailyQues where Category = '" + category + "' and quesDate = '" + ExamDate + "'  and  answeredFlag in (1,2,3) ";
         }
 
@@ -694,12 +708,9 @@ public class Exam_database extends SQLiteOpenHelper {
 
         }
 
-        if(FromScreen==0)
-        {
+        if (FromScreen == 0) {
             selectQuery = "SELECT  count(*) cnt  FROM EF_mob_MasterQuestion where category='" + category + "' and  answered_flag in (1)";
-        }
-        else
-        {
+        } else {
             selectQuery = "SELECT  count(*) cnt  FROM EF_mob_DailyQues where Category = '" + category + "' and quesDate = '" + ExamDate + "'  and  answeredFlag in (1) ";
         }
 
@@ -770,10 +781,11 @@ public class Exam_database extends SQLiteOpenHelper {
         }
         return list;
     }
-        private notificationtable getnot(String message, String timestamp,
-                String notificationid) {
-            return new notificationtable(notificationid, message, timestamp);
-        }
 
-
+    private notificationtable getnot(String message, String timestamp,
+                                     String notificationid) {
+        return new notificationtable(notificationid, message, timestamp);
     }
+
+
+}

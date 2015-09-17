@@ -53,6 +53,7 @@ public class Questionhome extends ActionBarActivity {
     //store correct answer and questionnumber
     public String Correctanswer;
     public int QuestionNumber;
+    public int QuestionNumberDailyExam;
     public String Category;
     public Boolean course_completed_flag = false;
 
@@ -220,11 +221,11 @@ public class Questionhome extends ActionBarActivity {
                     if (Correctanswer.equalsIgnoreCase(txtanswer1.getText().toString())) {
                         txtanswer1.setBackgroundColor(Color.GREEN);
                         showmessage(1);
-                        db.updateScore(QuestionNumber, 1, Integer.parseInt(txt_timer.getText().toString()),FromScreen);
+                        db.updateScore(QuestionNumberDailyExam, 1, Integer.parseInt(txt_timer.getText().toString()),FromScreen);
                     } else {
                         txtanswer1.setBackgroundColor(Color.RED);
                         showmessage(2);
-                        db.updateScore(QuestionNumber, 2, Integer.parseInt(txt_timer.getText().toString()),FromScreen);
+                        db.updateScore(QuestionNumberDailyExam, 2, Integer.parseInt(txt_timer.getText().toString()),FromScreen);
                         showanswer();
                     }
                     answered = 1;
@@ -243,11 +244,11 @@ public class Questionhome extends ActionBarActivity {
                     if (Correctanswer.equalsIgnoreCase(txtanswer2.getText().toString())) {
                         showmessage(1);
                         txtanswer2.setBackgroundColor(Color.GREEN);
-                        db.updateScore(QuestionNumber, 1, Integer.parseInt(txt_timer.getText().toString()),FromScreen);
+                        db.updateScore(QuestionNumberDailyExam, 1, Integer.parseInt(txt_timer.getText().toString()),FromScreen);
                     } else {
                         txtanswer2.setBackgroundColor(Color.RED);
                         showmessage(2);
-                        db.updateScore(QuestionNumber, 2, Integer.parseInt(txt_timer.getText().toString()),FromScreen);
+                        db.updateScore(QuestionNumberDailyExam, 2, Integer.parseInt(txt_timer.getText().toString()),FromScreen);
 
                         showanswer();
                     }
@@ -266,12 +267,12 @@ public class Questionhome extends ActionBarActivity {
                     if (Correctanswer.equalsIgnoreCase(txtanswer3.getText().toString())) {
                         showmessage(1);
                         txtanswer3.setBackgroundColor(Color.GREEN);
-                        db.updateScore(QuestionNumber, 1, Integer.parseInt(txt_timer.getText().toString()),FromScreen);
+                        db.updateScore(QuestionNumberDailyExam, 1, Integer.parseInt(txt_timer.getText().toString()),FromScreen);
                     } else {
                         txtanswer3.setBackgroundColor(Color.RED);
                         showmessage(2);
                         showanswer();
-                        db.updateScore(QuestionNumber, 2, Integer.parseInt(txt_timer.getText().toString()),FromScreen);
+                        db.updateScore(QuestionNumberDailyExam, 2, Integer.parseInt(txt_timer.getText().toString()),FromScreen);
                     }
                     disable = 1;
                     answered = 1;
@@ -290,11 +291,11 @@ public class Questionhome extends ActionBarActivity {
 
                         showmessage(1);
                         txtanswer4.setBackgroundColor(Color.GREEN);
-                        db.updateScore(QuestionNumber, 1, Integer.parseInt(txt_timer.getText().toString()),FromScreen);
+                        db.updateScore(QuestionNumberDailyExam, 1, Integer.parseInt(txt_timer.getText().toString()),FromScreen);
                     } else {
                         txtanswer4.setBackgroundColor(Color.RED);
                         showmessage(2);
-                        db.updateScore(QuestionNumber, 2, Integer.parseInt(txt_timer.getText().toString()),FromScreen);
+                        db.updateScore(QuestionNumberDailyExam, 2, Integer.parseInt(txt_timer.getText().toString()),FromScreen);
                         showanswer();
                     }
                     disable = 1;
@@ -312,11 +313,11 @@ public class Questionhome extends ActionBarActivity {
                     if (Correctanswer.equalsIgnoreCase(txtanswer5.getText().toString())) {
                         txtanswer5.setBackgroundColor(Color.GREEN);
                         showmessage(1);
-                        db.updateScore(QuestionNumber, 1, Integer.parseInt(txt_timer.getText().toString()),FromScreen);
+                        db.updateScore(QuestionNumberDailyExam, 1, Integer.parseInt(txt_timer.getText().toString()),FromScreen);
                     } else {
                         txtanswer5.setBackgroundColor(Color.RED);
                         showmessage(2);
-                        db.updateScore(QuestionNumber, 2, Integer.parseInt(txt_timer.getText().toString()),FromScreen);
+                        db.updateScore(QuestionNumberDailyExam, 2, Integer.parseInt(txt_timer.getText().toString()),FromScreen);
                         showanswer();
                     }
                     answered = 1;
@@ -446,6 +447,7 @@ public class Questionhome extends ActionBarActivity {
 
         {
             QuestionNumber = sd.get(0).getQuestionNo();
+            QuestionNumberDailyExam= sd.get(0).getQuestionNo();
             actionbar_queststat.setText(QuestionNumber + " of 1000");
 
             txtquestion.setText(sd.get(0).getQuestion());
@@ -459,7 +461,8 @@ public class Questionhome extends ActionBarActivity {
             actionbar_questcategory.setText(Category);
             Correctanswer = sd.get(0).getCorrect_Ans();
         } else if (Fromflag == 1) {
-            QuestionNumber =DailyExam.get(0).getid();
+            QuestionNumber = DailyExam.get(0).getQuesNo();
+            QuestionNumberDailyExam= DailyExam.get(0).getid();
             actionbar_queststat.setText( QuestionNumber + " of " + totalquestions);
             txtquestion.setText(DailyExam.get(0).getQues());
             txtquestion_details.setText(DailyExam.get(0).getQues());

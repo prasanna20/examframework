@@ -63,6 +63,9 @@ public class DailyExamAdapter extends ArrayAdapter<String> {
             viewHolder.Date.setTextColor(Color.BLACK);
             viewHolder.Article = (TextView) view.findViewById(R.id.txtArticle);
             viewHolder.Article.setTextColor(Color.BLACK);
+            viewHolder.Score = (TextView) view.findViewById(R.id.txtScore);
+            viewHolder.Score.setTextColor(Color.BLACK);
+
             view.setTag(viewHolder);
         } else {
             view = convertView;
@@ -70,7 +73,17 @@ public class DailyExamAdapter extends ArrayAdapter<String> {
 
         ViewHolder holder = (ViewHolder) view.getTag();
         if (!list.get(position).toString().trim().equalsIgnoreCase("")) {
+            String Score=db.getscore(1, list.get(position).toString());
             holder.Date.setText(list.get(position).toString());
+            if(Score.length() > 0)
+            {
+                holder.Score.setText(Score);
+            }
+            else
+            {
+                holder.Score.setVisibility(view.INVISIBLE);
+            }
+
         }
 
 
@@ -119,6 +132,7 @@ public class DailyExamAdapter extends ArrayAdapter<String> {
     static class ViewHolder {
         protected TextView Date;
         protected TextView Article;
+        protected TextView Score;
     }
 
 }

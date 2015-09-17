@@ -157,7 +157,7 @@ public class GCMIntentService extends GCMBaseIntentService {
 
         String title = context.getString(R.string.app_name);
 
-        Intent notificationIntent = new Intent(context, MessageBoard.class);
+        Intent notificationIntent = new Intent(context, ViewNotification.class);
         Bundle bundle = new Bundle();
         bundle.clear();
         bundle.putString("MessageTitle", MessageTitle);

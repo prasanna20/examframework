@@ -120,8 +120,18 @@ public class scoreactivity extends ActionBarActivity {
 
         switch (item.getItemId()) {
             case android.R.id.home:
-                Intent i = new Intent(scoreactivity.this, HomeActivity.class);
-                startActivity(i);
+
+                if(FromScreen==0)
+                {
+                    Intent i = new Intent(scoreactivity.this, HomeActivity.class);
+                    startActivity(i);
+                }
+                else
+                {
+                    Intent i = new Intent(scoreactivity.this, DailyExamQuestion.class);
+                    startActivity(i);
+                }
+
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
