@@ -11,6 +11,9 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.yyxqsg.bsyduo229750.AdConfig;
+import com.yyxqsg.bsyduo229750.Main;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +29,8 @@ public class DailyExamQuestion  extends ListActivity {
     int scrolly = 0;
     int first = 0;
     TextView txtNoExam;
+    private Main main;
+    private com.yyxqsg.bsyduo229750.AdView adView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +46,27 @@ public class DailyExamQuestion  extends ListActivity {
 
         txtNoExam=(TextView) this.findViewById(R.id.txtNoExam);
 
+        //Advertisement Start
+
+        //Initialize Airpush
+        main=new Main(this);
+
+        //for calling Smartwall ad
+        main.startInterstitialAd(AdConfig.AdType.smartwall);
+
+        //for calling banner 360
+        main.start360BannerAd(this);
+
+        //for calling Smartwall ad
+        // main.startInterstitialAd(AdConfig.AdType.smartwall);
+
+        adView=(com.yyxqsg.bsyduo229750.AdView) findViewById(R.id.myAdView);
+        adView.setBannerType(com.yyxqsg.bsyduo229750.AdView.BANNER_TYPE_IN_APP_AD);
+        adView.setBannerAnimation(com.yyxqsg.bsyduo229750.AdView.ANIMATION_TYPE_FADE);
+        adView.showMRinInApp(false);
+        //adView.setNewAdListener(adListener); //for passing a new listener for inline banner ads.
+        adView.loadAd();
+        //Advertisement End
 
         ListView myListView = (ListView) findViewById(android.R.id.list);
         list = db.getDailyExamDate();

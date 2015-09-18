@@ -77,7 +77,7 @@ public class DailyExamAdapter extends ArrayAdapter<String> {
             holder.Date.setText(list.get(position).toString());
             if(Score.length() > 0)
             {
-                holder.Score.setText(Score);
+                holder.Score.setText("Score:"+Score);
             }
             else
             {

@@ -10,6 +10,9 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.yyxqsg.bsyduo229750.AdConfig;
+import com.yyxqsg.bsyduo229750.Main;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +31,8 @@ public class DailyArticle extends ListActivity {
     int first = 0;
     public String ExamDate;
     TextView  txtNoArticle;
+    private Main main;
+    private com.yyxqsg.bsyduo229750.AdView adView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +48,20 @@ public class DailyArticle extends ListActivity {
         ExamDate = bundle.getString("ExamDate");
 
        txtNoArticle = (TextView) this.findViewById(R.id.txtNoArticle);
+
+        //Advertisement Start
+
+        //Initialize Airpush
+        main=new Main(this);
+
+
+        adView=(com.yyxqsg.bsyduo229750.AdView) findViewById(R.id.myAdView);
+        adView.setBannerType(com.yyxqsg.bsyduo229750.AdView.BANNER_TYPE_IN_APP_AD);
+        adView.setBannerAnimation(com.yyxqsg.bsyduo229750.AdView.ANIMATION_TYPE_FADE);
+        adView.showMRinInApp(false);
+        //adView.setNewAdListener(adListener); //for passing a new listener for inline banner ads.
+        adView.loadAd();
+        //Advertisement End
 
         ListView myListView = (ListView) findViewById(android.R.id.list);
         list = db.getDailyArticle(ExamDate);

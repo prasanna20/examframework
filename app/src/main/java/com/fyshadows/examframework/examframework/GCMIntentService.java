@@ -27,6 +27,7 @@ public class GCMIntentService extends GCMBaseIntentService {
 
 	JSONParser jsonParser = new JSONParser();
      public static  String  identify;
+    public static String ExamReminder;
 
 
 
@@ -80,6 +81,7 @@ public class GCMIntentService extends GCMBaseIntentService {
     @Override
     protected void onMessage(Context context, Intent intent) {
         identify = intent.getExtras().getString("identify");
+        ExamReminder=intent.getExtras().getString("ExamReminder");
         if (identify.trim().equals("notification")) {
                String MessageTitle = "";
                String MessageText = "";
@@ -150,6 +152,7 @@ public class GCMIntentService extends GCMBaseIntentService {
 
         int icon = R.mipmap.ic_launcher;
         long when = System.currentTimeMillis();
+        Intent notificationIntent;
 
         NotificationManager notificationManager = (NotificationManager) context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
@@ -157,7 +160,14 @@ public class GCMIntentService extends GCMBaseIntentService {
 
         String title = context.getString(R.string.app_name);
 
-        Intent notificationIntent = new Intent(context, ViewNotification.class);
+        if(ExamReminder.equalsIgnoreCase("Yes")) {
+             notificationIntent = new Intent(context, Configuringactivity.class);
+        }
+        else
+        {
+             notificationIntent = new Intent(context,ViewNotification.class);
+        }
+
         Bundle bundle = new Bundle();
         bundle.clear();
         bundle.putString("MessageTitle", MessageTitle);

@@ -30,7 +30,7 @@
         android:background="@drawable/roundedbutton"
         android:text="Start Exam"
         android:textColor="#ffffff"
-        android:textSize="22dp" />
+        android:textSize="20dp" />
 
     <Button
         android:id="@+id/btnDailyExam"
@@ -46,7 +46,7 @@
         android:background="@drawable/roundedbutton"
         android:text="Daily Exam"
         android:textColor="#ffffff"
-        android:textSize="22dp" />
+        android:textSize="20dp" />
 
 
     <Button
@@ -136,7 +136,7 @@
 
     </TableLayout>
 
-  <com.yyxqsg.bsyduo229750.AdView
+    <com.yyxqsg.bsyduo229750.AdView
         android:id="@+id/myAdView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

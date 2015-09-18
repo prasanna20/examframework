@@ -73,13 +73,13 @@
             <Button
                 android:id="@+id/txtanswer1"
                 android:layout_width="fill_parent"
-                android:layout_height="30dp"
+                android:layout_height="34dp"
                 android:layout_below="@+id/primerdivisor1"
                 android:layout_centerHorizontal="true"
                 android:background="#f2f2f2"
                 android:maxLines="2"
                 android:text="A"
-                android:textSize="18dp"
+                android:textSize="16dp"
 
                 />
 
@@ -94,13 +94,13 @@
             <Button
                 android:id="@+id/txtanswer2"
                 android:layout_width="fill_parent"
-                android:layout_height="30dp"
+                android:layout_height="34dp"
                 android:layout_below="@+id/primerdivisor2"
                 android:layout_centerHorizontal="true"
                 android:background="#efeded"
                 android:maxLines="2"
                 android:text="B"
-                android:textSize="18dp"
+                android:textSize="16dp"
 
                 />
 
@@ -115,13 +115,13 @@
             <Button
                 android:id="@+id/txtanswer3"
                 android:layout_width="fill_parent"
-                android:layout_height="30dp"
+                android:layout_height="34dp"
                 android:layout_below="@+id/primerdivisor3"
                 android:layout_centerHorizontal="true"
                 android:background="#f2f2f2"
                 android:maxLines="2"
                 android:text="C"
-                android:textSize="18dp"
+                android:textSize="16dp"
 
                 />
 
@@ -136,13 +136,13 @@
             <Button
                 android:id="@+id/txtanswer4"
                 android:layout_width="fill_parent"
-                android:layout_height="30dp"
+                android:layout_height="34dp"
                 android:layout_below="@+id/primerdivisor4"
                 android:layout_centerHorizontal="true"
                 android:background="#efeded"
                 android:maxLines="2"
                 android:text="D"
-                android:textSize="18dp"
+                android:textSize="16dp"
 
                 />
 
@@ -158,13 +158,13 @@
             <Button
                 android:id="@+id/txtanswer5"
                 android:layout_width="fill_parent"
-                android:layout_height="30dp"
+                android:layout_height="34dp"
                 android:layout_below="@+id/primerdivisor5"
                 android:layout_centerHorizontal="true"
                 android:background="#f2f2f2"
                 android:maxLines="2"
                 android:text="E"
-                android:textSize="18dp"
+                android:textSize="16dp"
 
                 />
 
