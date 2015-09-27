@@ -235,7 +235,7 @@ public class Exam_database extends SQLiteOpenHelper {
     public ArrayList<String> getDailyExamDate() {
         SQLiteDatabase db = this.getWritableDatabase();
         ArrayList<String> list = new ArrayList<String>();
-        String selectQuery = "SELECT  distinct quesDate FROM EF_mob_DailyQues where quesDate < date('now') order by id desc";
+        String selectQuery = "SELECT  distinct quesDate FROM EF_mob_DailyQues where quesDate < date('now') order by quesDate desc";
         Log.i("DateQuery",selectQuery);
         Cursor cursor = db.rawQuery(selectQuery, null);
 

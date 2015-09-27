@@ -39,7 +39,7 @@
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
             android:paddingLeft="20dp"
-            android:text="Today Article"
+            android:text="Article"
             android:layout_centerHorizontal="true"
             android:layout_toRightOf="@id/txtDate"
             android:textSize="@dimen/feed_item_profile_name"/>
