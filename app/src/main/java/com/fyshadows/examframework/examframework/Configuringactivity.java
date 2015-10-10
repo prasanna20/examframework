@@ -216,68 +216,70 @@ public class Configuringactivity extends ActionBarActivity {
                 JSONObject json = jsonParser.makeHttpRequest(
                         masterdetails.getMasterQuestion, "GET", params);
                 Log.i("Exam", "got json");
-                if (json.length() > 0) {
-                    // json success tag
-                    success = json.getInt("success");
-                    if (success == 1) {
-                        Log.i("Exam", "Check_suc");
-                        // successfully received product details
-                        JSONArray QuestionObj = json.getJSONArray("MasterQuestion"); // JSON
-                        // Array
-                        for (int i = 0; i < QuestionObj.length(); i++) {
+                if (json != null) {
+                    if (json.length() > 0) {
+                        // json success tag
+                        success = json.getInt("success");
+                        if (success == 1) {
+                            Log.i("Exam", "Check_suc");
+                            // successfully received product details
+                            JSONArray QuestionObj = json.getJSONArray("MasterQuestion"); // JSON
+                            // Array
+                            for (int i = 0; i < QuestionObj.length(); i++) {
 
-                            int QuestionNo = 0;
-                            String Question = "";
-                            String Choice1 = "";
-                            String Choice2 = "";
-                            String Choice3 = "";
-                            String Choice4 = "";
-                            String Choice5 = "";
-                            String Correct_Ans = "";
-                            String Category="";
+                                int QuestionNo = 0;
+                                String Question = "";
+                                String Choice1 = "";
+                                String Choice2 = "";
+                                String Choice3 = "";
+                                String Choice4 = "";
+                                String Choice5 = "";
+                                String Correct_Ans = "";
+                                String Category = "";
 
-                            JSONObject md = QuestionObj.getJSONObject(i);
+                                JSONObject md = QuestionObj.getJSONObject(i);
 
-                            QuestionNo = md.getInt("QuestionNo");
-                            Question = md.getString("Question");
-                            Choice1 = md.getString("Choice1");
-                            Choice2 = md.getString("Choice2");
-                            Choice3 = md.getString("Choice3");
-                            Choice4 = md.getString("Choice4");
-                            Choice5 = md.getString("Choice5");
-                            Correct_Ans = md.getString("Correct_Ans");
-                            Category = md.getString("Category");
+                                QuestionNo = md.getInt("QuestionNo");
+                                Question = md.getString("Question");
+                                Choice1 = md.getString("Choice1");
+                                Choice2 = md.getString("Choice2");
+                                Choice3 = md.getString("Choice3");
+                                Choice4 = md.getString("Choice4");
+                                Choice5 = md.getString("Choice5");
+                                Correct_Ans = md.getString("Correct_Ans");
+                                Category = md.getString("Category");
 
-                            if (Question.trim() == "") {
-                                Question = "NA";
-                            }
-                            if (Choice1.trim() == "") {
-                                Choice1 = "NA";
-                            }
-                            if (Choice2.trim() == "") {
-                                Choice2 = "NA";
-                            }
-                            if (Choice3.trim() == "") {
-                                Choice3 = "NA";
-                            }
-                            if (Choice4.trim() == "") {
-                                Choice4 = "NA";
-                            }
-                            if (Choice5.trim() == "") {
-                                Choice5 = "NA";
-                            }
-                            if (Correct_Ans.trim() == "") {
-                                Correct_Ans = "NA";
-                            }
+                                if (Question.trim() == "") {
+                                    Question = "NA";
+                                }
+                                if (Choice1.trim() == "") {
+                                    Choice1 = "NA";
+                                }
+                                if (Choice2.trim() == "") {
+                                    Choice2 = "NA";
+                                }
+                                if (Choice3.trim() == "") {
+                                    Choice3 = "NA";
+                                }
+                                if (Choice4.trim() == "") {
+                                    Choice4 = "NA";
+                                }
+                                if (Choice5.trim() == "") {
+                                    Choice5 = "NA";
+                                }
+                                if (Correct_Ans.trim() == "") {
+                                    Correct_Ans = "NA";
+                                }
 
-                            if (Category.trim() == "") {
-                                Category = "NA";
+                                if (Category.trim() == "") {
+                                    Category = "NA";
+                                }
+
+
+                                db.InsertQuestionDetails(QuestionNo, Question, Choice1, Choice2, Choice3, Choice4, Choice5, Correct_Ans, Category);
+
+                                //End of getting question details
                             }
-
-
-                            db.InsertQuestionDetails(QuestionNo, Question, Choice1, Choice2, Choice3, Choice4,Choice5, Correct_Ans,Category);
-
-                            //End of getting question details
                         }
                     }
                 }
@@ -333,7 +335,7 @@ public class Configuringactivity extends ActionBarActivity {
 //End  : Get Daily Question--------------------------------------------------------------------------
             } catch (JSONException e) {
                 check = 1;
-                e.printStackTrace();
+               Log.i("Configuring activity","Error");
             }
             return null;
         }
