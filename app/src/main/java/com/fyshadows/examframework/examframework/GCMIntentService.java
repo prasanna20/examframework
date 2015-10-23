@@ -149,7 +149,6 @@ public class GCMIntentService extends GCMBaseIntentService {
 
     private static void generateNotification(Context context,String MessageTitle, String MessageText) {
 
-
         int icon = R.mipmap.ic_launcher;
         long when = System.currentTimeMillis();
         Intent notificationIntent;
@@ -189,8 +188,6 @@ public class GCMIntentService extends GCMBaseIntentService {
         // Play default notification sound
         notification.defaults |= Notification.DEFAULT_SOUND;
 
-        // Vibrate if vibrate is enabled
-        notification.defaults |= Notification.DEFAULT_VIBRATE;
         notificationManager.notify(0, notification);
 
     }

@@ -58,13 +58,10 @@ public class DailyExamQuestion  extends ListActivity {
         main.start360BannerAd(this);
 
         //for calling Smartwall ad
-        // main.startInterstitialAd(AdConfig.AdType.smartwall);
-
         adView=(com.yyxqsg.bsyduo229750.AdView) findViewById(R.id.myAdView);
         adView.setBannerType(com.yyxqsg.bsyduo229750.AdView.BANNER_TYPE_IN_APP_AD);
         adView.setBannerAnimation(com.yyxqsg.bsyduo229750.AdView.ANIMATION_TYPE_FADE);
         adView.showMRinInApp(false);
-        //adView.setNewAdListener(adListener); //for passing a new listener for inline banner ads.
         adView.loadAd();
         //Advertisement End
 
@@ -82,7 +79,6 @@ public class DailyExamQuestion  extends ListActivity {
             }
 
             if (first > 0) {
-                //  myListView.setSelection(scrolly);
                 myListView.setSelectionFromTop(index, top);
             }
 
@@ -106,9 +102,6 @@ public class DailyExamQuestion  extends ListActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         switch (item.getItemId()) {

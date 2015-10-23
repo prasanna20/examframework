@@ -124,26 +124,29 @@ public class Exam_database extends SQLiteOpenHelper {
     public void InsertDailyQuestionDetails(
             int id, String quesDate, int QuesNo, String Ques, String Choice1, String Choice2, String Choice3, String Choice4, String Choice5, int CorrectAns, String Category) {
         SQLiteDatabase db = this.getWritableDatabase();
-        //int answeredFlag ,int timeTaken ,int Rank
         ContentValues values = new ContentValues();
 
-        values.put("id", id);
-        values.put("quesDate", quesDate);
-        values.put("QuesNo", QuesNo);
-        values.put("Ques", Ques);
-        values.put("Choice1", Choice1);
-        values.put("Choice2", Choice2);
-        values.put("Choice3", Choice3);
-        values.put("Choice4", Choice4);
-        values.put("Choice5", Choice5);
-        values.put("CorrectAns", CorrectAns);
-        values.put("Category", Category);
-        values.put("answeredFlag", 0);
-        values.put("timeTaken", 0);
-        values.put("Rank", 0);
+        if(QuesNo != 0 &&  CorrectAns != 0) {
 
-        db.insert("EF_mob_DailyQues", null, values);
+            values.put("id", id);
+            values.put("quesDate", quesDate);
+            values.put("QuesNo", QuesNo);
+            values.put("Ques", Ques);
+            values.put("Choice1", Choice1);
+            values.put("Choice2", Choice2);
+            values.put("Choice3", Choice3);
+            values.put("Choice4", Choice4);
+            values.put("Choice5", Choice5);
+            values.put("CorrectAns", CorrectAns);
+            values.put("Category", Category);
+            values.put("answeredFlag", 0);
+            values.put("timeTaken", 0);
+            values.put("Rank", 0);
 
+            db.insert("EF_mob_DailyQues", null, values);
+
+
+        }
         if (db.isOpen()) {
             db.close();
         }
@@ -153,7 +156,6 @@ public class Exam_database extends SQLiteOpenHelper {
     //Insert Daily Question details
     public void InsertDailyArticle(int ArticleNo, String ArticleDate, String Topic, String ArticleDesc) {
         SQLiteDatabase db = this.getWritableDatabase();
-        //int answeredFlag ,int timeTaken ,int Rank
         ContentValues values = new ContentValues();
 
         values.put("ArticleNo", ArticleNo);
@@ -252,7 +254,6 @@ public class Exam_database extends SQLiteOpenHelper {
                     list.add(Date);
 
                 } while (cursor.moveToNext());
-
 
             }
         }

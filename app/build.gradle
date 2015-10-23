@@ -8,8 +8,8 @@ android {
         applicationId "com.fyshadows.examframework.examframework"
         minSdkVersion 9
         targetSdkVersion 22
-        versionCode 14
-        versionName "1.21"
+        versionCode 15
+        versionName "1.22"
     }
     buildTypes {
         release {

@@ -16,8 +16,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gcm.GCMRegistrar;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
 import com.yyxqsg.bsyduo229750.AdConfig;
 import com.yyxqsg.bsyduo229750.Main;
 

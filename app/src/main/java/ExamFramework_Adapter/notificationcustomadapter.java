@@ -59,8 +59,6 @@ public class notificationcustomadapter extends ArrayAdapter<notificationtable> {
 		}
 
 		ViewHolder holder = (ViewHolder) view.getTag();
-		Log.i("listadpater",list.get(position).getMessage());
-		Log.i("listadpater",list.get(position).gettimestamp());
 		holder.text.setText(Html.fromHtml(list.get(position).getMessage()));
 		holder.text1.setText(formateDateFromstring("yyyy-MM-dd hh:mm:ss", "dd MMM yyyy hh:mm:ss", list.get(position).gettimestamp()));
 		
