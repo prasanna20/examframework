@@ -498,16 +498,18 @@ public class Questionhome extends ActionBarActivity {
     }
 
     public void showanswer() {
-        if (Correctanswer.equalsIgnoreCase(txtanswer1.getText().toString())) {
-            txtanswer1.setBackgroundColor(Color.GREEN);
-        } else if (Correctanswer.equalsIgnoreCase(txtanswer2.getText().toString())) {
-            txtanswer2.setBackgroundColor(Color.GREEN);
-        } else if (Correctanswer.equalsIgnoreCase(txtanswer3.getText().toString())) {
-            txtanswer3.setBackgroundColor(Color.GREEN);
-        } else if (Correctanswer.equalsIgnoreCase(txtanswer4.getText().toString())) {
-            txtanswer4.setBackgroundColor(Color.GREEN);
-        } else if (Correctanswer.equalsIgnoreCase(txtanswer5.getText().toString())) {
-            txtanswer5.setBackgroundColor(Color.GREEN);
+        if(Correctanswer != null) {
+            if (Correctanswer.equalsIgnoreCase(txtanswer1.getText().toString())) {
+                txtanswer1.setBackgroundColor(Color.GREEN);
+            } else if (Correctanswer.equalsIgnoreCase(txtanswer2.getText().toString())) {
+                txtanswer2.setBackgroundColor(Color.GREEN);
+            } else if (Correctanswer.equalsIgnoreCase(txtanswer3.getText().toString())) {
+                txtanswer3.setBackgroundColor(Color.GREEN);
+            } else if (Correctanswer.equalsIgnoreCase(txtanswer4.getText().toString())) {
+                txtanswer4.setBackgroundColor(Color.GREEN);
+            } else if (Correctanswer.equalsIgnoreCase(txtanswer5.getText().toString())) {
+                txtanswer5.setBackgroundColor(Color.GREEN);
+            }
         }
     }
 

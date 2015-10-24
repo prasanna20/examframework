@@ -42,7 +42,8 @@
             android:text="Article"
             android:layout_centerHorizontal="true"
             android:layout_toRightOf="@id/txtDate"
-            android:textSize="@dimen/feed_item_profile_name"/>
+            android:textSize="@dimen/feed_item_profile_name"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/txtScore"

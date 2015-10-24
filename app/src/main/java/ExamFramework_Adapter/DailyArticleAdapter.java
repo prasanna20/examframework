@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,9 +60,7 @@ public class DailyArticleAdapter extends ArrayAdapter<DailyArticleData> {
             view = inflator.inflate(R.layout.dailyarticleview, null);
             final ViewHolder viewHolder = new ViewHolder();
             viewHolder.ArticleTopic = (TextView) view.findViewById(R.id.txtArticleTopic);
-            //  viewHolder.ArticleTopic.setTextColor(Color.BLACK);
             viewHolder.ArticleDesc = (TextView) view.findViewById(R.id.txtArticleDesc);
-            //viewHolder.ArticleDesc.setTextColor(Color.BLACK);
             view.setTag(viewHolder);
         } else {
             view = convertView;
@@ -69,8 +68,8 @@ public class DailyArticleAdapter extends ArrayAdapter<DailyArticleData> {
 
         ViewHolder holder = (ViewHolder) view.getTag();
         if (!list.get(position).toString().trim().equalsIgnoreCase("")) {
-            holder.ArticleTopic.setText(list.get(position).getTopic().toString());
-            holder.ArticleDesc.setText(list.get(position).getArticleDesc().toString());
+            holder.ArticleTopic.setText(Html.fromHtml(list.get(position).getTopic().toString()));
+            holder.ArticleDesc.setText(Html.fromHtml(list.get(position).getArticleDesc().toString()));
         }
 
         return view;

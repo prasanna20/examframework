@@ -122,8 +122,6 @@ public class ViewNotification extends ListActivity {
 			@Override
 			public void onScroll(AbsListView view, int firstVisibleItem,
 					int visibleItemCount, int totalItemCount) {
-Log.i("scrol listen","scrol listen");
-
 			}
 
 			@Override
@@ -143,7 +141,6 @@ Log.i("scrol listen","scrol listen");
 			 Intent intent = new Intent(this, HomeActivity.class);
 			 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			 startActivity(intent);
-           // finish();
 
 			return true;
 		default:
@@ -174,9 +171,6 @@ Log.i("scrol listen","scrol listen");
 			View v = myListView.getChildAt(0);
 			top = (v == null) ? 0 : v.getTop();
 			list.clear();
-			// ...
-
-			// restore index and position
 
 		}
 
@@ -188,17 +182,6 @@ Log.i("scrol listen","scrol listen");
 			adapter = new notificationcustomadapter(this, list);
 			setListAdapter(adapter);
 			adapter.notifyDataSetChanged();
-			Log.i("asdas", "called");
-			//if (first == 0) {
-			//	Log.i("set last","set last");
-			//	myListView.setSelection(scrolly);
-			//}
-
-		//	if (first > 0) {
-				// myListView.setSelection(scrolly);
-		//		myListView.setSelectionFromTop(index, top);
-		//	}
-
 		} else {
 
 			TextView txt = (TextView) this
@@ -208,20 +191,5 @@ Log.i("scrol listen","scrol listen");
 
 	}
 
-	/*
-	 * // This task will be called to store the images in back ground private
-	 * class AsyncTaskEx extends AsyncTask<Void, Void, Void> {
-	 * 
-	 * protected void onPreExecute() {
-	 * 
-	 * Log.i("into async", "into async"); }
-	 * 
-	 * 
-	 * The system calls this to perform work in a worker thread and delivers it
-	 * the parameters given to AsyncTask.execute()
-	 * 
-	 * protected Void doInBackground(Void... arg0) {
-	 * 
-	 * } }
-	 */
+
 }
