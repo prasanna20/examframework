@@ -2,35 +2,30 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#d84527"
-    android:orientation="vertical" >
-
-
+    android:orientation="vertical">
 
     <TextView
         android:id="@android:id/text1"
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
-        android:gravity="center_vertical"
         android:layout_centerHorizontal="true"
-        android:textColor="#ffffff"
-        android:textStyle="bold"
-        android:text="@string/app_name"
+        android:gravity="center_vertical"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
-        />
+        android:text="@string/app_name"
+        android:textColor="#ffffff"
+        android:textStyle="bold" />
 
     <ImageButton
         android:id="@+id/vn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="10dp"
-        android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
         android:background="#00000000"
         android:src="@drawable/viewnotification"
         android:text="VN" />
-
 
 
 </RelativeLayout>

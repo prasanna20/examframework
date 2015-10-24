@@ -18,7 +18,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#d84527"
+                android:background="#29b6f6"
                 android:orientation="horizontal"
                 android:paddingBottom="30dp"
                 android:paddingLeft="20dp"
@@ -50,7 +50,7 @@
                         android:text="00"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="#FFFFFF"
-                        android:textSize="30dp"
+                        android:textSize="20dp"
                         android:textStyle="bold" />
                 </LinearLayout>
 
@@ -92,7 +92,7 @@
                         android:text="0.0"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="#FFFFFF"
-                        android:textSize="30dp"
+                        android:textSize="20dp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -131,8 +131,9 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:text="Skipped Count"
-                        android:textSize="18dp"
-                        android:textColor="#d84527" />
+                        android:textSize="16dp"
+                        android:textStyle="bold"
+                        android:textColor="#29b6f6" />
 
                     <TextView
                         android:id="@+id/skippedCount"
@@ -142,9 +143,8 @@
                         android:paddingTop="10dp"
                         android:text="00"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textColor="#d84527"
-                        android:textSize="20dp"
-                        android:textStyle="bold" />
+                        android:textColor="#29b6f6"
+                        android:textSize="16dp" />
 
                     <TextView
                         android:id="@+id/EnglishLabel"
@@ -152,9 +152,10 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:text="English"
-                        android:textSize="18dp"
+                        android:textSize="16dp"
                         android:paddingTop="20dp"
-                        android:textColor="#d84527" />
+                        android:textStyle="bold"
+                        android:textColor="#29b6f6" />
 
                     <TextView
                         android:id="@+id/English"
@@ -163,18 +164,18 @@
                         android:layout_gravity="center_horizontal"
                         android:paddingTop="10dp"
                         android:text="00"
-                        android:textColor="#d84527"
-                        android:textSize="20dp"
-                        android:textStyle="bold" />
+                        android:textColor="#29b6f6"
+                        android:textSize="16dp" />
                     <TextView
                         android:id="@+id/GeneralLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:text="General"
-                        android:textSize="18dp"
+                        android:textSize="16dp"
                         android:paddingTop="20dp"
-                        android:textColor="#d84527" />
+                        android:textStyle="bold"
+                        android:textColor="#29b6f6" />
 
                     <TextView
                         android:id="@+id/General"
@@ -183,9 +184,8 @@
                         android:layout_gravity="center_horizontal"
                         android:paddingTop="10dp"
                         android:text="00"
-                        android:textColor="#d84527"
-                        android:textSize="20dp"
-                        android:textStyle="bold" />
+                        android:textColor="#29b6f6"
+                        android:textSize="16dp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -198,7 +198,7 @@
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
                         android:layout_gravity="center_horizontal"
-                        android:background="#d84527"></View>
+                        android:background="#29b6f6"></View>
 
                 </LinearLayout>
 
@@ -214,8 +214,9 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:text="Quantitative"
-                        android:textSize="18dp"
-                        android:textColor="#d84527" />
+                        android:textSize="16dp"
+                        android:textStyle="bold"
+                        android:textColor="#29b6f6" />
 
                     <TextView
                         android:id="@+id/quantitativescore"
@@ -225,9 +226,8 @@
                         android:paddingTop="10dp"
                         android:text="00"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textColor="#d84527"
-                        android:textSize="20dp"
-                        android:textStyle="bold" />
+                        android:textColor="#29b6f6"
+                        android:textSize="16dp" />
 
                     <TextView
                         android:id="@+id/ReasoningLabel"
@@ -235,9 +235,10 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:text="Reasoning"
-                        android:textSize="18dp"
+                        android:textSize="16dp"
                         android:paddingTop="20dp"
-                        android:textColor="#d84527" />
+                        android:textStyle="bold"
+                        android:textColor="#29b6f6" />
 
                     <TextView
                         android:id="@+id/Reasoning"
@@ -246,18 +247,18 @@
                         android:layout_gravity="center_horizontal"
                         android:paddingTop="10dp"
                         android:text="00"
-                        android:textColor="#d84527"
-                        android:textSize="20dp"
-                        android:textStyle="bold" />
+                        android:textColor="#29b6f6"
+                        android:textSize="16dp" />
                     <TextView
                         android:id="@+id/ComputerLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:text="Computer"
-                        android:textSize="18dp"
+                        android:textSize="16dp"
                         android:paddingTop="20dp"
-                        android:textColor="#d84527" />
+                        android:textStyle="bold"
+                        android:textColor="#29b6f6" />
 
                     <TextView
                         android:id="@+id/Computer"
@@ -266,9 +267,8 @@
                         android:layout_gravity="center_horizontal"
                         android:paddingTop="10dp"
                         android:text="00"
-                        android:textColor="#d84527"
-                        android:textSize="20dp"
-                        android:textStyle="bold" />
+                        android:textColor="#29b6f6"
+                        android:textSize="16dp" />
                 </LinearLayout>
 
             </LinearLayout>

@@ -1,14 +1,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:ads="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="#FFFFFF"
     tools:context="com.fyshadows.examframework.examframework.HomeActivity">
-
 
     <com.yyxqsg.bsyduo229750.AdView
         android:id="@+id/myAdViewtop"
@@ -17,124 +12,170 @@
         android:layout_alignParentTop="true"
         android:layout_gravity="center_horizontal" />
 
-    <Button
-        android:id="@+id/Start"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/myAdViewtop"
-        android:layout_alignParentLeft="true"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="40dp"
-        android:paddingRight="2dp"
-        android:paddingLeft="2dp"
-        android:background="@drawable/roundedbutton"
-        android:text="Start Exam"
-        android:textColor="#ffffff"
-        android:textSize="20dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btnDailyExam"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/myAdViewtop"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="40dp"
-        android:paddingRight="2dp"
-        android:paddingLeft="2dp"
-        android:layout_toRightOf="@+id/Start"
-        android:layout_alignParentRight="true"
-        android:background="@drawable/roundedbutton"
-        android:text="Daily Exam"
-        android:textColor="#ffffff"
-        android:textSize="20dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:orientation="horizontal">
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
 
-    <Button
-        android:id="@+id/Score"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/Start"
-        android:layout_centerHorizontal="true"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="40dp"
-        android:background="@drawable/roundedbuttonyellow"
-        android:text="Score"
-        android:textColor="#ffffff"
-        android:textSize="23dp" />
+                <Button
+                    android:id="@+id/Start"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#29b6f6"
+                    android:text="Start"
+                    android:textAllCaps="false"
+                    android:textColor="#ffffff"
+                    android:textSize="16dp" />
 
-    <Button
-        android:id="@+id/Reset"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/Score"
-        android:layout_centerHorizontal="true"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="40dp"
-        android:background="@drawable/roundedbuttongreen"
-        android:text="Reset"
-        android:textColor="#ffffff"
-        android:textSize="23dp" />
+            </LinearLayout>
 
-    <TextView
-        android:id="@+id/LabelTimer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/Reset"
-        android:layout_centerHorizontal="true"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
-        android:clickable="true"
-        android:text="Set timer"
-        android:textSize="20dp" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
 
-    <TableLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/LabelTimer"
-        android:layout_centerHorizontal="true">
+                <Button
+                    android:id="@+id/btnDailyExam"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/Start"
+                    android:background="#03a9f4"
+                    android:text="Daily Exam"
+                    android:textAllCaps="false"
+                    android:textColor="#ffffff"
+                    android:textSize="16dp" />
+            </LinearLayout>
+        </LinearLayout>
 
-        <TableRow>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-            <Button
-                android:id="@+id/plus"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/LabelTimer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/Reset"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="20dp"
+                    android:text="Set Timer"
+                    android:textColor="#0288d1"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/Score"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/roundedbuttonblue"
-                android:text="+"
-                android:textSize="30dp" />
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="4"
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/settimer"
+                <RelativeLayout
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                    <TextView
+                        android:id="@+id/settimer"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_centerHorizontal="true"
+                        android:background="@drawable/roundedbutton"
+                        android:editable="false"
+                        android:gravity="center"
+                        android:text="36"
+                        android:textColor="#FFFFFF"
+                        android:textSize="24dp" />
+
+                    <Button
+                        android:id="@+id/plus"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/roundedbuttonblue"
+                        android:gravity="center"
+                        android:text="+"
+                        android:textColor="#FFFFFF"
+                        android:textSize="25dp" />
+
+                    <Button
+                        android:id="@+id/minus"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/roundedbuttonblue"
+                        android:gravity="center"
+                        android:text="-"
+                        android:textColor="#FFFFFF"
+                        android:textSize="30dp" />
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:orientation="horizontal">
+
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/Score"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp"
-                android:editable="false"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:text="0"
-                android:textSize="30dp" />
+                android:layout_height="match_parent"
+                android:layout_weight="1">
 
-            <Button
-                android:id="@+id/minus"
+                <Button
+                    android:id="@+id/Score"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#039be5"
+                    android:text="Score"
+                    android:textAllCaps="false"
+                    android:textColor="#ffffff"
+                    android:textSize="16dp" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/Score"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/roundedbuttonblue"
-                android:text="-"
-                android:textSize="30dp" />
+                android:layout_height="match_parent"
+                android:layout_weight="1">
 
+                <Button
+                    android:id="@+id/Reset"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#0288d1"
+                    android:text="Reset"
+                    android:textAllCaps="false"
+                    android:textColor="#ffffff"
+                    android:textSize="16dp" />
+            </LinearLayout>
+        </LinearLayout>
 
-        </TableRow>
-
-
-    </TableLayout>
+    </LinearLayout>
 
     <com.yyxqsg.bsyduo229750.AdView
         android:id="@+id/myAdView"
