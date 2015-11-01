@@ -14,8 +14,6 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
 import com.yyxqsg.bsyduo229750.AdConfig;
 import com.yyxqsg.bsyduo229750.Main;
 
@@ -552,12 +550,19 @@ public class Questionhome extends ActionBarActivity {
     }
 
     public void nexttap() {
+        if(QuestionNumber%5==0)
+        {
+            main.startInterstitialAd(AdConfig.AdType.smartwall);
+
+
+        }
         if (!course_completed_flag) {
             if (isRunning) {
                 countDownTimer.cancel();
             }
             if(FromScreen==0)
             {
+
                 sd.remove(0);
             }else if (FromScreen==1)
             {
@@ -577,6 +582,7 @@ public class Questionhome extends ActionBarActivity {
                 course_completed_flag = true;
             }
         } else {
+            main.startInterstitialAd(AdConfig.AdType.smartwall);
             scoreactivity();
         }
     }

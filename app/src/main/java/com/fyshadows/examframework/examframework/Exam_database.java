@@ -15,7 +15,6 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import ExamFramework_Data.DailyArticleData;
@@ -656,7 +655,7 @@ public class Exam_database extends SQLiteOpenHelper {
                 LastQuestionNum = 0;
             }
         }
-
+        Log.i("Lastquestion",String.valueOf(LastQuestionNum));
         return LastQuestionNum;
     }
 

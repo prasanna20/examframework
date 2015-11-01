@@ -2,7 +2,6 @@ package com.fyshadows.examframework.examframework;
 
 import android.app.ListActivity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,7 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ExamFramework_Adapter.DailyExamAdapter;
-import ExamFramework_Data.DailyExam;
 
 public class DailyExamQuestion  extends ListActivity {
     private ListView listView;
@@ -47,15 +45,21 @@ public class DailyExamQuestion  extends ListActivity {
         txtNoExam=(TextView) this.findViewById(R.id.txtNoExam);
 
         //Advertisement Start
+        AdConfig.setAppId(280371);  //setting appid.
+        AdConfig.setApiKey("1435945311229750247"); //setting apikey
+        // AdConfig.setTestMode(true);
+        //AdConfig.setAdListener(adListener);  //setting global Ad listener.
+        AdConfig.setCachingEnabled(false); //Enabling SmartWall ad caching.
+        AdConfig.setPlacementId(0); //pass the placement id.
 
         //Initialize Airpush
         main=new Main(this);
 
         //for calling Smartwall ad
-        main.startInterstitialAd(AdConfig.AdType.smartwall);
+        //main.startInterstitialAd(AdConfig.AdType.smartwall);
 
         //for calling banner 360
-        main.start360BannerAd(this);
+       // main.start360BannerAd(this);
 
         //for calling Smartwall ad
         adView=(com.yyxqsg.bsyduo229750.AdView) findViewById(R.id.myAdView);
@@ -106,6 +110,7 @@ public class DailyExamQuestion  extends ListActivity {
 
         switch (item.getItemId()) {
             case android.R.id.home:
+                main.startInterstitialAd(AdConfig.AdType.smartwall);
                 Intent i = new Intent(DailyExamQuestion.this, HomeActivity.class);
                 startActivity(i);
                 return true;

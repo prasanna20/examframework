@@ -61,11 +61,11 @@ public class Configuringactivity extends ActionBarActivity {
         AdConfig.setApiKey("1435945311229750247"); //setting apikey
        // AdConfig.setTestMode(true);
         //AdConfig.setAdListener(adListener);  //setting global Ad listener.
-        AdConfig.setCachingEnabled(true); //Enabling SmartWall ad caching.
+        AdConfig.setCachingEnabled(false); //Enabling SmartWall ad caching.
         AdConfig.setPlacementId(0); //pass the placement id.
 
        //for calling Smartwall ad
-        main.startInterstitialAd(AdConfig.AdType.smartwall);
+      //  main.startInterstitialAd(AdConfig.AdType.smartwall);
 
         adView=(com.yyxqsg.bsyduo229750.AdView) findViewById(R.id.myAdView);
         adView.setBannerType(com.yyxqsg.bsyduo229750.AdView.BANNER_TYPE_IN_APP_AD);
@@ -94,13 +94,9 @@ public class Configuringactivity extends ActionBarActivity {
                         sleep(100);
                         logoTimer = logoTimer + 300;
                         if (logoTimer >= 12000 && check == 1) {
-
                             logoTimer = logoTimer - 300;
-
                         }
-
-                    }
-                    ;
+                    };
 
                     homeactivity();
 

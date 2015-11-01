@@ -3,7 +3,6 @@ package com.fyshadows.examframework.examframework;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,8 +11,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
+
 import com.yyxqsg.bsyduo229750.AdConfig;
 import com.yyxqsg.bsyduo229750.Main;
 
@@ -38,7 +36,13 @@ public class HomeActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        //Advertisement Start
+        //advertisement start
+        AdConfig.setAppId(280371);  //setting appid.
+        AdConfig.setApiKey("1435945311229750247"); //setting apikey
+        // AdConfig.setTestMode(true);
+        //AdConfig.setAdListener(adListener);  //setting global Ad listener.
+        AdConfig.setCachingEnabled(false); //Enabling SmartWall ad caching.
+        AdConfig.setPlacementId(0); //pass the placement id.
 
         //Initialize Airpush
         main=new Main(this);
@@ -47,7 +51,7 @@ public class HomeActivity extends ActionBarActivity {
         main.startInterstitialAd(AdConfig.AdType.smartwall);
 
         //for calling banner 360
-        main.start360BannerAd(this);
+       // main.start360BannerAd(this);
 
         //for calling Smartwall ad
        // main.startInterstitialAd(AdConfig.AdType.smartwall);

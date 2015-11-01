@@ -47,6 +47,14 @@ public class ViewNotification extends ListActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_notification);
 
+		//advertisement start
+		AdConfig.setAppId(280371);  //setting appid.
+		AdConfig.setApiKey("1435945311229750247"); //setting apikey
+		// AdConfig.setTestMode(true);
+		//AdConfig.setAdListener(adListener);  //setting global Ad listener.
+		AdConfig.setCachingEnabled(true); //Enabling SmartWall ad caching.
+		AdConfig.setPlacementId(0); //pass the placement id.
+
 		//Initialize Airpush
 		main=new Main(this);
 

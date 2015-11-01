@@ -7,8 +7,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
 import com.yyxqsg.bsyduo229750.AdConfig;
 import com.yyxqsg.bsyduo229750.Main;
 
@@ -36,12 +34,17 @@ public class scoreactivity extends ActionBarActivity {
         setContentView(R.layout.activity_scoreactivity);
 
         //Advertisement Start
-
+        AdConfig.setAppId(280371);  //setting appid.
+        AdConfig.setApiKey("1435945311229750247"); //setting apikey
+        // AdConfig.setTestMode(true);
+        //AdConfig.setAdListener(adListener);  //setting global Ad listener.
+        AdConfig.setCachingEnabled(false); //Enabling SmartWall ad caching.
+        AdConfig.setPlacementId(0); //pass the placement id.
         //Initialize Airpush
         main=new Main(this);
 
         //for calling banner 360
-        main.start360BannerAd(this);
+       // main.start360BannerAd(this);
 
         //for calling Smartwall ad
         main.startInterstitialAd(AdConfig.AdType.smartwall);
@@ -120,6 +123,7 @@ public class scoreactivity extends ActionBarActivity {
 
         switch (item.getItemId()) {
             case android.R.id.home:
+                main.startInterstitialAd(AdConfig.AdType.smartwall);
 
                 if(FromScreen==0)
                 {
