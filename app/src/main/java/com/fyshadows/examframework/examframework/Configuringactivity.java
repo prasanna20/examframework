@@ -1,8 +1,10 @@
 package com.fyshadows.examframework.examframework;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
@@ -44,6 +46,7 @@ public class Configuringactivity extends ActionBarActivity {
     private com.yyxqsg.bsyduo229750.AdView adView;
 
 
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -119,7 +122,7 @@ public class Configuringactivity extends ActionBarActivity {
 
             if (masterdetails.isOnline(this)) {
                 Log.i("Exam", "starting async task");
-                new asynctask().execute();
+                new asynctask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
             } else {
                 Toast.makeText(this, "Please connect to Internet", Toast.LENGTH_LONG);
@@ -216,7 +219,7 @@ public class Configuringactivity extends ActionBarActivity {
                         success = json.getInt("success");
                         if (success == 1) {
                             Log.i("Exam", "Check_suc");
-                            // successfully received product details
+                            // successfully received details
                             JSONArray QuestionObj = json.getJSONArray("MasterQuestion"); // JSON
                             // Array
                             for (int i = 0; i < QuestionObj.length(); i++) {
@@ -375,158 +378,160 @@ public class Configuringactivity extends ActionBarActivity {
                 JSONObject json = jsonParser.makeHttpRequest(
                         masterdetails.checkForupdate, "GET", params);
                 Log.i("Exam", "got json");
-                if (json.length() > 0) {
-                    // json success tag
-                    success = json.getInt("success");
-                    if (success == 1) {
+                if(json != null) {
+                    if (json.length() > 0) {
+                        // json success tag
+                        success = json.getInt("success");
+                        if (success == 1) {
 
-                        // successfully received product details
-                        JSONArray QuestionObj = json.getJSONArray("LastQuestion"); // JSON
-                        // Array
-                        JSONObject md = QuestionObj.getJSONObject(0);
-
-
-                        MainDBLastQuestion = md.getInt("maxQuestionNo");
-                        if (MainDBLastQuestion > db.getmaxquestionnumber()) {
-                            Log.i("exam", "we have new set of question");
-                            try {
-
-                                // To get question details
-
-                                params.clear();
-                                params.add(new BasicNameValuePair("lastquestionnumber",String.valueOf(db.getmaxquestionnumber())));
-
-                                json = jsonParser.makeHttpRequest(
-                                        masterdetails.getNewQuestions, "GET", params);
-                                Log.i("Exam", "got json");
-                                if (json.length() > 0) {
-                                    // json success tag
-                                    success = json.getInt("success");
-                                    if (success == 1) {
-                                        Log.i("Exam", "Check_suc");
-                                        // successfully received product details
-                                        QuestionObj = json.getJSONArray("MasterQuestion"); // JSON
-                                        // Array
-                                        for (int i = 0; i < QuestionObj.length(); i++) {
-
-                                            int QuestionNo = 0;
-                                            String Question = "";
-                                            String Choice1 = "";
-                                            String Choice2 = "";
-                                            String Choice3 = "";
-                                            String Choice4 = "";
-                                            String Choice5 = "";
-                                            String Correct_Ans = "";
-                                            String Category="";
+                            // successfully received product details
+                            JSONArray QuestionObj = json.getJSONArray("LastQuestion"); // JSON
+                            // Array
+                            JSONObject md = QuestionObj.getJSONObject(0);
 
 
-                                            md = QuestionObj.getJSONObject(i);
+                            MainDBLastQuestion = md.getInt("maxQuestionNo");
+                            if (MainDBLastQuestion > db.getmaxquestionnumber()) {
+                                Log.i("exam", "we have new set of question");
+                                try {
 
-                                            QuestionNo = md.getInt("QuestionNo");
-                                            Question = md.getString("Question");
-                                            Choice1 = md.getString("Choice1");
-                                            Choice2 = md.getString("Choice2");
-                                            Choice3 = md.getString("Choice3");
-                                            Choice4 = md.getString("Choice4");
-                                            Choice5 = md.getString("Choice5");
-                                            Correct_Ans = md.getString("Correct_Ans");
-                                            Category = md.getString("Category");
+                                    // To get question details
+
+                                    params.clear();
+                                    params.add(new BasicNameValuePair("lastquestionnumber", String.valueOf(db.getmaxquestionnumber())));
+
+                                    json = jsonParser.makeHttpRequest(
+                                            masterdetails.getNewQuestions, "GET", params);
+                                    Log.i("Exam", "got json");
+                                    if (json.length() > 0) {
+                                        // json success tag
+                                        success = json.getInt("success");
+                                        if (success == 1) {
+                                            Log.i("Exam", "Check_suc");
+                                            // successfully received product details
+                                            QuestionObj = json.getJSONArray("MasterQuestion"); // JSON
+                                            // Array
+                                            for (int i = 0; i < QuestionObj.length(); i++) {
+
+                                                int QuestionNo = 0;
+                                                String Question = "";
+                                                String Choice1 = "";
+                                                String Choice2 = "";
+                                                String Choice3 = "";
+                                                String Choice4 = "";
+                                                String Choice5 = "";
+                                                String Correct_Ans = "";
+                                                String Category = "";
 
 
-                                            if (Question.trim() == "") {
-                                                Question = "NA";
+                                                md = QuestionObj.getJSONObject(i);
+
+                                                QuestionNo = md.getInt("QuestionNo");
+                                                Question = md.getString("Question");
+                                                Choice1 = md.getString("Choice1");
+                                                Choice2 = md.getString("Choice2");
+                                                Choice3 = md.getString("Choice3");
+                                                Choice4 = md.getString("Choice4");
+                                                Choice5 = md.getString("Choice5");
+                                                Correct_Ans = md.getString("Correct_Ans");
+                                                Category = md.getString("Category");
+
+
+                                                if (Question.trim() == "") {
+                                                    Question = "NA";
+                                                }
+                                                if (Choice1.trim() == "") {
+                                                    Choice1 = "NA";
+                                                }
+                                                if (Choice2.trim() == "") {
+                                                    Choice2 = "NA";
+                                                }
+                                                if (Choice3.trim() == "") {
+                                                    Choice3 = "NA";
+                                                }
+                                                if (Choice4.trim() == "") {
+                                                    Choice4 = "NA";
+                                                }
+                                                if (Choice5.trim() == "") {
+                                                    Choice5 = "NA";
+                                                }
+                                                if (Correct_Ans.trim() == "") {
+                                                    Correct_Ans = "NA";
+                                                }
+                                                if (Category.trim() == "") {
+                                                    Category = "NA";
+                                                }
+
+
+                                                db.InsertQuestionDetails(QuestionNo, Question, Choice1, Choice2, Choice3, Choice4, Choice5, Correct_Ans, Category);
+
+                                                //End of getting question details
                                             }
-                                            if (Choice1.trim() == "") {
-                                                Choice1 = "NA";
-                                            }
-                                            if (Choice2.trim() == "") {
-                                                Choice2 = "NA";
-                                            }
-                                            if (Choice3.trim() == "") {
-                                                Choice3 = "NA";
-                                            }
-                                            if (Choice4.trim() == "") {
-                                                Choice4 = "NA";
-                                            }
-                                            if (Choice5.trim() == "") {
-                                                Choice5 = "NA";
-                                            }
-                                            if (Correct_Ans.trim() == "") {
-                                                Correct_Ans = "NA";
-                                            }
-                                            if (Category.trim() == "") {
-                                                Category = "NA";
-                                            }
-
-
-                                            db.InsertQuestionDetails(QuestionNo, Question, Choice1, Choice2, Choice3, Choice4,Choice5, Correct_Ans,Category);
-
-                                            //End of getting question details
                                         }
                                     }
+                                } catch (JSONException e) {
+                                    Log.i("exam", "we have not got any new set of question");
                                 }
-                            } catch (JSONException e) {
+                                //download new question to database ends
+                            } else {
                                 Log.i("exam", "we have not got any new set of question");
+                                //download new questions to database start
+
                             }
-                            //download new question to database ends
-                        } else {
-                            Log.i("exam", "we have not got any new set of question");
-                            //download new questions to database start
 
-                        }
+                            //End of getting question detail
+                            // //Start :  Get Daily Question-----------------------------------------------------------------------
+                            params.clear();
+                            params.add(new BasicNameValuePair("lastquestionnumber", String.valueOf(db.getMaxDailyQuestionNumber())));
 
-                        //End of getting question detail
-                        // //Start :  Get Daily Question-----------------------------------------------------------------------
-                        params.clear();
-                        params.add(new BasicNameValuePair("lastquestionnumber", String.valueOf(db.getMaxDailyQuestionNumber())));
+                            json = jsonParser.makeHttpRequest(
+                                    masterdetails.getDailyTestQuestions, "GET", params);
+                            Log.i("maximum Exam Daily", String.valueOf(db.getMaxDailyQuestionNumber()));
+                            if (json.length() > 0) {
+                                // json success tag
+                                success = json.getInt("success");
+                                if (success == 1) {
+                                    Log.i("Exam", "Check_suc");
+                                    // successfully received product details
+                                    QuestionObj = json.getJSONArray("MasterDailyQuestion"); // JSON
+                                    // Array
+                                    for (int i = 0; i < QuestionObj.length(); i++) {
+                                        md = QuestionObj.getJSONObject(i);
 
-                        json = jsonParser.makeHttpRequest(
-                                masterdetails.getDailyTestQuestions, "GET", params);
-                        Log.i("maximum Exam Daily", String.valueOf(db.getMaxDailyQuestionNumber()));
-                        if (json.length() > 0) {
-                            // json success tag
-                            success = json.getInt("success");
-                            if (success == 1) {
-                                Log.i("Exam", "Check_suc");
-                                // successfully received product details
-                                 QuestionObj = json.getJSONArray("MasterDailyQuestion"); // JSON
-                                // Array
-                                for (int i = 0; i < QuestionObj.length(); i++) {
-                                     md = QuestionObj.getJSONObject(i);
+                                        db.InsertDailyQuestionDetails(md.getInt("Id"), md.getString("ExamDate"), md.getInt("QuestionNo"), md.getString("QuestionText"), md.getString("Choice1"), md.getString("Choice2"), md.getString("Choice3"), md.getString("Choice4"), md.getString("Choice5"), md.getInt("Answer"), md.getString("Category"));
 
-                                    db.InsertDailyQuestionDetails(md.getInt("Id"), md.getString("ExamDate"), md.getInt("QuestionNo"),md.getString("QuestionText"), md.getString("Choice1"), md.getString("Choice2"),md.getString("Choice3"),md.getString("Choice4"),md.getString("Choice5") ,md.getInt("Answer"),md.getString("Category") );
-
-                                    //End of getting question details
+                                        //End of getting question details
+                                    }
                                 }
                             }
-                        }
 //End  : Get Daily Question--------------------------------------------------------------------------
 
-                        //Start :  Get Daily Article details-----------------------------------------------------------------------
-                        params.clear();
-                        params.add(new BasicNameValuePair("lastArticleNumber", String.valueOf(db.getMaxDailyArticle())));
+                            //Start :  Get Daily Article details-----------------------------------------------------------------------
+                            params.clear();
+                            params.add(new BasicNameValuePair("lastArticleNumber", String.valueOf(db.getMaxDailyArticle())));
 
-                        json = jsonParser.makeHttpRequest(
-                                masterdetails.getDailyArticle, "GET", params);
-                        Log.i("Maximum Exam Article", String.valueOf(db.getMaxDailyArticle()));
-                        if (json.length() > 0) {
-                            // json success tag
-                            success = json.getInt("success");
-                            if (success == 1) {
-                                // successfully received product details
-                                 QuestionObj = json.getJSONArray("MasterDailyArticle"); // JSON
-                                // Array
-                                for (int i = 0; i < QuestionObj.length(); i++) {
-                                     md = QuestionObj.getJSONObject(i);
+                            json = jsonParser.makeHttpRequest(
+                                    masterdetails.getDailyArticle, "GET", params);
+                            Log.i("Maximum Exam Article", String.valueOf(db.getMaxDailyArticle()));
+                            if (json.length() > 0) {
+                                // json success tag
+                                success = json.getInt("success");
+                                if (success == 1) {
+                                    // successfully received product details
+                                    QuestionObj = json.getJSONArray("MasterDailyArticle"); // JSON
+                                    // Array
+                                    for (int i = 0; i < QuestionObj.length(); i++) {
+                                        md = QuestionObj.getJSONObject(i);
 
-                                    db.InsertDailyArticle(md.getInt("ArticleNo"), md.getString("ArticleDate"), md.getString("Topic"), md.getString("ArticleDesc") );
+                                        db.InsertDailyArticle(md.getInt("ArticleNo"), md.getString("ArticleDate"), md.getString("Topic"), md.getString("ArticleDesc"));
 
-                                    //End of getting Article details
+                                        //End of getting Article details
+                                    }
                                 }
                             }
-                        }
 //End  : Get Daily Question--------------------------------------------------------------------------s
 
+                        }
                     }
                 }
             } catch (JSONException e) {

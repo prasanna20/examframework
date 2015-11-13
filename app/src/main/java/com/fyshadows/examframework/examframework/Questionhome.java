@@ -88,7 +88,7 @@ public class Questionhome extends ActionBarActivity {
         main = new Main(this);
 
         //for calling Smartwall ad
-        main.startInterstitialAd(AdConfig.AdType.smartwall);
+        //main.startInterstitialAd(AdConfig.AdType.smartwall);
 
         adView = (com.yyxqsg.bsyduo229750.AdView) findViewById(R.id.myAdView);
         adView.setBannerType(com.yyxqsg.bsyduo229750.AdView.BANNER_TYPE_IN_APP_AD);
@@ -335,6 +335,10 @@ public class Questionhome extends ActionBarActivity {
             rowcount = sd.size();
             Log.i("check", String.valueOf(rowcount));
         } else if (FromScreen == 1) {
+            //Start : Insert Analysis
+            masterdetails masterdetails=new masterdetails(this);
+            masterdetails.insertAnalysis(this, 7);
+            //End : Insert Analysis
             ExamDate = bundle.getString("ExamDate");
             Log.i("Into Home Activity", ExamDate);
             //totalquestions = db.getQuestionCount();
@@ -550,12 +554,7 @@ public class Questionhome extends ActionBarActivity {
     }
 
     public void nexttap() {
-        if(QuestionNumber%5==0)
-        {
-            main.startInterstitialAd(AdConfig.AdType.smartwall);
 
-
-        }
         if (!course_completed_flag) {
             if (isRunning) {
                 countDownTimer.cancel();

@@ -33,6 +33,11 @@ public class scoreactivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scoreactivity);
 
+        //Start : Insert Analysis
+        masterdetails masterdetails=new masterdetails(this);
+        masterdetails.insertAnalysis(this, 3);
+        //End : Insert Analysis
+
         //Advertisement Start
         AdConfig.setAppId(280371);  //setting appid.
         AdConfig.setApiKey("1435945311229750247"); //setting apikey

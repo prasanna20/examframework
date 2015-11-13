@@ -125,7 +125,7 @@ public class GCMIntentService extends GCMBaseIntentService {
 	}
 
 
-    static String getEmail(Context context) {
+   public static String getEmail(Context context) {
         AccountManager accountManager = AccountManager.get(context);
         Account account = getAccount(accountManager);
 
@@ -149,7 +149,7 @@ public class GCMIntentService extends GCMBaseIntentService {
 
     private static void generateNotification(Context context,String MessageTitle, String MessageText) {
 
-        int icon = R.mipmap.ic_launcher;
+        int icon = R.drawable.logotrans;
         long when = System.currentTimeMillis();
         Intent notificationIntent;
 
@@ -157,8 +157,8 @@ public class GCMIntentService extends GCMBaseIntentService {
                 .getSystemService(Context.NOTIFICATION_SERVICE);
         Notification notification = new Notification(icon, MessageText, when);
 
-        String title = context.getString(R.string.app_name);
-
+       // String title = context.getString(R.string.app_name);
+        String title = MessageTitle;
         if(ExamReminder.equalsIgnoreCase("Yes")) {
              notificationIntent = new Intent(context, Configuringactivity.class);
         }
@@ -182,6 +182,7 @@ public class GCMIntentService extends GCMBaseIntentService {
         int iUniqueId = (int) (System.currentTimeMillis() & 0xfffffff);
         PendingIntent contentIntent = PendingIntent.getActivity(context, iUniqueId, notificationIntent, 0);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
         notification.setLatestEventInfo(context, title, MessageText, contentIntent);
         notification.flags |= Notification.FLAG_AUTO_CANCEL;
 

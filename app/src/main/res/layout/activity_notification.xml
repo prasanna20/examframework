@@ -30,7 +30,7 @@
         android:layout_height="fill_parent"
         android:gravity="center"
         android:padding="10dp"
-        android:text="Loading.....Latest news will appear here."
+        android:text="Loading...Latest news will appear here."
         android:textSize="14sp" >
     </TextView>
 

@@ -13,13 +13,10 @@ import android.widget.TextView;
 
 import com.fyshadows.examframework.examframework.DailyArticle;
 import com.fyshadows.examframework.examframework.Exam_database;
-import com.fyshadows.examframework.examframework.HomeActivity;
 import com.fyshadows.examframework.examframework.Questionhome;
 import com.fyshadows.examframework.examframework.R;
 
 import java.util.List;
-
-import ExamFramework_Data.DailyExam;
 
 /**
  * Created by Prasanna on 28-08-2015.
@@ -90,7 +87,6 @@ public class DailyExamAdapter extends ArrayAdapter<String> {
         holder.Date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
 
                 Log.i("Selected Date",list.get(position).toString());
                 Intent i = new Intent(context, Questionhome.class);

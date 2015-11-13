@@ -31,6 +31,8 @@ public class HomeActivity extends ActionBarActivity {
     private Main main; //Declare here
     private com.yyxqsg.bsyduo229750.AdView adView;
     public int Timersaved=0;
+    masterdetails masterdetails;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +81,10 @@ public class HomeActivity extends ActionBarActivity {
         getSupportActionBar().setCustomView(R.layout.actionbar_homeactivity);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
+        //Start : Insert Analysis
+         masterdetails=new masterdetails(this);
+        masterdetails.insertAnalysis(this, 1);
+        //End : Insert Analysis
 
 
         db = new Exam_database(this);
@@ -147,6 +153,9 @@ public class HomeActivity extends ActionBarActivity {
         DailyExam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Start : Insert Analysis
+                masterdetails.insertAnalysis(HomeActivity.this, 2);
+                //End : Insert Analysis
                 Intent i = new Intent(HomeActivity.this, DailyExamQuestion.class);
                 startActivity(i);
             }
@@ -156,6 +165,9 @@ public class HomeActivity extends ActionBarActivity {
         vn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Start : Insert Analysis
+                masterdetails.insertAnalysis(HomeActivity.this, 4);
+                //End : Insert Analysis
                 Intent i = new Intent(HomeActivity.this , ViewNotification.class);
                 startActivity(i);
 
@@ -191,6 +203,9 @@ public class HomeActivity extends ActionBarActivity {
 
     // user defined functions
     public void homeactivity() {
+        //Start : Insert Analysis
+        masterdetails.insertAnalysis(HomeActivity.this, 9);
+        //End : Insert Analysis
         Intent i = new Intent(HomeActivity.this, Questionhome.class);
         Bundle bundle = new Bundle();
         bundle.putInt("FromScreen", 0);
@@ -199,6 +214,7 @@ public class HomeActivity extends ActionBarActivity {
     }
 
     public void scoreactivity() {
+
         Intent i = new Intent(HomeActivity.this, scoreactivity.class);
         Bundle bundle = new Bundle();
         bundle.putInt("FromScreen", 0);
@@ -209,6 +225,9 @@ public class HomeActivity extends ActionBarActivity {
 
 
     public void resetexam() {
+        //Start : Insert Analysis
+        masterdetails.insertAnalysis(HomeActivity.this, 8);
+        //End : Insert Analysis
         Toast.makeText(getBaseContext(), "Exam reset successfull", Toast.LENGTH_LONG).show();
         db.Resetquestion();
 

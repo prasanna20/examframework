@@ -27,7 +27,6 @@ import ExamFramework_Data.notificationtable;
 
 public class Exam_database extends SQLiteOpenHelper {
 
-
     JSONParser jsonParser = new JSONParser();
 
     public Exam_database(Context context) {
@@ -92,6 +91,29 @@ public class Exam_database extends SQLiteOpenHelper {
         if (db.isOpen()) {
             db.close();
         }
+    }
+
+
+    public String GetEmailDetails(Context context) {
+
+        String email="";
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selectQuery = "SELECT mail_id  FROM EF_mob_UserDetails";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (null != cursor && cursor.moveToFirst()) {
+
+            int _mail_id = cursor.getColumnIndex("mail_id");
+
+            if (cursor.moveToFirst()) {
+                email = cursor.getString(_mail_id);
+            }
+        } else {
+            email = GCMIntentService.getEmail(context);
+        }
+
+        return email;
     }
 
     //insert question details

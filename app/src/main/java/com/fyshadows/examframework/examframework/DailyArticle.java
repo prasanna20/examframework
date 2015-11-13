@@ -49,6 +49,11 @@ public class DailyArticle extends ListActivity {
 
        txtNoArticle = (TextView) this.findViewById(R.id.txtNoArticle);
 
+        //Start : Insert Analysis
+        masterdetails masterdetails=new masterdetails(this);
+        masterdetails.insertAnalysis(this, 6);
+        //End : Insert Analysis
+
         //Advertisement Start
 
         //Initialize Airpush

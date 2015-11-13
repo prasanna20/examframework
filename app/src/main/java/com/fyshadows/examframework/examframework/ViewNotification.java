@@ -2,6 +2,7 @@ package com.fyshadows.examframework.examframework;
 
 import android.app.ListActivity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
@@ -10,9 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -52,14 +51,14 @@ public class ViewNotification extends ListActivity {
 		AdConfig.setApiKey("1435945311229750247"); //setting apikey
 		// AdConfig.setTestMode(true);
 		//AdConfig.setAdListener(adListener);  //setting global Ad listener.
-		AdConfig.setCachingEnabled(true); //Enabling SmartWall ad caching.
+		AdConfig.setCachingEnabled(false); //Enabling SmartWall ad caching.
 		AdConfig.setPlacementId(0); //pass the placement id.
 
 		//Initialize Airpush
 		main=new Main(this);
 
 		//for calling banner 360
-		main.start360BannerAd(this);
+		//main.start360BannerAd(this);
 
 		//for calling Smartwall ad
 		main.startInterstitialAd(AdConfig.AdType.smartwall);
@@ -93,13 +92,13 @@ public class ViewNotification extends ListActivity {
 
 		ListView lv = getListView();
 		if (masterdetails.isOnline(this)) {
-			getnotification();
+			new asyncGetNotification().execute();
 		} else {
 
 			TextView txt = (TextView) this
 					.findViewById(R.id.nonotificationtext);
 			txt.setText("No internet Connection.Please connect to internet");
-			Toast.makeText(this, "No internet Connection.Please connect to internet..", Toast.LENGTH_LONG).show();
+
 		}
 
 
@@ -110,7 +109,7 @@ public class ViewNotification extends ListActivity {
 			public void run() {
 
 				if (masterdetails.isOnline(ViewNotification.this)) {
-					getnotification();
+					new asyncGetNotification().execute();
 				} else {
 					TextView txt = (TextView) ViewNotification.this
 							.findViewById(R.id.nonotificationtext);
@@ -197,6 +196,36 @@ public class ViewNotification extends ListActivity {
 			txt.setVisibility(View.VISIBLE);
 		}
 
+	}
+
+	//to check for updates in questions
+	public class asyncGetNotification extends AsyncTask<String, Void, String> {
+		JSONParser jsonParser = new JSONParser();
+		int MainDBLastQuestion;
+
+
+		@Override
+		protected void onPreExecute() {
+
+		}
+
+		@Override
+		protected String doInBackground(String... urls) {
+
+
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+			try {
+				getnotification();
+			}
+			catch (Exception ex)
+			{
+				Log.i("Exception", "got exception");
+			}
+		}
 	}
 
 
