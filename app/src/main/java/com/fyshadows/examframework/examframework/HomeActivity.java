@@ -25,6 +25,7 @@ public class HomeActivity extends ActionBarActivity {
     Button minus;
     Button DailyExam;
     ImageButton vn;
+    ImageButton chat;
     TextView timer;
     Exam_database db;
     SharedPreferences prefs;
@@ -169,6 +170,16 @@ public class HomeActivity extends ActionBarActivity {
                 masterdetails.insertAnalysis(HomeActivity.this, 4);
                 //End : Insert Analysis
                 Intent i = new Intent(HomeActivity.this , ViewNotification.class);
+                startActivity(i);
+
+            }
+        });
+
+        chat= (ImageButton) findViewById(R.id.chat);
+        chat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(HomeActivity.this , ChatRoom.class);
                 startActivity(i);
 
             }

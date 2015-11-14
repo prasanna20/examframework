@@ -6,7 +6,7 @@
     <string name="title_activity_configuringactivity">Welcome</string>
     //for displaying advertisement
 
-    //   --Replace this in prod
+    // --Replace this in prod
     <string name="banner_ad_unit_id">ca-app-pub-7106902264495033/2221908904</string>
 
     // ConfiguringAvtivity.java
@@ -64,8 +64,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_daily_exam_question">DailyExamQuestion</string>
     <string name="title_activity_daily_article">DailyArticle</string>
-
-
+    <string name="title_activity_chat_room">ChatRoom</string>
 
 
 </resources>

@@ -30,6 +30,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import ExamFramework_AsyncTask.AsyncUpdateChatRoom;
+
 
 public class Configuringactivity extends ActionBarActivity {
 
@@ -134,6 +136,7 @@ public class Configuringactivity extends ActionBarActivity {
             welcome.setText(R.string.welcomeback);
             if (masterdetails.isOnline(this)) {
             new asynccheckfornewques().execute();
+
             } else {
                 Toast.makeText(this, "Please connect to Internet to receive updates", Toast.LENGTH_LONG);
             }
@@ -141,6 +144,10 @@ public class Configuringactivity extends ActionBarActivity {
 
 
         }
+
+        //Start : Get ChatRoom
+        new AsyncUpdateChatRoom(Configuringactivity.this).execute();
+        //End : Chat Room
 
         logoTimer.start();
 
@@ -330,6 +337,8 @@ public class Configuringactivity extends ActionBarActivity {
                     }
                 }
 //End  : Get Daily Question--------------------------------------------------------------------------
+
+
             } catch (JSONException e) {
                 check = 1;
                Log.i("Configuring activity","Error");

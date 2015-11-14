@@ -17,6 +17,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import ExamFramework_AsyncTask.AsyncUpdateUserName;
+import ExamFramework_Data.ChatRoomData;
 import ExamFramework_Data.DailyArticleData;
 import ExamFramework_Data.DailyExam;
 import ExamFramework_Data.notificationtable;
@@ -28,11 +30,12 @@ import ExamFramework_Data.notificationtable;
 public class Exam_database extends SQLiteOpenHelper {
 
     JSONParser jsonParser = new JSONParser();
+    private Context myCtx;
 
     public Exam_database(Context context) {
 
-        super(context, "exam_database", null, 3);// version number is given at
-
+        super(context, "exam_database", null, 4);// version number is given at
+        myCtx = context;
     }
 
     private boolean doesDatabaseExist(ContextWrapper context) {
@@ -43,7 +46,7 @@ public class Exam_database extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase myDB) {
 
-        myDB.execSQL("CREATE TABLE if not exists EF_mob_UserDetails(mail_id varchar(250),GCM_registration_id TEXT );");
+        myDB.execSQL("CREATE TABLE if not exists EF_mob_UserDetails(mail_id varchar(250),GCM_registration_id TEXT,username  varchar(250) );");
 
         myDB.execSQL("CREATE TABLE if not exists EF_mob_MasterQuestion(Questionno int,Question text,Choice1 varchar(350),Choice2 varchar(350),Choice3 varchar(350),Choice4 varchar(350),Choice5 varchar(350),Correct_ans varchar(350),Category,answered_flag int,time_taken int);");
 
@@ -52,6 +55,8 @@ public class Exam_database extends SQLiteOpenHelper {
         myDB.execSQL("CREATE TABLE if not exists EF_mob_DailyQues(id  int,quesDate date,QuesNo int ,Ques text,Choice1 varchar(350),Choice2 varchar(350),Choice3 varchar(350),Choice4 varchar(350),Choice5 varchar(350),CorrectAns varchar(350),Category varchar(250),answeredFlag int,timeTaken int,Rank int);");
 
         myDB.execSQL("CREATE TABLE if not exists EF_mob_DailyArticle(ArticleNo int, ArticleDate Date,Topic varchar(300),ArticleDesc text);");
+
+        myDB.execSQL("CREATE TABLE if not exists EF_mob_ChatRoom(id int, RoomName varchar(300),Description varchar(750), CreatedBy  varchar(300),ChatCount int,NotificationEnabled int,favourite int);");
 
        /*
        Answered_flag
@@ -72,6 +77,10 @@ public class Exam_database extends SQLiteOpenHelper {
         myDB.execSQL("CREATE TABLE if not exists EF_mob_DailyQues(id  int,quesDate date,QuesNo int ,Ques text,Choice1 varchar(350),Choice2 varchar(350),Choice3 varchar(350),Choice4 varchar(350),Choice5 varchar(350),CorrectAns varchar(350),Category varchar(250),answeredFlag int,timeTaken int,Rank int);");
 
         myDB.execSQL("CREATE TABLE if not exists EF_mob_DailyArticle(ArticleNo int, ArticleDate Date,Topic varchar(300),ArticleDesc text);");
+
+        myDB.execSQL("CREATE TABLE if not exists EF_mob_ChatRoom(id int, RoomName varchar(300),CreatedBy  varchar(300),Description varchar(750),ChatCount int,NotificationEnabled int,favourite int);");
+
+        myDB.execSQL("ALTER TABLE EF_mob_UserDetails ADD COLUMN username  varchar(250);");
 
         Log.i("table created", "table created");
     }
@@ -807,6 +816,135 @@ public class Exam_database extends SQLiteOpenHelper {
     private notificationtable getnot(String message, String timestamp,
                                      String notificationid) {
         return new notificationtable(notificationid, message, timestamp);
+    }
+
+    //Get Chat Room Details
+    public ArrayList<ChatRoomData> getChatRoomDetails() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ArrayList<ChatRoomData> list = new ArrayList<ChatRoomData>();
+        String selectQuery = "SELECT  id,RoomName ,CreatedBy ,ChatCount,NotificationEnabled ,favourite,Description FROM EF_mob_ChatRoom";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+
+        if (null != cursor && cursor.moveToFirst()) {
+
+            int _id = cursor.getColumnIndex("id");
+            int _RoomName = cursor.getColumnIndex("RoomName");
+            int _CreatedBy = cursor.getColumnIndex("CreatedBy");
+            int _ChatCount = cursor.getColumnIndex("ChatCount");
+            int _NotificationEnabled = cursor.getColumnIndex("NotificationEnabled");
+            int _FavEnabled = cursor.getColumnIndex("favourite");
+            int _Description = cursor.getColumnIndex("Description");
+
+
+            if (cursor.moveToFirst()) {
+                do {
+                    int id=cursor.getInt(_id);
+                    String RoomName = cursor.getString(_RoomName);
+                    String CreatedBy = cursor.getString(_CreatedBy);
+                    int ChatCount = cursor.getInt(_ChatCount);
+                    int NotificationEnabled = cursor.getInt(_NotificationEnabled);
+                    int FavEnabled = cursor.getInt(_FavEnabled);
+                    String Description=cursor.getString(_Description);
+
+                    list.add(new ChatRoomData( id,  ChatCount,  NotificationEnabled,  RoomName,  CreatedBy, FavEnabled,Description));
+
+                } while (cursor.moveToNext());
+
+            }
+        }
+        return list;
+
+    }
+
+    //To Update User Name
+    public void updateUserName(String UserName) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+
+        String sql = "UPDATE EF_mob_UserDetails  SET username ='" + UserName +"'";
+        db.execSQL(sql);
+
+
+        new AsyncUpdateUserName(this.myCtx).execute(UserName);
+
+
+        if (db.isOpen()) {
+            db.close();
+        }
+    }
+
+    //To get user Name
+
+    public String getUserName() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String UserName = "";
+        String selectQuery = "SELECT  username FROM EF_mob_UserDetails";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+
+        if (null != cursor && cursor.moveToFirst()) {
+
+            int _username = cursor.getColumnIndex("username");
+
+            if (cursor.moveToFirst()) {
+
+                     UserName=cursor.getString(_username);
+
+            }
+        }
+        return UserName;
+
+    }
+
+//Insert chat room details
+public void InsertChatRoomDetails(ChatRoomData chatRoomData) {
+    SQLiteDatabase db = this.getWritableDatabase();
+    ContentValues values = new ContentValues();
+
+    Log.i("chatinsert",chatRoomData.getRoomName());
+
+    values.put("id", chatRoomData.getid());
+    values.put("RoomName", chatRoomData.getRoomName());
+    values.put("Description", chatRoomData.getDescription());
+    values.put("CreatedBy", chatRoomData.getCreatedBy());
+    values.put("ChatCount", chatRoomData.getChatCount());
+    values.put("NotificationEnabled", 0);
+    values.put("favourite", 0);
+
+    db.insert("EF_mob_ChatRoom", null, values);
+
+    if (db.isOpen()) {
+        db.close();
+    }
+}
+
+    //To Update Toggle notification
+    public void updateToggleNotification(int Id,int Flag) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String sql = "UPDATE EF_mob_ChatRoom  SET NotificationEnabled ='" + Flag +"' " +  " where id ='" + Id +"'";
+        Log.i("sql-noti",sql);
+        db.execSQL(sql);
+
+        if (db.isOpen()) {
+            db.close();
+        }
+    }
+
+    //To Update Toggle Favourite
+    public void updateToggleFavourite(int Id,int Flag) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String sql = "UPDATE EF_mob_ChatRoom  SET favourite ='" + Flag +"' " +  " where id ='" + Id +"'";
+        Log.i("sql-fav",sql);
+        db.execSQL(sql);
+
+        if (db.isOpen()) {
+            db.close();
+        }
     }
 
 

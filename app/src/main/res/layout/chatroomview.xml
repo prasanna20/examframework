@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
+    android:background="@drawable/listviewbg"
+    android:orientation="vertical" >
 
     <RelativeLayout
         android:id="@+id/relativeLayout1"
@@ -15,38 +16,69 @@
         android:paddingTop="10dp" >
 
         <TextView
-            android:id="@+id/txtArticleTopic"
+        android:id="@+id/txtRoomName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="Room Name"
+        android:textColor="#000000"
+        android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/txtChatCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:text="Medium Text"
+            android:layout_toRightOf="@id/txtRoomName"
+            android:text="Chat Count"
             android:textColor="#000000"
             android:textSize="14sp" />
+
+        <ToggleButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="On"
+            android:id="@+id/toggleNotification"
+            android:checked="false"
+            android:layout_toRightOf="@id/txtChatCount" />
+
+        <ToggleButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fav"
+            android:id="@+id/FavButton"
+            android:checked="true"
+            android:layout_toRightOf="@id/toggleNotification" />
+
+
 
         <View
             android:id="@+id/view0"
             android:layout_width="fill_parent"
             android:layout_height="0.5dip"
-            android:layout_below="@+id/txtArticleTopic"
+            android:layout_below="@+id/toggleNotification"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="5dp"
-            android:background="#cdcfd2" />
+            android:background="#000000" />
 
         <TextView
-            android:id="@+id/txtArticleDesc"
+            android:id="@+id/txtCreatedBy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/view0"
             android:layout_alignParentLeft="true"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:text="Medium Text"
+            android:text="Created By"
             android:textColor="#000000"
             android:textSize="14sp" />
+
 
         <View
             android:id="@+id/view3"
@@ -70,4 +102,6 @@
         android:background="#cdcfd2" />
 
 
+
 </RelativeLayout>
+

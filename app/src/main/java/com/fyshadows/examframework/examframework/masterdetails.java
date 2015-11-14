@@ -40,6 +40,10 @@ public class masterdetails {
     static String getDailyArticle="http://collegemateapp.com/ExamFrameWork/getDailyArticle.php";
     public static String getnews="http://collegemateapp.com/ExamFrameWork/getnews.php";
     public static String InsertAnalysis="http://collegemateapp.com/ExamFrameWork/IbpsAnalysis.php";
+    public static String UpdateUserName="http://collegemateapp.com/ExamFrameWork/UpdateUserName.php";
+    public static String AddChatRoom="http://collegemateapp.com/ExamFrameWork/AddChatRoom.php";
+    public static String getChatRoom="http://collegemateapp.com/ExamFrameWork/getChatRoom.php";
+
 
     /*
 Screen	                  Code
