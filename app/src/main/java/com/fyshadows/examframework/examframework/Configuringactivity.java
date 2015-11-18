@@ -1,6 +1,5 @@
 package com.fyshadows.examframework.examframework;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -19,6 +18,7 @@ import android.widget.Toast;
 
 import com.google.android.gcm.GCMRegistrar;
 import com.yyxqsg.bsyduo229750.AdConfig;
+import com.yyxqsg.bsyduo229750.AdView;
 import com.yyxqsg.bsyduo229750.Main;
 
 import org.apache.http.NameValuePair;
@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ExamFramework_AsyncTask.AsyncUpdateChatRoom;
+import ExamFramework_AsyncTask.AsyncUpdateNewValues;
 
 
 public class Configuringactivity extends ActionBarActivity {
@@ -48,7 +49,7 @@ public class Configuringactivity extends ActionBarActivity {
     private com.yyxqsg.bsyduo229750.AdView adView;
 
 
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -72,9 +73,9 @@ public class Configuringactivity extends ActionBarActivity {
        //for calling Smartwall ad
       //  main.startInterstitialAd(AdConfig.AdType.smartwall);
 
-        adView=(com.yyxqsg.bsyduo229750.AdView) findViewById(R.id.myAdView);
-        adView.setBannerType(com.yyxqsg.bsyduo229750.AdView.BANNER_TYPE_IN_APP_AD);
-        adView.setBannerAnimation(com.yyxqsg.bsyduo229750.AdView.ANIMATION_TYPE_FADE);
+        adView=(AdView) findViewById(R.id.myAdView);
+        adView.setBannerType(AdView.BANNER_TYPE_IN_APP_AD);
+        adView.setBannerAnimation(AdView.ANIMATION_TYPE_FADE);
         adView.showMRinInApp(false);
         //adView.setNewAdListener(adListener); //for passing a new listener for inline banner ads.
         adView.loadAd();
@@ -84,7 +85,7 @@ public class Configuringactivity extends ActionBarActivity {
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-        if (android.os.Build.VERSION.SDK_INT > 9) {
+        if (Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                     .permitAll().build();
             StrictMode.setThreadPolicy(policy);
@@ -124,7 +125,13 @@ public class Configuringactivity extends ActionBarActivity {
 
             if (masterdetails.isOnline(this)) {
                 Log.i("Exam", "starting async task");
-                new asynctask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                    new asynctask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                }
+                else
+                {
+                    new asynctask().execute();
+                }
 
             } else {
                 Toast.makeText(this, "Please connect to Internet", Toast.LENGTH_LONG);
@@ -135,7 +142,16 @@ public class Configuringactivity extends ActionBarActivity {
             // This block is used for the already installed activity
             welcome.setText(R.string.welcomeback);
             if (masterdetails.isOnline(this)) {
-            new asynccheckfornewques().execute();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                   // new asynccheckfornewques().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                new AsyncUpdateNewValues(Configuringactivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                }
+
+                else
+                {
+                    //new asynccheckfornewques().execute();
+                    new AsyncUpdateNewValues(Configuringactivity.this).execute();
+                }
 
             } else {
                 Toast.makeText(this, "Please connect to Internet to receive updates", Toast.LENGTH_LONG);
@@ -146,7 +162,13 @@ public class Configuringactivity extends ActionBarActivity {
         }
 
         //Start : Get ChatRoom
-        new AsyncUpdateChatRoom(Configuringactivity.this).execute();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            new AsyncUpdateChatRoom(Configuringactivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        }
+        else
+        {
+            new AsyncUpdateChatRoom(Configuringactivity.this).execute();
+        }
         //End : Chat Room
 
         logoTimer.start();

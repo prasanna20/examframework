@@ -2,7 +2,12 @@ package com.fyshadows.examframework.examframework;
 
 import android.app.ListActivity;
 import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.StrictMode;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -26,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ExamFramework_Adapter.ChatRoomAdapter;
+import ExamFramework_AsyncTask.AsyncUpdateChatRoom;
 import ExamFramework_Data.ChatRoomData;
 
 
@@ -46,6 +52,8 @@ public class ChatRoom  extends ListActivity {
     EditText editText_RoomDesc;
     JSONParser jsonParser = new JSONParser();
     RelativeLayout AddLayout;
+    final Handler handler = new Handler();
+    Boolean isHandlerRunning = false;
     private Main main;
     private com.yyxqsg.bsyduo229750.AdView adView;
 
@@ -59,6 +67,12 @@ public class ChatRoom  extends ListActivity {
         getActionBar().setDisplayShowCustomEnabled(true);
         getActionBar().setCustomView(R.layout.actionbar_chatroom);
         getActionBar().setDisplayHomeAsUpEnabled(true);
+
+        if (Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                    .permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
 
         txtNoChatRoom=(TextView) this.findViewById(R.id.txtNoChatRoom);
 
@@ -128,9 +142,8 @@ public class ChatRoom  extends ListActivity {
             @Override
             public void onClick(View v) {
                 if (masterdetails.isOnline(ChatRoom.this)) {
-                    if(editText_RoomName.getText().toString().trim().length() >0)
-                    {
-                        int success=0;
+                    if (editText_RoomName.getText().toString().trim().length() > 0) {
+                        int success = 0;
                         db = new Exam_database(ChatRoom.this);
 
                         List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -153,34 +166,48 @@ public class ChatRoom  extends ListActivity {
                                     btnAdd.setImageResource(R.drawable.menu);
                                     editText_RoomDesc.setText("");
                                     editText_RoomName.setText("");
+                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                                        new AsyncUpdateChatRoom(ChatRoom.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                    } else {
+                                        new AsyncUpdateChatRoom(ChatRoom.this).execute();
+                                    }
                                     Toast.makeText(getBaseContext(), "Room Added.", Toast.LENGTH_SHORT);
-                                }
-                                else if(success == 2 )
-                                {
+
+                                } else if (success == 2) {
                                     editText_RoomName.setSelection(0);
                                     Toast.makeText(getBaseContext(), "Room with Same Name available.", Toast.LENGTH_SHORT);
-                                }
-                                else
-                                {
+                                } else {
                                     Toast.makeText(getBaseContext(), "Unable to create room. Please try after sometime..", Toast.LENGTH_SHORT);
                                 }
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                    }
-                    else
-                    {
-                        Toast.makeText(getBaseContext(),"Please input the Room Name",Toast.LENGTH_SHORT);
+                    } else {
+                        Toast.makeText(getBaseContext(), "Please input the Room Name", Toast.LENGTH_SHORT);
                         editText_RoomName.setSelection(0);
                     }
-                }
-                else
-                {
-                    Toast.makeText(getBaseContext(),"Please connect to internet.",Toast.LENGTH_SHORT);
+                } else {
+                    Toast.makeText(getBaseContext(), "Please connect to internet.", Toast.LENGTH_SHORT);
                 }
             }
         });
+
+
+        handler.postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                isHandlerRunning = true;
+                Log.i("Refreshing", "Refreshing");
+                list = db.getChatRoomDetails();
+                adapter = new ChatRoomAdapter(ChatRoom.this, list);
+                setListAdapter(adapter);
+                adapter.notifyDataSetChanged();
+                handler.postDelayed(this, 60 * 200);
+                isHandlerRunning = false;
+            }
+        }, 60 * 1);
 
     }
 
@@ -207,6 +234,34 @@ public class ChatRoom  extends ListActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (isHandlerRunning) {
+            isHandlerRunning = false;
+            handler.removeCallbacksAndMessages(null);
+        }
+
+            Log.i("Home", "in  resume here" + isHandlerRunning);
+        }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.i("Home", "in  Destroy here" + isHandlerRunning);
+        if (isHandlerRunning) {
+            handler.removeCallbacksAndMessages(null);
+
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.i("Home", "in  resume here" + isHandlerRunning);
+
+        }
 
 
 }

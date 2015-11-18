@@ -926,7 +926,7 @@ public void InsertChatRoomDetails(ChatRoomData chatRoomData) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         String sql = "UPDATE EF_mob_ChatRoom  SET NotificationEnabled ='" + Flag +"' " +  " where id ='" + Id +"'";
-        Log.i("sql-noti",sql);
+        Log.i("sql-noti", sql);
         db.execSQL(sql);
 
         if (db.isOpen()) {
@@ -937,11 +937,41 @@ public void InsertChatRoomDetails(ChatRoomData chatRoomData) {
     //To Update Toggle Favourite
     public void updateToggleFavourite(int Id,int Flag) {
         SQLiteDatabase db = this.getWritableDatabase();
-
         String sql = "UPDATE EF_mob_ChatRoom  SET favourite ='" + Flag +"' " +  " where id ='" + Id +"'";
         Log.i("sql-fav",sql);
         db.execSQL(sql);
 
+        if (db.isOpen()) {
+            db.close();
+        }
+    }
+
+    //Check whether the room id is present
+    public Boolean checkChatRoomId(int Id) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        String UserName = "";
+        Boolean Output = false ;
+        String selectQuery = "SELECT  id FROM EF_mob_ChatRoom "  +  " where id ='" + Id +"'";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (null != cursor && cursor.moveToFirst()) {
+            Output= true;
+        }
+        else
+        {
+            Output= false;
+        }
+        return Output;
+
+    }
+
+
+    //To Update Toggle notification
+    public void updateChatRoomDetails(ChatRoomData chatRoomData) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String sql = "UPDATE EF_mob_ChatRoom  SET RoomName ='" + chatRoomData.getRoomName() +"', Description ='" + chatRoomData.getDescription() +"',  ChatCount ='" + chatRoomData.getChatCount() +"' " +  " where id ='" + chatRoomData.getid() +"'";
+        Log.i("sql-UpadateChatRoom", sql);
+        db.execSQL(sql);
         if (db.isOpen()) {
             db.close();
         }

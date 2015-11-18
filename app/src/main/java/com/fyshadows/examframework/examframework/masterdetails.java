@@ -30,14 +30,14 @@ public class masterdetails {
     }
 
     JSONParser jsonParser = new JSONParser();
-    static String sender_id="830753459977";
-    static int timer=36;
-    static String registeruser ="http://collegemateapp.com/ExamFrameWork/GCMregistration.php";
-    static String getMasterQuestion="http://collegemateapp.com/ExamFrameWork/getExamQuestions.php";
-    static String checkForupdate="http://collegemateapp.com/ExamFrameWork/CheckForNewQuestions.php";
-    static String getNewQuestions="http://collegemateapp.com/ExamFrameWork/getNewQuestions.php";
-    static String getDailyTestQuestions="http://collegemateapp.com/ExamFrameWork/getDailyTestQuestions.php";
-    static String getDailyArticle="http://collegemateapp.com/ExamFrameWork/getDailyArticle.php";
+    public static String sender_id="830753459977";
+    public static int timer=36;
+    public static String registeruser ="http://collegemateapp.com/ExamFrameWork/GCMregistration.php";
+    public static String getMasterQuestion="http://collegemateapp.com/ExamFrameWork/getExamQuestions.php";
+    public static String checkForupdate="http://collegemateapp.com/ExamFrameWork/CheckForNewQuestions.php";
+    public static String getNewQuestions="http://collegemateapp.com/ExamFrameWork/getNewQuestions.php";
+    public static String getDailyTestQuestions="http://collegemateapp.com/ExamFrameWork/getDailyTestQuestions.php";
+    public static String getDailyArticle="http://collegemateapp.com/ExamFrameWork/getDailyArticle.php";
     public static String getnews="http://collegemateapp.com/ExamFrameWork/getnews.php";
     public static String InsertAnalysis="http://collegemateapp.com/ExamFrameWork/IbpsAnalysis.php";
     public static String UpdateUserName="http://collegemateapp.com/ExamFrameWork/UpdateUserName.php";

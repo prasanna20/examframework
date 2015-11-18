@@ -22,38 +22,32 @@ import ExamFramework_Data.ChatRoomData;
  * Created by Prasanna on 14-11-2015.
  */
 
-
 public class AsyncUpdateChatRoom extends AsyncTask<String, Void, String> {
 
     JSONParser jsonParser = new JSONParser();
     Exam_database db;
     private Context myCtx;
 
-
     public AsyncUpdateChatRoom(Context ctx) {
         // Now set context
         this.myCtx = ctx;
     }
-
 
     @Override
     protected void onPreExecute() {
 
     }
 
-
     @Override
     protected String doInBackground(String... Values) {
         try {
             Log.i("Async", "Executing get chat room");
-
 
             db = new Exam_database(this.myCtx);
 
             List<NameValuePair> params = new ArrayList<NameValuePair>();
 
             params.clear();
-
 
             JSONObject json = jsonParser.makeHttpRequest(
                     masterdetails.getChatRoom, "GET", params);
@@ -73,9 +67,11 @@ public class AsyncUpdateChatRoom extends AsyncTask<String, Void, String> {
 
                     for (int i = 0; i < objChatRoom.length(); i++) {
 
+
                         JSONObject obj = objChatRoom.getJSONObject(i);
                         Log.i("chatinsert","RoomName"+ String.valueOf(obj.getString("RoomName")) );
                         Log.i("chatinsert","Id"+ String.valueOf(obj.getInt("Id")) );
+
                         chatRoomData = new ChatRoomData();
                         chatRoomData.setRoomName(obj.getString("RoomName"));
                         chatRoomData.setDescription(obj.getString("Description"));
@@ -86,11 +82,16 @@ public class AsyncUpdateChatRoom extends AsyncTask<String, Void, String> {
                         if (chatRoomData.getDescription().trim() == "") {
                             chatRoomData.setDescription("No Description available");
                         }
-                        db.InsertChatRoomDetails(chatRoomData);
+
+                        if(db.checkChatRoomId(obj.getInt("Id"))) {
+                          db.updateChatRoomDetails(chatRoomData);
+                        }
+                        else
+                        {
+                            db.InsertChatRoomDetails(chatRoomData);
+                        }
                     }
                 }
-
-
 
             }
         } catch (JSONException e) {

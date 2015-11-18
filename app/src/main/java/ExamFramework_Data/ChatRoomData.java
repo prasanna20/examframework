@@ -52,7 +52,4 @@ public class ChatRoomData {
 
     public void setDescription(String Description) {this.Description = Description;}
 
-
-
-
 }
