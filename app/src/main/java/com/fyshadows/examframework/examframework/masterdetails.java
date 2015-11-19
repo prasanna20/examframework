@@ -43,6 +43,10 @@ public class masterdetails {
     public static String UpdateUserName="http://collegemateapp.com/ExamFrameWork/UpdateUserName.php";
     public static String AddChatRoom="http://collegemateapp.com/ExamFrameWork/AddChatRoom.php";
     public static String getChatRoom="http://collegemateapp.com/ExamFrameWork/getChatRoom.php";
+    public static String TriggerUpdate="http://collegemateapp.com/ExamFrameWork/TriggerUpdate.php";
+    public static String TriggerDeleteRoom="http://collegemateapp.com/ExamFrameWork/TriggerDeleteRoom.php";
+
+
 
 
     /*
@@ -54,6 +58,9 @@ On click of news	       4
 On click of notification   5
 On click of article	       6
 on click of Exam date	   7
+update values through Notification 8
+on click of chatroom 9
+on DeleteRoom 10
      */
 
     public static boolean isOnline(Context context) {

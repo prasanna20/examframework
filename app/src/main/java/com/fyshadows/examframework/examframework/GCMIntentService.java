@@ -20,6 +20,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import ExamFramework_AsyncTask.AsyncUpdateNewValues;
+
 
 public class GCMIntentService extends GCMBaseIntentService {
 
@@ -91,6 +93,27 @@ public class GCMIntentService extends GCMBaseIntentService {
             generateNotification(context, MessageTitle,MessageText);
 
         }
+        else if(identify.trim().equals("update"))
+        {
+            new AsyncUpdateNewValues(GCMIntentService.this).execute();
+            //Start : Insert Analysis
+            masterdetails masterdetails=new masterdetails(this);
+            masterdetails.insertAnalysis(this, 8);
+            Log.i("Notification","Executing update task");
+            //End : Insert Analysis
+        }
+        else if(identify.trim().equals("DeleteRoom"))
+        {
+            Exam_database db=new Exam_database(GCMIntentService.this);
+           int RoomId =Integer.parseInt(intent.getExtras().getString("RoomId"));
+            db.deleteChatRoom(RoomId);
+            //Start : Insert Analysis
+            masterdetails masterdetails=new masterdetails(this);
+            masterdetails.insertAnalysis(this, 10);
+            Log.i("Notification","Deleted Room Id");
+            //End : Insert Analysis
+        }
+
     }
 
 	/**

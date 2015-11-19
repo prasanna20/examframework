@@ -88,6 +88,8 @@ public class AsyncUpdateChatRoom extends AsyncTask<String, Void, String> {
                         }
                         else
                         {
+                            chatRoomData.setNotificationEnabled(0);
+                            chatRoomData.setFavEnabled(0);
                             db.InsertChatRoomDetails(chatRoomData);
                         }
                     }

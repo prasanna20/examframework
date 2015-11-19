@@ -58,6 +58,8 @@ public class Exam_database extends SQLiteOpenHelper {
 
         myDB.execSQL("CREATE TABLE if not exists EF_mob_ChatRoom(id int, RoomName varchar(300),Description varchar(750), CreatedBy  varchar(300),ChatCount int,NotificationEnabled int,favourite int);");
 
+        myDB.execSQL("CREATE TABLE if not exists Exam_Chat(id int, RoomId int,username varchar(250), mail_id varchar(250),ChatMessage text,TimeStamp timestamp);");
+
        /*
        Answered_flag
        0   -    Not attempted yet
@@ -82,7 +84,9 @@ public class Exam_database extends SQLiteOpenHelper {
 
         myDB.execSQL("ALTER TABLE EF_mob_UserDetails ADD COLUMN username  varchar(250);");
 
-        Log.i("table created", "table created");
+        myDB.execSQL("CREATE TABLE if not exists Exam_Chat(id int, RoomId int,username varchar(250), mail_id varchar(250),ChatMessage text,TimeStamp timestamp);");
+
+        Log.i("table upgraded", "table upgraded");
     }
 
     // Register admin
@@ -822,7 +826,7 @@ public class Exam_database extends SQLiteOpenHelper {
     public ArrayList<ChatRoomData> getChatRoomDetails() {
         SQLiteDatabase db = this.getWritableDatabase();
         ArrayList<ChatRoomData> list = new ArrayList<ChatRoomData>();
-        String selectQuery = "SELECT  id,RoomName ,CreatedBy ,ChatCount,NotificationEnabled ,favourite,Description FROM EF_mob_ChatRoom";
+        String selectQuery = "SELECT  id,RoomName ,CreatedBy ,ChatCount,NotificationEnabled ,favourite,Description FROM EF_mob_ChatRoom ORDER BY favourite DESC,NotificationEnabled  DESC,ChatCount DESC,id DESC";
 
         Cursor cursor = db.rawQuery(selectQuery, null);
 
@@ -905,14 +909,22 @@ public void InsertChatRoomDetails(ChatRoomData chatRoomData) {
     ContentValues values = new ContentValues();
 
     Log.i("chatinsert",chatRoomData.getRoomName());
-
+    String CreatedBy="";
+    if(chatRoomData.getCreatedBy() == null)
+    {
+        CreatedBy = "";
+    }
+    else
+    {
+        CreatedBy = chatRoomData.getCreatedBy();
+    }
     values.put("id", chatRoomData.getid());
     values.put("RoomName", chatRoomData.getRoomName());
     values.put("Description", chatRoomData.getDescription());
-    values.put("CreatedBy", chatRoomData.getCreatedBy());
+    values.put("CreatedBy", CreatedBy);
     values.put("ChatCount", chatRoomData.getChatCount());
-    values.put("NotificationEnabled", 0);
-    values.put("favourite", 0);
+    values.put("NotificationEnabled", chatRoomData.getNotificationEnabled());
+    values.put("favourite", chatRoomData.getFavEnabled());
 
     db.insert("EF_mob_ChatRoom", null, values);
 
@@ -977,5 +989,15 @@ public void InsertChatRoomDetails(ChatRoomData chatRoomData) {
         }
     }
 
+    //Delete the chat room
+    public void deleteChatRoom(int RoomId)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete("EF_mob_ChatRoom", "id  = "+ RoomId,null);
+        db.close();
+        if (db.isOpen()) {
+            db.close();
+        }
+    }
 
 }
