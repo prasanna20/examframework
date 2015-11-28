@@ -56,6 +56,7 @@ public class ChatRoom  extends ListActivity {
     Boolean isHandlerRunning = false;
     private Main main;
     private com.yyxqsg.bsyduo229750.AdView adView;
+    String UserName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,7 +108,16 @@ public class ChatRoom  extends ListActivity {
         }
 
         editText_UserName= (EditText) findViewById(R.id.editText_UserName);
-        editText_UserName.setText(db.getUserName());
+       UserName = db.getUserName();
+        if(UserName != null) {
+            editText_UserName.setText(UserName);
+        }
+        else
+        {
+            String Email = db.GetEmailDetails(this);
+            int End = Email.indexOf("@");
+            editText_UserName.setText(Email.substring(0,End));
+        }
         btnSave= (Button) findViewById(R.id.btnSave);
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override

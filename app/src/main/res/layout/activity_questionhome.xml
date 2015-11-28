@@ -230,6 +230,7 @@
 
         </RelativeLayout>
 
+
     <RelativeLayout
         android:id="@+id/questiondetails_layout"
         android:layout_width="match_parent"
@@ -237,6 +238,9 @@
         android:layout_gravity="bottom"
         android:background="#88666666">
 
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
         <TextView
             android:id="@+id/question_details"
             android:layout_width="wrap_content"
@@ -253,8 +257,9 @@
             android:textSize="20sp"
             android:textStyle="bold" />
 
-
+        </ScrollView>
     </RelativeLayout>
+
 
     <com.yyxqsg.bsyduo229750.AdView
         android:id="@+id/myAdView"

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    tools:context="com.fyshadows.examframework.examframework.ChatWindow">
+
+
+    <LinearLayout
+        android:id="@+id/bottom_write_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#ffffff"
+        android:weightSum="100" >
+
+        <EditText
+            android:id="@+id/text"
+            android:layout_width="fill_parent"
+            android:layout_margin="5sp"
+            android:layout_weight="90"
+            android:layout_height="wrap_content"
+            android:hint="Your message"
+            android:padding="5dp"
+            android:inputType="textCapSentences|textMultiLine"
+            android:maxLength="2000"
+            android:maxLines="4" />
+
+        <ImageButton
+            android:id="@+id/imgSend"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="10"
+            android:background="#00000000"
+            android:src="@drawable/send_msg_icon"
+            android:textColor="#FFF" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/bottom_write_bar"
+        android:layout_alignParentTop="true"
+        android:cacheColorHint="#00000000"
+        android:clipToPadding="false"
+        android:dividerHeight="10dp"
+        android:paddingTop="10dp"
+        android:listSelector="#00000000"
+        android:paddingBottom="10dp" >
+    </ListView>
+
+    <TextView
+        android:id="@android:id/empty"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@id/bottom_write_bar"
+        android:layout_alignParentTop="true"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="Be the first to chat.." />
+
+</RelativeLayout>

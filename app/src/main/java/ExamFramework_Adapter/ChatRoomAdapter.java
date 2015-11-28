@@ -1,7 +1,9 @@
 package ExamFramework_Adapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.fyshadows.examframework.examframework.ChatWindow;
 import com.fyshadows.examframework.examframework.Exam_database;
 import com.fyshadows.examframework.examframework.R;
 
@@ -127,6 +130,21 @@ public class ChatRoomAdapter extends ArrayAdapter<ChatRoomData> {
                 {
                     db.updateToggleFavourite(list.get(position).getid(), 0);
                 }
+
+            }
+
+        });
+
+        holder.txtRoomName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent i = new Intent(context, ChatWindow.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt("RoomId", list.get(position).getid());
+                bundle.putString("RoomName", list.get(position).getRoomName());
+                i.putExtras(bundle);
+                context.startActivity(i);
 
             }
 

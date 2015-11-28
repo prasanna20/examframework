@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.ActionBarActivity;
+import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -452,8 +453,8 @@ public class Questionhome extends ActionBarActivity {
             QuestionNumberDailyExam= sd.get(0).getQuestionNo();
             actionbar_queststat.setText(QuestionNumber + " of 1000");
 
-            txtquestion.setText(sd.get(0).getQuestion());
-            txtquestion_details.setText(sd.get(0).getQuestion());
+            txtquestion.setText(Html.fromHtml(sd.get(0).getQuestion()));
+            txtquestion_details.setText(Html.fromHtml(sd.get(0).getQuestion()));
             txtanswer1.setText(sd.get(0).getChoice1());
             txtanswer2.setText(sd.get(0).getChoice2());
             txtanswer3.setText(sd.get(0).getChoice3());
@@ -466,8 +467,8 @@ public class Questionhome extends ActionBarActivity {
             QuestionNumber = DailyExam.get(0).getQuesNo();
             QuestionNumberDailyExam= DailyExam.get(0).getid();
             actionbar_queststat.setText( QuestionNumber + " of " + totalquestions);
-            txtquestion.setText(DailyExam.get(0).getQues());
-            txtquestion_details.setText(DailyExam.get(0).getQues());
+            txtquestion.setText(Html.fromHtml(DailyExam.get(0).getQues()));
+            txtquestion_details.setText(Html.fromHtml(DailyExam.get(0).getQues()));
             txtanswer1.setText(DailyExam.get(0).getChoice1());
             txtanswer2.setText(DailyExam.get(0).getChoice2());
             txtanswer3.setText(DailyExam.get(0).getChoice3());

@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ExamFramework_AsyncTask.AsyncUpdateUserName;
+import ExamFramework_Data.ChatData;
 import ExamFramework_Data.ChatRoomData;
 import ExamFramework_Data.DailyArticleData;
 import ExamFramework_Data.DailyExam;
@@ -84,7 +85,7 @@ public class Exam_database extends SQLiteOpenHelper {
 
         myDB.execSQL("ALTER TABLE EF_mob_UserDetails ADD COLUMN username  varchar(250);");
 
-        myDB.execSQL("CREATE TABLE if not exists Exam_Chat(id int, RoomId int,username varchar(250), mail_id varchar(250),ChatMessage text,TimeStamp timestamp);");
+        myDB.execSQL("CREATE TABLE if not exists Exam_Chat(id int, RoomId int,username varchar(250), Email varchar(250),ChatMessage text,TimeStamp timestamp);");
 
         Log.i("table upgraded", "table upgraded");
     }
@@ -993,11 +994,48 @@ public void InsertChatRoomDetails(ChatRoomData chatRoomData) {
     public void deleteChatRoom(int RoomId)
     {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete("EF_mob_ChatRoom", "id  = "+ RoomId,null);
+        db.delete("EF_mob_ChatRoom", "id  = " + RoomId, null);
         db.close();
         if (db.isOpen()) {
             db.close();
         }
+    }
+
+    //Get Chat Message
+    public ArrayList<ChatData> getChatMessage(int RoomId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ArrayList<ChatData> list = new ArrayList<ChatData>();
+        String selectQuery = "SELECT  Ec.id , Ec.id RoomId,Ecr.RoomName ,Ec.username , Ec.mail_id ,Ec.ChatMessage ,Ec.TimeStamp  FROM Exam_Chat Ec left outer join EF_mob_ChatRoom Ecr on Ec.RoomId=Ecr.id where RoomId = " + RoomId + " ORDER BY TimeStamp asc";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+
+        if (null != cursor && cursor.moveToFirst()) {
+
+            int _id = cursor.getColumnIndex("id");
+            int _RoomName = cursor.getColumnIndex("RoomName");
+            int _RoomId = cursor.getColumnIndex("RoomId");
+            int _username = cursor.getColumnIndex("username");
+            int _Email = cursor.getColumnIndex("mail_id");
+            int _ChatMessage= cursor.getColumnIndex("ChatMessage");
+            int _TimeStamp = cursor.getColumnIndex("TimeStamp");
+
+            if (cursor.moveToFirst()) {
+                do {
+                    int id=cursor.getInt(_id);
+                    int RoomIdd = cursor.getInt(_RoomId);
+                    String RoomName = cursor.getString(_RoomName);
+                    String username = cursor.getString(_username);
+                    String Email = cursor.getString(_Email);
+                    String ChatMessage = cursor.getString(_ChatMessage);
+                    String TimeStamp=cursor.getString(_TimeStamp);
+                    list.add(new ChatData( id,  RoomIdd, RoomName,   username,  Email,  ChatMessage, TimeStamp));
+                } while (cursor.moveToNext());
+
+            }
+        }
+        return list;
+
     }
 
 }

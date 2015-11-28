@@ -65,6 +65,7 @@
     <string name="title_activity_daily_exam_question">DailyExamQuestion</string>
     <string name="title_activity_daily_article">DailyArticle</string>
     <string name="title_activity_chat_room">ChatRoom</string>
+    <string name="title_activity_chat_window">ChatWindow</string>
 
 
 </resources>
