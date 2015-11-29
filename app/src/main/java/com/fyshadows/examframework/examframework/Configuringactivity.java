@@ -30,6 +30,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import ExamFramework_AsyncTask.AsyncUpdateChatMessage;
 import ExamFramework_AsyncTask.AsyncUpdateChatRoom;
 import ExamFramework_AsyncTask.AsyncUpdateNewValues;
 
@@ -170,6 +171,18 @@ public class Configuringactivity extends ActionBarActivity {
             new AsyncUpdateChatRoom(Configuringactivity.this).execute();
         }
         //End : Chat Room
+
+        //Start : Get Chat Message
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            new AsyncUpdateChatMessage(Configuringactivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        }
+        else
+        {
+            new AsyncUpdateChatMessage(Configuringactivity.this).execute();
+        }
+        //End : Chat Message
+
+
 
         logoTimer.start();
 

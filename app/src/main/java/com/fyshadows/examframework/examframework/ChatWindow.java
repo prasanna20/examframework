@@ -1,25 +1,32 @@
 package com.fyshadows.examframework.examframework;
 
 import android.app.ListActivity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import ExamFramework_Adapter.ChatWindowAdapter;
+import ExamFramework_AsyncTask.AsyncSendChatMessage;
 import ExamFramework_Data.ChatData;
 
 public class ChatWindow   extends ListActivity {
 
     TextView empty;
     TextView  txtChatRoomName;
+    TextView txtMessage;
+    ImageView imgSend;
     List<ChatData> list = new ArrayList<ChatData>();
     int scrolly = 0;
     int first = 0;
@@ -42,6 +49,8 @@ public class ChatWindow   extends ListActivity {
 
         empty=(TextView) this.findViewById(android.R.id.empty);
         txtChatRoomName=(TextView) this.findViewById(R.id.txtChatRoomName);
+        txtMessage=(TextView) this.findViewById(R.id.txtMessage);
+        imgSend =(ImageView) this.findViewById(R.id.imgSend);
 
         Bundle bundle = getIntent().getExtras();
         RoomId = bundle.getInt("RoomId");
@@ -79,6 +88,30 @@ public class ChatWindow   extends ListActivity {
         {
             empty.setVisibility(View.VISIBLE);
         }
+
+        imgSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+                    public void onClick(View v) {
+                     if(masterdetails.isOnline(ChatWindow.this)) {
+                         if (txtMessage.getText().length() > 0) {
+                             new AsyncSendChatMessage(ChatWindow.this).execute(String.valueOf(RoomId), txtMessage.getText().toString());
+                             txtMessage.setText("");
+                             txtMessage.clearFocus();
+                             View view = ChatWindow.this.getCurrentFocus();
+                             if (view != null) {
+                                 InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                             }
+                         } else {
+                             Toast.makeText(ChatWindow.this, "Please enter message!", Toast.LENGTH_SHORT).show();
+                         }
+                     }
+                        else
+                     {
+                         Toast.makeText(ChatWindow.this, "Please connect Internet!", Toast.LENGTH_SHORT).show();
+                     }
+            }
+        });
 
     }
     @Override

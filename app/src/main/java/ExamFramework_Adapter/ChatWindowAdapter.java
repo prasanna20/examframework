@@ -55,10 +55,10 @@ public class ChatWindowAdapter  extends ArrayAdapter<ChatData> {
         Log.i("a", "into get view");
         if (convertView == null) {
             LayoutInflater inflator = context.getLayoutInflater();
-            view = inflator.inflate(R.layout.chatroomview, null);
+            view = inflator.inflate(R.layout.chatrow, null);
             final ViewHolder viewHolder = new ViewHolder();
-            viewHolder.txtMessage = (TextView) view.findViewById(R.id.txtMessage);
-            viewHolder.txtMessage.setTextColor(Color.BLACK);
+            viewHolder.txtChatMessage = (TextView) view.findViewById(R.id.txtChatMessage);
+            viewHolder.txtChatMessage.setTextColor(Color.BLACK);
             viewHolder.txtMessageTime = (TextView) view.findViewById(R.id.txtMessageTime);
             viewHolder.txtMessageTime.setTextColor(Color.BLACK);
             viewHolder.txtMessageUser = (TextView) view.findViewById(R.id.txtMessageUser);
@@ -72,7 +72,7 @@ public class ChatWindowAdapter  extends ArrayAdapter<ChatData> {
         final ViewHolder holder = (ViewHolder) view.getTag();
 
         //Start : Setting the value
-        holder.txtMessage.setText(Html.fromHtml(list.get(position).getChatMessage().toString()));
+        holder.txtChatMessage.setText(Html.fromHtml(list.get(position).getChatMessage().toString()));
         holder.txtMessageTime.setText(String.valueOf(list.get(position).getTimeStamp()));
         holder.txtMessageUser.setText(String.valueOf(list.get(position).getUsername()));
 
@@ -97,7 +97,7 @@ public class ChatWindowAdapter  extends ArrayAdapter<ChatData> {
     }
 
     static class ViewHolder {
-        protected TextView txtMessage;
+        protected TextView txtChatMessage;
         protected TextView txtMessageTime;
         protected TextView txtMessageUser;
 

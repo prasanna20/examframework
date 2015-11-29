@@ -159,20 +159,22 @@ import java.util.List;
                             json = jsonParser.makeHttpRequest(
                                     masterdetails.getDailyTestQuestions, "GET", params);
                             Log.i("maximum Exam Daily", String.valueOf(db.getMaxDailyQuestionNumber()));
-                            if (json.length() > 0) {
-                                // json success tag
-                                success = json.getInt("success");
-                                if (success == 1) {
-                                    Log.i("Exam", "Check_suc");
-                                    // successfully received product details
-                                    QuestionObj = json.getJSONArray("MasterDailyQuestion"); // JSON
-                                    // Array
-                                    for (int i = 0; i < QuestionObj.length(); i++) {
-                                        md = QuestionObj.getJSONObject(i);
+                            if(json != null) {
+                                if (json.length() > 0) {
+                                    // json success tag
+                                    success = json.getInt("success");
+                                    if (success == 1) {
+                                        Log.i("Exam", "Check_suc");
+                                        // successfully received product details
+                                        QuestionObj = json.getJSONArray("MasterDailyQuestion"); // JSON
+                                        // Array
+                                        for (int i = 0; i < QuestionObj.length(); i++) {
+                                            md = QuestionObj.getJSONObject(i);
 
-                                        db.InsertDailyQuestionDetails(md.getInt("Id"), md.getString("ExamDate"), md.getInt("QuestionNo"), md.getString("QuestionText"), md.getString("Choice1"), md.getString("Choice2"), md.getString("Choice3"), md.getString("Choice4"), md.getString("Choice5"), md.getInt("Answer"), md.getString("Category"));
+                                            db.InsertDailyQuestionDetails(md.getInt("Id"), md.getString("ExamDate"), md.getInt("QuestionNo"), md.getString("QuestionText"), md.getString("Choice1"), md.getString("Choice2"), md.getString("Choice3"), md.getString("Choice4"), md.getString("Choice5"), md.getInt("Answer"), md.getString("Category"));
 
-                                        //End of getting question details
+                                            //End of getting question details
+                                        }
                                     }
                                 }
                             }
@@ -185,6 +187,8 @@ import java.util.List;
                             json = jsonParser.makeHttpRequest(
                                     masterdetails.getDailyArticle, "GET", params);
                             Log.i("Maximum Exam Article", String.valueOf(db.getMaxDailyArticle()));
+                            if(json != null)
+                            {
                             if (json.length() > 0) {
                                 // json success tag
                                 success = json.getInt("success");
@@ -201,7 +205,8 @@ import java.util.List;
                                     }
                                 }
                             }
-//End  : Get Daily Question--------------------------------------------------------------------------s
+                        }
+//End  : Get Daily Question--------------------------------------------------------------------------
 
                         }
                     }

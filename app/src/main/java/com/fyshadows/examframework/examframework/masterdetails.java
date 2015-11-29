@@ -45,6 +45,10 @@ public class masterdetails {
     public static String getChatRoom="http://collegemateapp.com/ExamFrameWork/getChatRoom.php";
     public static String TriggerUpdate="http://collegemateapp.com/ExamFrameWork/TriggerUpdate.php";
     public static String TriggerDeleteRoom="http://collegemateapp.com/ExamFrameWork/TriggerDeleteRoom.php";
+    public static String AddChatMessage="http://collegemateapp.com/ExamFrameWork/AddChatMessage.php";
+    public static String getChatMessage="http://collegemateapp.com/ExamFrameWork/getChatMessage.php";
+
+
 
 
 

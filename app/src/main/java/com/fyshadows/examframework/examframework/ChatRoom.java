@@ -296,7 +296,7 @@ public class ChatRoom  extends ListActivity {
                 chatRoomData.setid(RoomId);
                 chatRoomData.setRoomName(RoomName);
                 chatRoomData.setDescription(RoomDesc);
-                chatRoomData.setCreatedBy(db.getUserName());
+                chatRoomData.setCreatedBy(UserName);
                 chatRoomData.setNotificationEnabled(1);
                 chatRoomData.setFavEnabled(1);
 

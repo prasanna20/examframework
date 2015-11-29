@@ -1038,4 +1038,48 @@ public void InsertChatRoomDetails(ChatRoomData chatRoomData) {
 
     }
 
+    //Get last message id
+    public int getMaxChatMessage() {
+        int LastMessageId = 0;
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String selectQuery = "SELECT max(id) maxi FROM Exam_Chat";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+
+        if (null != cursor && cursor.moveToFirst()) {
+
+            int _LastMessageId = cursor.getColumnIndex("maxi");
+            if (cursor.moveToFirst()) {
+                LastMessageId = cursor.getInt(_LastMessageId);
+            } else {
+                LastMessageId = 0;
+            }
+        }
+
+        return LastMessageId;
+    }
+
+    //Insert chat Message details
+    public void InsertChatMessage(ChatData chatData) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        Log.i("dbchatinsert", chatData.getChatMessage());
+
+        values.put("id", chatData.getid());
+        values.put("RoomId", chatData.getRoomId());
+        values.put("username", chatData.getUsername());
+        values.put("mail_id", chatData.getEmail());
+        values.put("ChatMessage", chatData.getChatMessage());
+        values.put("TimeStamp", chatData.getTimeStamp());
+
+        db.insert("Exam_Chat", null, values);
+
+        if (db.isOpen()) {
+            db.close();
+        }
+    }
+
+
 }

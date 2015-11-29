@@ -17,12 +17,12 @@
         android:weightSum="100" >
 
         <EditText
-            android:id="@+id/text"
+            android:id="@+id/txtMessage"
             android:layout_width="fill_parent"
             android:layout_margin="5sp"
             android:layout_weight="90"
             android:layout_height="wrap_content"
-            android:hint="Your message"
+            android:hint="Your message..."
             android:padding="5dp"
             android:inputType="textCapSentences|textMultiLine"
             android:maxLength="2000"
