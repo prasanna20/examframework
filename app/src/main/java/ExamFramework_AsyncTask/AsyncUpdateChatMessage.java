@@ -28,6 +28,7 @@ public class AsyncUpdateChatMessage extends AsyncTask<String, Void, String> {
     JSONParser jsonParser = new JSONParser();
     Exam_database db;
     private Context myCtx;
+    public static Boolean isHandlerRunning = false;
 
     public AsyncUpdateChatMessage(Context ctx) {
         // Now set context
@@ -36,7 +37,7 @@ public class AsyncUpdateChatMessage extends AsyncTask<String, Void, String> {
 
     @Override
     protected void onPreExecute() {
-
+        isHandlerRunning=true;
     }
 
     @Override
@@ -45,9 +46,9 @@ public class AsyncUpdateChatMessage extends AsyncTask<String, Void, String> {
             Log.i("Async", "Executing get chat Message");
 
             db = new Exam_database(this.myCtx);
-            int LastId=0;
+            int LastId = 0;
 
-            LastId=db.getMaxChatMessage();
+            LastId = db.getMaxChatMessage();
 
             List<NameValuePair> params = new ArrayList<NameValuePair>();
 
@@ -59,18 +60,26 @@ public class AsyncUpdateChatMessage extends AsyncTask<String, Void, String> {
             int success = 0;
             JSONArray objChatMessage;
             ChatData chatData;
-            Log.i("chatMessageinsert","Value"+ String.valueOf(json.length()) );
+        if(json != null)
+        {
             if (json.length() > 0) {
                 success = json.getInt("success");
-                Log.i("chatMessageinsert","success"+ String.valueOf(success) );
+                Log.i("chatMessageinsert", "success" + String.valueOf(success));
                 if (success == 1) {
+
+                    // Start : Generate Notification
+                  //  String MessageTitle = "New message";
+                  //  String MessageText = "You have un-read messages.";
+                  //  Boolean isNotificationEnabled = false;
+
+//                    GCMIntentService.generateNotification(myCtx, MessageTitle, MessageText);
+                    // End  : Generate Notification
 
                     objChatMessage = json.getJSONArray("MasterChatMessage"); // JSON
 
-                    Log.i("chatMessageinsert","objChatMessage"+ String.valueOf(objChatMessage.length()) );
+                    Log.i("chatMessageinsert", "objChatMessage" + String.valueOf(objChatMessage.length()));
 
                     for (int i = 0; i < objChatMessage.length(); i++) {
-
 
                         JSONObject obj = objChatMessage.getJSONObject(i);
                         Log.i("chatMessageinsert", "ChatMessage" + String.valueOf(obj.getString("ChatMessage")));
@@ -83,17 +92,40 @@ public class AsyncUpdateChatMessage extends AsyncTask<String, Void, String> {
                         chatData.setTimeStamp(obj.getString("TimeStamp"));
                         chatData.setUsername(obj.getString("UserName"));
 
+                        if(!obj.getString("Email").trim().equalsIgnoreCase(db.GetEmailDetails(myCtx).trim()))
+                        {
                             db.InsertChatMessage(chatData);
                         }
+
+                      /*//Start : Check is notification enabled
+                        if(!isNotificationEnabled) {
+
+                                isNotificationEnabled = db.checkNotificationEnabledForChatRoom(obj.getInt("RoomId"));
+
+                        }
+                        //End : Check is notification enabled
+
+                        if(objChatMessage.length() == i-1 )
+                        {
+                            if(isNotificationEnabled) {
+                                GCMIntentService.generateNotification(myCtx, MessageTitle, MessageText);
+                            }
+                        }*/
+                    }
 
                 }
 
             }
+        }
         } catch (JSONException e) {
-
+            isHandlerRunning=false;
             Log.i("Analysis activity", "Error");
         }
         return null;
     }
+    @Override
+    protected void onPostExecute(String result) {
+        isHandlerRunning=false;
+         }
 }
 

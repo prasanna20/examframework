@@ -238,9 +238,26 @@
         android:layout_gravity="bottom"
         android:background="#88666666">
 
+        <ImageButton
+            android:id="@+id/btnCancel"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:background="#00000000"
+            android:scaleType="fitCenter"
+            android:src="@drawable/menuclose"
+            android:textColor="#ffffff" />
+
+
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_below="@+id/btnCancel">
+
+     <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dp">
         <TextView
             android:id="@+id/question_details"
             android:layout_width="wrap_content"
@@ -257,17 +274,17 @@
             android:textSize="20sp"
             android:textStyle="bold" />
 
+
+           </RelativeLayout>
         </ScrollView>
     </RelativeLayout>
-
 
     <com.yyxqsg.bsyduo229750.AdView
         android:id="@+id/myAdView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
         android:layout_alignParentBottom="true"
-        />
+        android:layout_gravity="center_horizontal" />
 
 
 </RelativeLayout>

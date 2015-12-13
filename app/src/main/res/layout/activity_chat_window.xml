@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="#F0EEEA"
     tools:context="com.fyshadows.examframework.examframework.ChatWindow">
 
 
@@ -40,6 +40,8 @@
             android:textColor="#FFF" />
     </LinearLayout>
 
+
+
     <ListView
         android:id="@android:id/list"
         android:layout_width="fill_parent"
@@ -48,11 +50,15 @@
         android:layout_alignParentTop="true"
         android:cacheColorHint="#00000000"
         android:clipToPadding="false"
+        android:divider="#F0EEEA"
         android:dividerHeight="10dp"
         android:paddingTop="10dp"
         android:listSelector="#00000000"
-        android:paddingBottom="10dp" >
+        android:paddingBottom="10dp"
+        android:stackFromBottom="true">
     </ListView>
+
+
 
     <TextView
         android:id="@android:id/empty"
@@ -62,5 +68,7 @@
         android:layout_alignParentTop="true"
         android:gravity="center_vertical|center_horizontal"
         android:text="Be the first to chat.." />
+
+
 
 </RelativeLayout>

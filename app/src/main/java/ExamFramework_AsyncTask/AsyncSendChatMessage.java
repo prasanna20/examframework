@@ -15,6 +15,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import ExamFramework_Data.ChatData;
+
 /**
  * Created by Prasanna on 14-11-2015.
  */
@@ -45,22 +47,22 @@ public class AsyncSendChatMessage extends AsyncTask<String, Void, String> {
 
             db = new Exam_database(this.myCtx);
 
-            Log.i("Async","Executing Aync task send message");
+            Log.i("Async", "Executing Aync task send message");
             int RoomId = Integer.valueOf(Values[0]);
             String ChatMessage = Values[1];
             String Email = db.GetEmailDetails(this.myCtx);
             String UserName = db.getUserName();
 
-            Log.i("RoomId",String.valueOf(RoomId));
-            Log.i("ChatMessage",ChatMessage);
-            Log.i("Email",Email);
+            Log.i("RoomId", String.valueOf(RoomId));
+            Log.i("ChatMessage", ChatMessage);
+            Log.i("Email", Email);
 
-            if(UserName == null) {
+            if (UserName == null) {
                 int End = Email.indexOf("@");
-                UserName=Email.substring(0,End);
+                UserName = Email.substring(0, End);
             }
 
-            Log.i("UserName",UserName);
+            Log.i("UserName", UserName);
 
             List<NameValuePair> params = new ArrayList<NameValuePair>();
 
@@ -71,8 +73,32 @@ public class AsyncSendChatMessage extends AsyncTask<String, Void, String> {
             params.add(new BasicNameValuePair("UserName", UserName));
 
             JSONObject json = jsonParser.makeHttpRequest(
-                    masterdetails.AddChatMessage, "GET", params);
-        } catch (Exception e) {
+                    masterdetails.sendChatMessage, "GET", params);
+
+            if (json != null) {
+                if (json.length() > 0) {
+                    // json success tag
+                    int success = json.getInt("success");
+                    if (success == 1) {
+
+                        Log.i("InsertChat",String.valueOf(json.getInt("Id")));
+
+                        ChatData chatData = new ChatData();
+                        chatData.setChatMessage(ChatMessage);
+                        chatData.setEmail(Email);
+                        chatData.setid(json.getInt("Id"));
+                        chatData.setRoomId(RoomId);
+                        chatData.setTimeStamp(json.getString("TimeStamp"));
+                        chatData.setUsername(UserName);
+
+                        db.InsertChatMessage(chatData);
+                    }
+                }
+            }
+        }
+
+
+    catch (Exception e) {
 
             Log.i("Analysis activity", "Error");
         }

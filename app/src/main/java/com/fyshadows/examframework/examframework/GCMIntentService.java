@@ -7,6 +7,8 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -20,6 +22,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import ExamFramework_AsyncTask.AsyncUpdateChatMessage;
+import ExamFramework_AsyncTask.AsyncUpdateChatRoom;
 import ExamFramework_AsyncTask.AsyncUpdateNewValues;
 
 
@@ -28,8 +32,11 @@ public class GCMIntentService extends GCMBaseIntentService {
 	private static final String TAG = "Exam";
 
 	JSONParser jsonParser = new JSONParser();
-     public static  String  identify;
+    public static  String  identify;
     public static String ExamReminder;
+    public static int RoomId ;
+    public String UserName ;
+    public static String RoomName;
 
 
 
@@ -113,6 +120,46 @@ public class GCMIntentService extends GCMBaseIntentService {
             Log.i("Notification","Deleted Room Id");
             //End : Insert Analysis
         }
+        else if(identify.trim().equals("UpdateChat"))
+        {
+            //Start : Get ChatRoom
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                new AsyncUpdateChatRoom(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            } else {
+                new AsyncUpdateChatRoom(this).execute();
+            }
+            //End : Chat Room
+
+            //Start : Get Chat Message
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                new AsyncUpdateChatMessage(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            } else {
+                new AsyncUpdateChatMessage(this).execute();
+            }
+            //End : Chat Message
+        }
+        else if(identify.trim().equals("chatmessage")) {
+
+            //Start : Get Chat Message
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                new AsyncUpdateChatMessage(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            } else {
+                new AsyncUpdateChatMessage(this).execute();
+            }
+            //End : Chat Message
+
+                    Exam_database db=new Exam_database(GCMIntentService.this);
+                     RoomId = Integer.parseInt(intent.getExtras().getString("RoomId"));
+                     UserName =intent.getExtras().getString("UserName");
+                     RoomName=db.getChatRoomName(RoomId);
+
+                        String MessageTitle = RoomName;
+                        String MessageText = intent.getExtras().getString("ChatMessage");
+                        Boolean isNotificationEnabled = db.checkNotificationEnabledForChatRoom(RoomId);
+            if(isNotificationEnabled) {
+                generateNotification(context, MessageTitle, MessageText);
+            }
+        }
 
     }
 
@@ -170,7 +217,7 @@ public class GCMIntentService extends GCMBaseIntentService {
         return account;
     }
 
-    private static void generateNotification(Context context,String MessageTitle, String MessageText) {
+    public static void generateNotification(Context context,String MessageTitle, String MessageText) {
 
         int icon = R.drawable.logotrans;
         long when = System.currentTimeMillis();
@@ -182,22 +229,41 @@ public class GCMIntentService extends GCMBaseIntentService {
 
        // String title = context.getString(R.string.app_name);
         String title = MessageTitle;
-        if(ExamReminder.equalsIgnoreCase("Yes")) {
-             notificationIntent = new Intent(context, Configuringactivity.class);
+        notificationIntent = new Intent(context, Configuringactivity.class);
+
+        if(identify.trim().equals("chatmessage")) {
+            notificationIntent = new Intent(context, ChatWindow
+                    .class);
+            Bundle bundle = new Bundle();
+            bundle.clear();
+            bundle.putInt("RoomId", RoomId);
+            Log.i("Message", MessageTitle);
+            bundle.putString("RoomName", RoomName);
+            Log.i("Message2", MessageText);
+
+            notificationIntent.putExtras(bundle);
         }
-        else
-        {
-             notificationIntent = new Intent(context,ViewNotification.class);
+        else {
+
+            if (ExamReminder != null) {
+                if (ExamReminder.equalsIgnoreCase("Yes")) {
+                    notificationIntent = new Intent(context, Configuringactivity.class);
+                } else {
+                    notificationIntent = new Intent(context, ViewNotification.class);
+                }
+            }
+
+            Bundle bundle = new Bundle();
+            bundle.clear();
+            bundle.putString("MessageTitle", MessageTitle);
+            Log.i("Message", MessageTitle);
+            bundle.putString("MessageText", MessageText);
+            Log.i("Message2", MessageText);
+
+            notificationIntent.putExtras(bundle);
         }
 
-        Bundle bundle = new Bundle();
-        bundle.clear();
-        bundle.putString("MessageTitle", MessageTitle);
-        Log.i("Message", MessageTitle);
-        bundle.putString("MessageText", MessageText);
-        Log.i("Message2", MessageText);
 
-        notificationIntent.putExtras(bundle);
 
         // set intent so it does not start a new activity
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP

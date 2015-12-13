@@ -272,7 +272,7 @@ public class Exam_database extends SQLiteOpenHelper {
     public ArrayList<String> getDailyExamDate() {
         SQLiteDatabase db = this.getWritableDatabase();
         ArrayList<String> list = new ArrayList<String>();
-        String selectQuery = "SELECT  distinct quesDate FROM EF_mob_DailyQues where quesDate < date('now') order by quesDate desc";
+        String selectQuery = "SELECT  distinct quesDate FROM EF_mob_DailyQues where quesDate <= date('now') order by quesDate desc";
         Log.i("DateQuery",selectQuery);
         Cursor cursor = db.rawQuery(selectQuery, null);
 
@@ -934,6 +934,29 @@ public void InsertChatRoomDetails(ChatRoomData chatRoomData) {
     }
 }
 
+    //Getting chat room name
+    public String getChatRoomName(int RoomId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String RoomName = "";
+        String selectQuery = "SELECT  RoomName FROM EF_mob_ChatRoom where id="+ RoomId;
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+
+        if (null != cursor && cursor.moveToFirst()) {
+
+            int _RoomName = cursor.getColumnIndex("RoomName");
+
+            if (cursor.moveToFirst()) {
+
+                RoomName=cursor.getString(_RoomName);
+
+            }
+        }
+        return RoomName;
+
+    }
+
     //To Update Toggle notification
     public void updateToggleNotification(int Id,int Flag) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -1079,6 +1102,36 @@ public void InsertChatRoomDetails(ChatRoomData chatRoomData) {
         if (db.isOpen()) {
             db.close();
         }
+    }
+
+
+
+    //Check whether the room id is present
+    public Boolean checkNotificationEnabledForChatRoom(int RoomId) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        String UserName = "";
+        Boolean Output = false ;
+
+        String selectQuery = "SELECT  NotificationEnabled FROM EF_mob_ChatRoom "  +  " where id ='" + RoomId +"'";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        int _NotificationEnabled = cursor.getColumnIndex("NotificationEnabled");
+        if (null != cursor && cursor.moveToFirst()) {
+            if(cursor.getInt(_NotificationEnabled) == 1)
+            {
+                Output=true;
+            }
+            else
+            {
+                Output=false;
+            }
+        }
+        else
+        {
+            Output= false;
+        }
+        return Output;
+
     }
 
 

@@ -3,8 +3,13 @@
 
     <item android:state_pressed="true"><shape>
             <solid android:color="#fefefe" />
-
             <corners android:bottomLeftRadius="8dp" android:bottomRightRadius="8dp" android:topLeftRadius="8dp" android:topRightRadius="8dp" />
+        <corners
+            android:topLeftRadius="10dp"
+            android:topRightRadius="10dp"
+            android:bottomLeftRadius="10dp"
+            android:bottomRightRadius="10dp"
+            />
         </shape></item>
     <item android:bottom="1dp"><shape>
             <solid android:color="#fefcfc" />

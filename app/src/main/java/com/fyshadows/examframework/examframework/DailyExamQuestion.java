@@ -1,8 +1,11 @@
 package com.fyshadows.examframework.examframework;
 
 import android.app.ListActivity;
+import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -12,6 +15,10 @@ import android.widget.TextView;
 
 import com.yyxqsg.bsyduo229750.AdConfig;
 import com.yyxqsg.bsyduo229750.Main;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -117,5 +124,34 @@ public class DailyExamQuestion  extends ListActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+
+    public class AsyncSendChatMessage extends AsyncTask<String, Void, String> {
+
+
+
+        @Override
+        protected void onPreExecute() {
+
+        }
+
+
+        @Override
+        protected String doInBackground(String... Values) {
+            try {
+                adView=(com.yyxqsg.bsyduo229750.AdView) findViewById(R.id.myAdView);
+                adView.setBannerType(com.yyxqsg.bsyduo229750.AdView.BANNER_TYPE_IN_APP_AD);
+                adView.setBannerAnimation(com.yyxqsg.bsyduo229750.AdView.ANIMATION_TYPE_FADE);
+                adView.showMRinInApp(false);
+                adView.loadAd();
+
+            } catch (Exception e) {
+
+                Log.i("Analysis activity", "Error");
+            }
+            return null;
+        }
+
     }
 }

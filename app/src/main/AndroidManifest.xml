@@ -100,6 +100,7 @@
         <activity
             android:name=".ChatWindow"
             android:label="@string/title_activity_chat_window"
+            android:windowSoftInputMode="stateHidden"
             android:theme="@android:style/Theme.Holo.Light.DarkActionBar" ></activity>
     </application>
 

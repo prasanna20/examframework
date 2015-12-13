@@ -62,6 +62,8 @@ public class DailyExamAdapter extends ArrayAdapter<String> {
             viewHolder.Article.setTextColor(Color.BLACK);
             viewHolder.Score = (TextView) view.findViewById(R.id.txtScore);
             viewHolder.Score.setTextColor(Color.BLACK);
+            viewHolder.TakeExam = (TextView) view.findViewById(R.id.txtTakeExam);
+            viewHolder.TakeExam.setTextColor(Color.BLACK);
 
             view.setTag(viewHolder);
         } else {
@@ -83,6 +85,24 @@ public class DailyExamAdapter extends ArrayAdapter<String> {
 
         }
 
+
+        holder.TakeExam.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Log.i("Selected Date",list.get(position).toString());
+                Intent i = new Intent(context, Questionhome.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt("FromScreen", 1);
+                bundle.putString("ExamDate", list.get(position).toString());
+                i.putExtras(bundle);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        | Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(i);
+
+            }
+
+        });
 
         holder.Date.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,6 +149,7 @@ public class DailyExamAdapter extends ArrayAdapter<String> {
         protected TextView Date;
         protected TextView Article;
         protected TextView Score;
+        protected TextView TakeExam;
     }
 
 }

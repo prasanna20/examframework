@@ -79,21 +79,19 @@ public class ChatWindowAdapter  extends ArrayAdapter<ChatData> {
         LinearLayout ll = (LinearLayout) view.findViewById(R.id.messlinear);
 
         //End : Setting the value
-        if (list.get(position).getEmail() == db.GetEmailDetails(this.context)) {
-
+        if (list.get(position).getEmail().trim().equalsIgnoreCase(db.GetEmailDetails(this.context).trim())) {
+            holder.txtChatMessage
+                    .setBackgroundResource(R.drawable.chatrightsidebg);
             ll.setGravity(Gravity.RIGHT);
-
         }
         else
         {
+            holder.txtChatMessage
+                    .setBackgroundResource(R.drawable.chatleftsidebg);
             ll.setGravity(Gravity.LEFT);
         }
 
         return view;
-
-
-
-
     }
 
     static class ViewHolder {

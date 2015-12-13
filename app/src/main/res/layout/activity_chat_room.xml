@@ -4,7 +4,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#FFFFFF"
+          android:background="#FFFFFF"
         tools:context="com.fyshadows.examframework.examframework.ChatRoom">
 
     <ListView
@@ -18,10 +18,12 @@
         android:divider="#00000000"
         android:dividerHeight="0.5dp"
         android:scrollbars="none"
+        android:soundEffectsEnabled="true"
         android:stackFromBottom="false"
-        android:paddingBottom="50dp"
+
         >
     </ListView>
+
     <RelativeLayout
         android:id="@+id/top_layout"
         android:layout_width="match_parent"

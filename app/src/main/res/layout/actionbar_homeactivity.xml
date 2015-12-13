@@ -23,7 +23,7 @@
         android:layout_centerVertical="true"
         android:layout_marginRight="10dp"
         android:background="#00000000"
-        android:src="@drawable/viewnotification"
+        android:src="@drawable/chaticon"
         android:text="VN" />
 
     <ImageButton

@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -70,6 +71,7 @@ public class Questionhome extends ActionBarActivity {
 
     public TextView actionbar_queststat;
     public TextView actionbar_questcategory;
+    public ImageView QuestionClose;
     public String[] myString;
     public Resources res;
     private static final Random rgenerator = new Random();
@@ -201,14 +203,23 @@ public class Questionhome extends ActionBarActivity {
             }
         });
 
-        txtquestion_details.setOnClickListener(new View.OnClickListener() {
+      //  txtquestion_details.setOnClickListener(new View.OnClickListener() {
+      //      @Override
+       //     public void onClick(View v) {
+//
+       //         questiondetails_layout.setVisibility(View.INVISIBLE);
+//      }
+   //    });
+
+        QuestionClose = (ImageView) findViewById(R.id.btnCancel);
+        QuestionClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 questiondetails_layout.setVisibility(View.INVISIBLE);
 
             }
         });
+
 
 
         txtanswer1.setOnClickListener(new View.OnClickListener() {
@@ -217,14 +228,22 @@ public class Questionhome extends ActionBarActivity {
 
                 countDownTimer.cancel();
                 if (disable == 0) {
+
+                    String FinalTimerValue=String.valueOf(startTime);
+
+                    if(!txt_timer.getText().toString().contains("Time's up!"))
+                    {
+                        FinalTimerValue=txt_timer.getText().toString();
+                    }
+
                     if (Correctanswer.equalsIgnoreCase(txtanswer1.getText().toString())) {
                         txtanswer1.setBackgroundColor(Color.GREEN);
                         showmessage(1);
-                        db.updateScore(QuestionNumberDailyExam, 1, Integer.parseInt(txt_timer.getText().toString()),FromScreen);
+                        db.updateScore(QuestionNumberDailyExam, 1, Integer.parseInt(FinalTimerValue),FromScreen);
                     } else {
                         txtanswer1.setBackgroundColor(Color.RED);
                         showmessage(2);
-                        db.updateScore(QuestionNumberDailyExam, 2, Integer.parseInt(txt_timer.getText().toString()),FromScreen);
+                        db.updateScore(QuestionNumberDailyExam, 2, Integer.parseInt(FinalTimerValue),FromScreen);
                         showanswer();
                     }
                     answered = 1;
@@ -240,14 +259,22 @@ public class Questionhome extends ActionBarActivity {
                 countDownTimer.cancel();
                 if (disable == 0) {
 
+                    String FinalTimerValue=String.valueOf(startTime);
+
+                    if(!txt_timer.getText().toString().contains("Time"))
+                    {
+                        FinalTimerValue=txt_timer.getText().toString();
+                    }
+
+
                     if (Correctanswer.equalsIgnoreCase(txtanswer2.getText().toString())) {
                         showmessage(1);
                         txtanswer2.setBackgroundColor(Color.GREEN);
-                        db.updateScore(QuestionNumberDailyExam, 1, Integer.parseInt(txt_timer.getText().toString()),FromScreen);
+                        db.updateScore(QuestionNumberDailyExam, 1, Integer.parseInt(FinalTimerValue),FromScreen);
                     } else {
                         txtanswer2.setBackgroundColor(Color.RED);
                         showmessage(2);
-                        db.updateScore(QuestionNumberDailyExam, 2, Integer.parseInt(txt_timer.getText().toString()),FromScreen);
+                        db.updateScore(QuestionNumberDailyExam, 2, Integer.parseInt(FinalTimerValue),FromScreen);
 
                         showanswer();
                     }
@@ -263,15 +290,23 @@ public class Questionhome extends ActionBarActivity {
 
                 countDownTimer.cancel();
                 if (disable == 0) {
+
+                    String FinalTimerValue=String.valueOf(startTime);
+
+                    if(!txt_timer.getText().toString().contains("Time"))
+                    {
+                        FinalTimerValue=txt_timer.getText().toString();
+                    }
+
                     if (Correctanswer.equalsIgnoreCase(txtanswer3.getText().toString())) {
                         showmessage(1);
                         txtanswer3.setBackgroundColor(Color.GREEN);
-                        db.updateScore(QuestionNumberDailyExam, 1, Integer.parseInt(txt_timer.getText().toString()),FromScreen);
+                        db.updateScore(QuestionNumberDailyExam, 1, Integer.parseInt(FinalTimerValue),FromScreen);
                     } else {
                         txtanswer3.setBackgroundColor(Color.RED);
                         showmessage(2);
                         showanswer();
-                        db.updateScore(QuestionNumberDailyExam, 2, Integer.parseInt(txt_timer.getText().toString()),FromScreen);
+                        db.updateScore(QuestionNumberDailyExam, 2, Integer.parseInt(FinalTimerValue),FromScreen);
                     }
                     disable = 1;
                     answered = 1;
@@ -286,15 +321,21 @@ public class Questionhome extends ActionBarActivity {
                 countDownTimer.cancel();
                 if (disable == 0) {
 
-                    if (Correctanswer.equalsIgnoreCase(txtanswer4.getText().toString())) {
+                    String FinalTimerValue=String.valueOf(startTime);
 
+                    if(!txt_timer.getText().toString().contains("Time"))
+                    {
+                        FinalTimerValue=txt_timer.getText().toString();
+                    }
+
+                    if (Correctanswer.equalsIgnoreCase(txtanswer4.getText().toString())) {
                         showmessage(1);
                         txtanswer4.setBackgroundColor(Color.GREEN);
-                        db.updateScore(QuestionNumberDailyExam, 1, Integer.parseInt(txt_timer.getText().toString()),FromScreen);
+                        db.updateScore(QuestionNumberDailyExam, 1, Integer.parseInt(FinalTimerValue),FromScreen);
                     } else {
                         txtanswer4.setBackgroundColor(Color.RED);
                         showmessage(2);
-                        db.updateScore(QuestionNumberDailyExam, 2, Integer.parseInt(txt_timer.getText().toString()),FromScreen);
+                        db.updateScore(QuestionNumberDailyExam, 2, Integer.parseInt(FinalTimerValue),FromScreen);
                         showanswer();
                     }
                     disable = 1;
@@ -307,16 +348,24 @@ public class Questionhome extends ActionBarActivity {
             @Override
             public void onClick(View v) {
 
+                String FinalTimerValue=String.valueOf(startTime);
+
+                if(!txt_timer.getText().toString().contains("Time"))
+                {
+                    FinalTimerValue=txt_timer.getText().toString();
+                }
+
+
                 countDownTimer.cancel();
                 if (disable == 0) {
                     if (Correctanswer.equalsIgnoreCase(txtanswer5.getText().toString())) {
                         txtanswer5.setBackgroundColor(Color.GREEN);
                         showmessage(1);
-                        db.updateScore(QuestionNumberDailyExam, 1, Integer.parseInt(txt_timer.getText().toString()),FromScreen);
+                        db.updateScore(QuestionNumberDailyExam, 1, Integer.parseInt(FinalTimerValue),FromScreen);
                     } else {
                         txtanswer5.setBackgroundColor(Color.RED);
                         showmessage(2);
-                        db.updateScore(QuestionNumberDailyExam, 2, Integer.parseInt(txt_timer.getText().toString()),FromScreen);
+                        db.updateScore(QuestionNumberDailyExam, 2, Integer.parseInt(FinalTimerValue),FromScreen);
                         showanswer();
                     }
                     answered = 1;
