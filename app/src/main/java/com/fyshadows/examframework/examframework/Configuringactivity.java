@@ -68,7 +68,7 @@ public class Configuringactivity extends ActionBarActivity {
         AdConfig.setApiKey("1435945311229750247"); //setting apikey
        // AdConfig.setTestMode(true);
         //AdConfig.setAdListener(adListener);  //setting global Ad listener.
-        AdConfig.setCachingEnabled(false); //Enabling SmartWall ad caching.
+        AdConfig.setCachingEnabled(true); //Enabling SmartWall ad caching.
         AdConfig.setPlacementId(0); //pass the placement id.
 
        //for calling Smartwall ad

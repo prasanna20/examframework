@@ -108,7 +108,9 @@ public class ChatRoom  extends ListActivity {
         }
 
         editText_UserName= (EditText) findViewById(R.id.editText_UserName);
-       UserName = db.getUserName();
+
+        UserName = db.getUserName();
+
         if(UserName != null) {
             editText_UserName.setText(UserName);
         }
@@ -116,8 +118,10 @@ public class ChatRoom  extends ListActivity {
         {
             String Email = db.GetEmailDetails(this);
             int End = Email.indexOf("@");
+            UserName=Email.substring(0,End);
             editText_UserName.setText(Email.substring(0,End));
         }
+
         btnSave= (Button) findViewById(R.id.btnSave);
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,8 +134,6 @@ public class ChatRoom  extends ListActivity {
                 }
             }
         });
-
-
 
         AddLayout = (RelativeLayout) findViewById(R.id.top_layout);
         AddLayout.setVisibility(View.INVISIBLE);

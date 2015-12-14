@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.fyshadows.examframework.examframework.Exam_database;
 import com.fyshadows.examframework.examframework.R;
+import com.fyshadows.examframework.examframework.masterdetails;
 
 import java.util.List;
 
@@ -50,48 +51,54 @@ public class ChatWindowAdapter  extends ArrayAdapter<ChatData> {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        db= new Exam_database(parent.getContext());
-        View view = null;
-        Log.i("a", "into get view");
-        if (convertView == null) {
-            LayoutInflater inflator = context.getLayoutInflater();
-            view = inflator.inflate(R.layout.chatrow, null);
-            final ViewHolder viewHolder = new ViewHolder();
-            viewHolder.txtChatMessage = (TextView) view.findViewById(R.id.txtChatMessage);
-            viewHolder.txtChatMessage.setTextColor(Color.BLACK);
-            viewHolder.txtMessageTime = (TextView) view.findViewById(R.id.txtMessageTime);
-            viewHolder.txtMessageTime.setTextColor(Color.BLACK);
-            viewHolder.txtMessageUser = (TextView) view.findViewById(R.id.txtMessageUser);
-            viewHolder.txtMessageUser.setTextColor(Color.BLACK);
+try {
+    db = new Exam_database(parent.getContext());
+    View view = null;
+    Log.i("a", "into get view");
+    if (convertView == null) {
+        LayoutInflater inflator = context.getLayoutInflater();
+        view = inflator.inflate(R.layout.chatrow, null);
+        final ViewHolder viewHolder = new ViewHolder();
+        viewHolder.txtChatMessage = (TextView) view.findViewById(R.id.txtChatMessage);
+        viewHolder.txtChatMessage.setTextColor(Color.BLACK);
+        viewHolder.txtMessageTime = (TextView) view.findViewById(R.id.txtMessageTime);
+        viewHolder.txtMessageUser = (TextView) view.findViewById(R.id.txtMessageUser);
 
-            view.setTag(viewHolder);
-        } else {
-            view = convertView;
-        }
+        view.setTag(viewHolder);
+    } else {
+        view = convertView;
+    }
 
-        final ViewHolder holder = (ViewHolder) view.getTag();
+    final ViewHolder holder = (ViewHolder) view.getTag();
 
-        //Start : Setting the value
-        holder.txtChatMessage.setText(Html.fromHtml(list.get(position).getChatMessage().toString()));
-        holder.txtMessageTime.setText(String.valueOf(list.get(position).getTimeStamp()));
-        holder.txtMessageUser.setText(String.valueOf(list.get(position).getUsername()));
+    //Start : Setting the value
+    holder.txtChatMessage.setText(Html.fromHtml(list.get(position).getChatMessage().toString()));
+    holder.txtMessageTime.setText(String.valueOf(masterdetails.formateDateFromstring("yyyy-MM-dd hh:mm:ss", "dd MMM yyyy hh:mm:ss", list.get(position).getTimeStamp())));
+    holder.txtMessageUser.setText(String.valueOf(list.get(position).getUsername()));
 
-        LinearLayout ll = (LinearLayout) view.findViewById(R.id.messlinear);
+    LinearLayout ll = (LinearLayout) view.findViewById(R.id.messlinear);
 
-        //End : Setting the value
-        if (list.get(position).getEmail().trim().equalsIgnoreCase(db.GetEmailDetails(this.context).trim())) {
-            holder.txtChatMessage
-                    .setBackgroundResource(R.drawable.chatrightsidebg);
-            ll.setGravity(Gravity.RIGHT);
-        }
-        else
-        {
-            holder.txtChatMessage
-                    .setBackgroundResource(R.drawable.chatleftsidebg);
-            ll.setGravity(Gravity.LEFT);
-        }
+    //End : Setting the value
+    if (list.get(position).getEmail().trim().equalsIgnoreCase(db.GetEmailDetails(this.context).trim())) {
+        holder.txtChatMessage
+                .setBackgroundResource(R.drawable.chatrightsidebg);
+        ll.setGravity(Gravity.RIGHT);
+    } else {
+        holder.txtChatMessage
+                .setBackgroundResource(R.drawable.chatleftsidebg);
+        ll.setGravity(Gravity.LEFT);
+    }
+    return view;
+}
+catch (Exception ex)
+{
 
-        return view;
+    Log.i("ChatAdapter","got exception");
+    return null;
+}
+
+
+
     }
 
     static class ViewHolder {

@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -60,13 +62,13 @@ public class ChatRoomAdapter extends ArrayAdapter<ChatRoomData> {
             view = inflator.inflate(R.layout.chatroomview, null);
             final ViewHolder viewHolder = new ViewHolder();
             viewHolder.txtRoomName = (TextView) view.findViewById(R.id.txtRoomName);
-            viewHolder.txtRoomName.setTextColor(Color.BLACK);
+            viewHolder.txtRoomName.setTextColor(Color.WHITE);
             viewHolder.txtChatCount = (TextView) view.findViewById(R.id.txtChatCount);
-            viewHolder.txtChatCount.setTextColor(Color.BLACK);
             viewHolder.txtCreatedBy = (TextView) view.findViewById(R.id.txtCreatedBy);
-            viewHolder.txtCreatedBy.setTextColor(Color.BLACK);
             viewHolder.toggleNotification = (ToggleButton) view.findViewById(R.id.toggleNotification);
             viewHolder.FavButton = (ToggleButton) view.findViewById(R.id.FavButton);
+            viewHolder.topbase = (RelativeLayout) view.findViewById(R.id.topbase);
+            viewHolder.bottombar = (LinearLayout) view.findViewById(R.id.bottombar);
 
             view.setTag(viewHolder);
         } else {
@@ -76,7 +78,7 @@ public class ChatRoomAdapter extends ArrayAdapter<ChatRoomData> {
         final ViewHolder holder = (ViewHolder) view.getTag();
 
         //Start : Setting the value
-        holder.txtRoomName.setText(Html.fromHtml(list.get(position).getRoomName().toString()));
+        holder.txtRoomName.setText(Html.fromHtml(list.get(position).getRoomName().toString().toUpperCase()));
         holder.txtChatCount.setText(String.valueOf(list.get(position).getChatCount()));
         holder.txtCreatedBy.setText(String.valueOf(list.get(position).getCreatedBy()));
 
@@ -95,6 +97,22 @@ public class ChatRoomAdapter extends ArrayAdapter<ChatRoomData> {
         else
         {
             holder.FavButton.setChecked(false);
+        }
+
+        if (position % 2 == 0) {
+            holder.topbase.setBackgroundColor(Color.parseColor("#03a9f4"));
+            holder.bottombar.setBackgroundColor(Color.parseColor("#039be5"));
+        } else if (position % 3 == 0) {
+            holder.topbase.setBackgroundColor(Color.parseColor("#ce5250"));
+            holder.bottombar.setBackgroundColor(Color.parseColor("#c24949"));
+        } else if (position % 5 == 0) {
+            holder.topbase.setBackgroundColor(Color.parseColor("#53d37e"));
+            holder.bottombar.setBackgroundColor(Color.parseColor("#47c772"));
+        }
+        else
+        {
+            holder.topbase.setBackgroundColor(Color.parseColor("#7988e5"));
+            holder.bottombar.setBackgroundColor(Color.parseColor("#5969c8"));
         }
 
         //End : Setting the value
@@ -163,6 +181,8 @@ public class ChatRoomAdapter extends ArrayAdapter<ChatRoomData> {
         protected ToggleButton toggleNotification;
         protected ToggleButton FavButton;
         protected TextView txtCreatedBy;
+        protected RelativeLayout topbase;
+        protected LinearLayout bottombar;
 
     }
 

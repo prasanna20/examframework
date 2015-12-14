@@ -40,6 +40,7 @@
                 android:layout_height="wrap_content"
                 android:paddingBottom="5dp"
                 android:paddingTop="5dp"
+                android:textColor="#01b59d"
                 android:text="User Name"
                 android:textSize="10sp" />
 
@@ -58,6 +59,7 @@
                 android:layout_height="wrap_content"
                 android:paddingBottom="5dp"
                 android:paddingTop="5dp"
+                android:textColor="#01b59d"
                 android:text="Time Stamp"
                 android:textSize="10sp" />
 

@@ -74,6 +74,11 @@ public class ChatWindow   extends ListActivity {
             StrictMode.setThreadPolicy(policy);
         }
 
+        //Start : Insert Analysis
+        masterdetails masterdet=new masterdetails(this);
+        masterdet.insertAnalysis(this, 11);
+        //End : Insert Analysis
+
 
         final ListView myListView = (ListView) findViewById(android.R.id.list);
         list = db.getChatMessage(RoomId);
@@ -174,22 +179,18 @@ public class ChatWindow   extends ListActivity {
                     isUpdateListViewHandlerRunning = true;
                     list = db.getChatMessage(RoomId);
                     adapter = new ChatWindowAdapter(ChatWindow.this, list);
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-                        adapter.addAll(list);
-                    }
-                    setListAdapter(adapter);
+
+                     setListAdapter(adapter);
+
 
                     adapter.notifyDataSetChanged();
-
 
                     if (scrollChanged == 1) {
 
                         myListView.setSelectionFromTop(index, top);
                     }
 
-
                     isUpdateListViewHandlerRunning = false;
-
 
                 }
                 UpdateListViewHandler.postDelayed(this, 10 * 50);

@@ -2,6 +2,7 @@ package com.fyshadows.examframework.examframework;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -39,41 +40,7 @@ public class HomeActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        //advertisement start
-        AdConfig.setAppId(280371);  //setting appid.
-        AdConfig.setApiKey("1435945311229750247"); //setting apikey
-        // AdConfig.setTestMode(true);
-        //AdConfig.setAdListener(adListener);  //setting global Ad listener.
-        AdConfig.setCachingEnabled(false); //Enabling SmartWall ad caching.
-        AdConfig.setPlacementId(0); //pass the placement id.
 
-        //Initialize Airpush
-        main=new Main(this);
-
-        //for calling Smartwall ad
-        main.startInterstitialAd(AdConfig.AdType.smartwall);
-
-        //for calling banner 360
-       // main.start360BannerAd(this);
-
-        //for calling Smartwall ad
-       // main.startInterstitialAd(AdConfig.AdType.smartwall);
-
-        adView=(com.yyxqsg.bsyduo229750.AdView) findViewById(R.id.myAdView);
-        adView.setBannerType(com.yyxqsg.bsyduo229750.AdView.BANNER_TYPE_IN_APP_AD);
-        adView.setBannerAnimation(com.yyxqsg.bsyduo229750.AdView.ANIMATION_TYPE_FADE);
-        adView.showMRinInApp(false);
-        //adView.setNewAdListener(adListener); //for passing a new listener for inline banner ads.
-        adView.loadAd();
-        //Advertisement End
-
-
-        adView=(com.yyxqsg.bsyduo229750.AdView) findViewById(R.id.myAdViewtop);
-        adView.setBannerType(com.yyxqsg.bsyduo229750.AdView.BANNER_TYPE_IN_APP_AD);
-        adView.setBannerAnimation(com.yyxqsg.bsyduo229750.AdView.ANIMATION_TYPE_FADE);
-        adView.showMRinInApp(false);
-        //adView.setNewAdListener(adListener); //for passing a new listener for inline banner ads.
-        adView.loadAd();
 
         //set action bar
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -83,7 +50,7 @@ public class HomeActivity extends ActionBarActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         //Start : Insert Analysis
-         masterdetails=new masterdetails(this);
+        masterdetails=new masterdetails(this);
         masterdetails.insertAnalysis(this, 1);
         //End : Insert Analysis
 
@@ -100,6 +67,7 @@ public class HomeActivity extends ActionBarActivity {
             }
         });
 
+        new asyncExecuteAdvertisement().execute();
 
         // set the Timer view
 
@@ -242,5 +210,51 @@ public class HomeActivity extends ActionBarActivity {
         Toast.makeText(getBaseContext(), "Exam reset successfull", Toast.LENGTH_LONG).show();
         db.Resetquestion();
 
+    }
+
+    public class asyncExecuteAdvertisement extends AsyncTask<String, Void, String> {
+
+
+
+        @Override
+        protected void onPreExecute() {
+
+        }
+
+        @Override
+        protected String doInBackground(String... urls) {
+
+            //advertisement start
+            AdConfig.setAppId(280371);  //setting appid.
+            AdConfig.setApiKey("1435945311229750247"); //setting apikey
+            // AdConfig.setTestMode(true);
+            //AdConfig.setAdListener(adListener);  //setting global Ad listener.
+            AdConfig.setCachingEnabled(false); //Enabling SmartWall ad caching.
+            AdConfig.setPlacementId(0); //pass the placement id.
+
+            //Initialize Airpush
+            main=new Main(HomeActivity.this);
+
+            //for calling Smartwall ad
+            main.startInterstitialAd(AdConfig.AdType.smartwall);
+
+            //for calling banner 360
+            // main.start360BannerAd(this);
+
+            return  null;
+
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+
+            adView=(com.yyxqsg.bsyduo229750.AdView) findViewById(R.id.myAdView);
+
+            adView.setBannerType(com.yyxqsg.bsyduo229750.AdView.BANNER_TYPE_IN_APP_AD);
+            adView.setBannerAnimation(com.yyxqsg.bsyduo229750.AdView.ANIMATION_TYPE_FADE);
+            adView.showMRinInApp(false);
+            //adView.setNewAdListener(adListener); //for passing a new listener for inline banner ads.
+            adView.loadAd();
+        }
     }
 }

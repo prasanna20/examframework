@@ -3,172 +3,215 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:background="#1a1a1a"
+    android:orientation="vertical">
 
     <RelativeLayout
-        android:id="@+id/relativeLayout1"
+        android:id="@+id/topbase"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/listviewbg"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp"
-         >
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="30dp"
+        android:background="#03a9f4"
+        android:orientation="vertical"
+        android:paddingBottom="0dp"
+        android:paddingTop="10dp">
         <TableLayout
-            android:id="@+id/tblHeader"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TableRow>
-                    <TextView
-                        android:id="@+id/txtRoomName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentTop="true"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
-                        android:text="Room Name"
-                        android:textColor="#000000"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        />
-
-                    <TextView
-                        android:id="@+id/lblCreatedBy"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/view0"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
-                        android:text="Created By : "
-                        android:textColor="#000000"
-                        android:textSize="10sp" />
-
-                    <TextView
-                        android:id="@+id/txtCreatedBy"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/view0"
-                        android:paddingLeft="2dp"
-                        android:paddingRight="10dp"
-                        android:text="Created By"
-                        android:textColor="#000000"
-                        android:textSize="12sp" />
-
-            </TableRow>
-        </TableLayout>
-
-
-
-        <TableLayout
-            android:id="@+id/tblSetting"
+            android:id="@+id/tblHeading"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tblHeader"
-            android:paddingTop="5dp">
-            <TableRow
-                android:paddingLeft="20dp"
-                >
-                <TextView
-                    android:id="@+id/txtChatCount"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:text="Count"
-                    android:textColor="#000000"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:textSize="14sp" />
+            android:gravity="center_horizontal">
 
-                <ToggleButton
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="On"
-                    android:id="@+id/toggleNotification"
-                    android:checked="false"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:layout_toRightOf="@id/txtChatCount" />
-
-                <ToggleButton
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Fav"
-                    android:id="@+id/FavButton"
-                    android:checked="true"
-                    android:textOn="Yes"
-                    android:textOff="No"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:layout_toRightOf="@id/toggleNotification" />
+        <TextView
+            android:id="@+id/txtRoomName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:paddingLeft="20dp"
+            android:text="Room Name"
+            android:textAlignment="center"
+            android:textColor="#269c4d"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
 
-
-
-            </TableRow>
 
             <TableRow
-                android:paddingLeft="20dp">
-                <TextView
-                    android:id="@+id/lbltChatCount"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:text="Chat"
-                    android:textSize="12sp"
-                    />
+                android:layout_gravity="center_horizontal"
+                android:gravity="right">
 
                 <TextView
-                    android:id="@+id/lblNotification"
-                    android:layout_width="match_parent"
+                    android:id="@+id/lblCreatedBy"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/lbltChatCount"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:text="Notification"
-                    android:textSize="12sp" />
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_horizontal"
+                    android:text="Created By : "
+                    android:textColor="@color/white"
+                    android:textSize="10dp" />
 
                 <TextView
-                    android:id="@+id/lblFavourite"
-                    android:layout_width="match_parent"
+                    android:id="@+id/txtCreatedBy"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:text="Favourite"
-                    android:layout_toRightOf="@id/lblNotification"
-                    android:textSize="10sp" />
-
-                <TextView
-                    android:id="@+id/lblCreatedBY"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:layout_toRightOf="@id/lblFavourite"
-                    android:text="Created"
-                    android:textSize="10sp" />
-
-
+                    android:layout_below="@id/lblCreatedBy"
+                    android:layout_marginTop="10dp"
+                    android:paddingRight="20dp"
+                    android:text="Create By"
+                    android:textColor="@color/white"
+                    android:textSize="12dp" />
             </TableRow>
-
         </TableLayout>
+
+        <LinearLayout
+            android:id="@+id/bottombar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tblHeading"
+            android:layout_marginTop="10dp"
+            android:background="#039be5"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="20">
+
+
+                <TableLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TableRow>
+
+                        <ToggleButton
+                            android:id="@+id/toggleNotification"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:checked="false"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"
+                            android:text="On" />
+                    </TableRow>
+
+                    <TableRow>
+
+                        <TextView
+                            android:id="@+id/txtNotification"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingBottom="5dp"
+                            android:paddingLeft="20dp"
+                            android:paddingRight="5dp"
+                            android:text="Notification"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/feed_item_timestamp" />
+                    </TableRow>
+                </TableLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="20">
+
+                <TableLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TableRow>
+
+                        <ToggleButton
+                            android:id="@+id/FavButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:checked="false"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"
+                            android:text="On" />
+                    </TableRow>
+
+                    <TableRow>
+
+                        <TextView
+                            android:id="@+id/txtFavourite"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:paddingBottom="5dp"
+                            android:paddingLeft="20dp"
+                            android:paddingRight="5dp"
+                            android:text="Favourite"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/feed_item_timestamp"
+
+                            />
+                    </TableRow>
+                </TableLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="10">
+
+                <TableLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TableRow>
+
+                        <TextView
+                            android:id="@+id/txtChatCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_marginRight="5dp"
+                            android:gravity="center"
+                            android:paddingTop="15dp"
+                            android:text="4"
+                            android:textColor="#FFFFFF" />
+                    </TableRow>
+
+                    <TableRow>
+
+                        <TextView
+                            android:id="@+id/lblChatCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:gravity="bottom"
+                            android:paddingLeft="20dp"
+                            android:paddingRight="5dp"
+                            android:paddingTop="10dp"
+                            android:text="Chat Count"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/feed_item_timestamp"
+
+                            />
+
+                    </TableRow>
+                </TableLayout>
+            </LinearLayout>
+
+        </LinearLayout>
 
 
     </RelativeLayout>
 
-
-    <View
-        android:id="@+id/view1"
-        android:layout_width="fill_parent"
-        android:layout_height="0.5dip"
-        android:layout_below="@+id/relativeLayout1"
-        android:layout_marginLeft="7dp"
-        android:layout_marginRight="7dp"
-        android:background="#cdcfd2" />
-
+    <ImageView
+        android:id="@+id/categoryimage"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="0dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/people" />
 
 </RelativeLayout>
 

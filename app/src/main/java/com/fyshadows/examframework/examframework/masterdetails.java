@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.ParseException;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.util.Log;
@@ -12,6 +13,7 @@ import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,6 +69,7 @@ on click of Exam date	   7
 update values through Notification 8
 on click of chatroom 9
 on DeleteRoom 10
+on chatWindow 11
      */
 
     public static boolean isOnline(Context context) {
@@ -125,4 +128,31 @@ on DeleteRoom 10
         }
     }
     //End :- Insert into analysis
+
+    //Formating Datetime
+    public static String formateDateFromstring(String inputFormat, String outputFormat, String inputDate){
+
+        java.util.Date parsed = null;
+        String outputDate = "";
+
+        SimpleDateFormat df_input = new SimpleDateFormat(inputFormat, java.util.Locale.getDefault());
+        SimpleDateFormat df_output = new SimpleDateFormat(outputFormat, java.util.Locale.getDefault());
+
+        try {
+            try {
+                parsed = df_input.parse(inputDate);
+            } catch (java.text.ParseException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            outputDate = df_output.format(parsed);
+            Log.i("date", outputDate);
+
+        } catch (ParseException e) {
+            Log.i("date", "ParseException - dateFormat");
+        }
+
+        return outputDate;
+
+    }
 }
