@@ -35,7 +35,7 @@ public class ChatWindow   extends ListActivity {
     int scrolly = 0;
     int index = 0;
     int top = 0;
-   static int Scrolling=0;
+    static int Scrolling=0;
     Exam_database db;
     int RoomId;
     String RoomName;
@@ -44,6 +44,7 @@ public class ChatWindow   extends ListActivity {
     Handler UpdateListViewHandler = new Handler();
     Boolean isUpdateListViewHandlerRunning = false;
     static int scrollChanged=0;
+    ListView myListView;
 
 
     @Override
@@ -65,8 +66,8 @@ public class ChatWindow   extends ListActivity {
 
         Bundle bundle = getIntent().getExtras();
         RoomId = bundle.getInt("RoomId");
-        RoomName= bundle.getString("RoomName");
-        txtChatRoomName.setText(RoomName);
+        RoomName= bundle.getString("RoomName").toUpperCase();
+        txtChatRoomName.setText(RoomName.toUpperCase());
 
         if (Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
@@ -80,7 +81,7 @@ public class ChatWindow   extends ListActivity {
         //End : Insert Analysis
 
 
-        final ListView myListView = (ListView) findViewById(android.R.id.list);
+        myListView = (ListView) findViewById(android.R.id.list);
         list = db.getChatMessage(RoomId);
 
 
@@ -119,6 +120,7 @@ public class ChatWindow   extends ListActivity {
             public void onClick(View v) {
                 if (masterdetails.isOnline(ChatWindow.this)) {
                     if (txtMessage.getText().length() > 0) {
+                        Toast.makeText(ChatWindow.this, "Sending Message...", Toast.LENGTH_SHORT).show();
                         new AsyncSendChatMessage(ChatWindow.this).execute(String.valueOf(RoomId), txtMessage.getText().toString());
                         txtMessage.setText("");
                         txtMessage.clearFocus();
@@ -226,20 +228,53 @@ public class ChatWindow   extends ListActivity {
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
+    protected void onResume() {
+        super.onResume();
         if ( AsyncUpdateChatMessage.isHandlerRunning) {
-            AsyncUpdateChatMessage.isHandlerRunning = false;
-            handler.removeCallbacksAndMessages(null);
+            UpdateListViewHandler.postDelayed(new Runnable() {
+
+                @Override
+                public void run() {
+
+                    Log.i("Updating", "Upd list scroll");
+                    if (Scrolling == 0 || scrollChanged == 0) {
+                        int index = 0;
+                        int top = 0;
+                        if (scrollChanged == 1) {
+                            index = myListView.getFirstVisiblePosition();
+                            View v = myListView.getChildAt(0);
+                            top = (v == null) ? 0 : v.getTop();
+
+                        }
+
+                        Log.i("Updating", "Upd list view");
+                        isUpdateListViewHandlerRunning = true;
+                        list = db.getChatMessage(RoomId);
+                        adapter = new ChatWindowAdapter(ChatWindow.this, list);
+
+                        setListAdapter(adapter);
+
+
+                        adapter.notifyDataSetChanged();
+
+                        if (scrollChanged == 1) {
+
+                            myListView.setSelectionFromTop(index, top);
+                        }
+
+                        isUpdateListViewHandlerRunning = false;
+
+                    }
+                    UpdateListViewHandler.postDelayed(this, 10 * 50);
+                }
+
+
+            }, 10 * 50);
+
 
         }
-
-       /* if (isUpdateListViewHandlerRunning) {
-            isUpdateListViewHandlerRunning = false;
-            UpdateListViewHandler.removeCallbacksAndMessages(null);
-        }*/
-
     }
+
 
     @Override
     protected void onDestroy() {

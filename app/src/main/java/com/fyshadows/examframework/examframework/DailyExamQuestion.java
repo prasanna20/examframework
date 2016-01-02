@@ -4,14 +4,18 @@ import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.yyxqsg.bsyduo229750.AdConfig;
 import com.yyxqsg.bsyduo229750.Main;
@@ -24,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ExamFramework_Adapter.DailyExamAdapter;
+import ExamFramework_AsyncTask.AsyncUpdateNewValues;
 
 public class DailyExamQuestion  extends ListActivity {
     private ListView listView;
@@ -36,6 +41,7 @@ public class DailyExamQuestion  extends ListActivity {
     TextView txtNoExam;
     private Main main;
     private com.yyxqsg.bsyduo229750.AdView adView;
+    ImageView refresh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +56,28 @@ public class DailyExamQuestion  extends ListActivity {
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
         txtNoExam=(TextView) this.findViewById(R.id.txtNoExam);
+
+        refresh=(ImageView) this.findViewById(R.id.refresh);
+        refresh = (ImageView) findViewById(R.id.refresh);
+        refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (masterdetails.isOnline(DailyExamQuestion.this)) {
+                    Toast.makeText(getBaseContext(), "Refreshing", Toast.LENGTH_SHORT).show();
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                        new AsyncUpdateNewValues(DailyExamQuestion.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    }
+                    else
+                    {
+                        new AsyncUpdateNewValues(DailyExamQuestion.this).execute();
+                    }
+
+                } else {
+                    Toast.makeText(getBaseContext(), "Please Connect to internet", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         //Advertisement Start
         AdConfig.setAppId(280371);  //setting appid.

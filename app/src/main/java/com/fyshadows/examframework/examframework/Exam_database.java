@@ -81,11 +81,11 @@ public class Exam_database extends SQLiteOpenHelper {
 
         myDB.execSQL("CREATE TABLE if not exists EF_mob_DailyArticle(ArticleNo int, ArticleDate Date,Topic varchar(300),ArticleDesc text);");
 
-        myDB.execSQL("CREATE TABLE if not exists EF_mob_ChatRoom(id int, RoomName varchar(300),CreatedBy  varchar(300),Description varchar(750),ChatCount int,NotificationEnabled int,favourite int);");
-
         myDB.execSQL("ALTER TABLE EF_mob_UserDetails ADD COLUMN username  varchar(250);");
 
-        myDB.execSQL("CREATE TABLE if not exists Exam_Chat(id int, RoomId int,username varchar(250), Email varchar(250),ChatMessage text,TimeStamp timestamp);");
+        myDB.execSQL("CREATE TABLE if not exists EF_mob_ChatRoom(id int, RoomName varchar(300),Description varchar(750), CreatedBy  varchar(300),ChatCount int,NotificationEnabled int,favourite int);");
+
+        myDB.execSQL("CREATE TABLE if not exists Exam_Chat(id int, RoomId int,username varchar(250), mail_id varchar(250),ChatMessage text,TimeStamp timestamp);");
 
         Log.i("table upgraded", "table upgraded");
     }
@@ -884,7 +884,7 @@ public class Exam_database extends SQLiteOpenHelper {
 
     public String getUserName() {
         SQLiteDatabase db = this.getWritableDatabase();
-        String UserName = "";
+        String UserName = null;
         String selectQuery = "SELECT  username FROM EF_mob_UserDetails";
 
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -899,6 +899,9 @@ public class Exam_database extends SQLiteOpenHelper {
                      UserName=cursor.getString(_username);
 
             }
+        }
+        if (db.isOpen()) {
+            db.close();
         }
         return UserName;
 
@@ -953,6 +956,9 @@ public void InsertChatRoomDetails(ChatRoomData chatRoomData) {
 
             }
         }
+        if (db.isOpen()) {
+            db.close();
+        }
         return RoomName;
 
     }
@@ -997,7 +1003,13 @@ public void InsertChatRoomDetails(ChatRoomData chatRoomData) {
         {
             Output= false;
         }
+        if (db.isOpen()) {
+            db.close();
+        }
+
         return Output;
+
+
 
     }
 
@@ -1018,7 +1030,7 @@ public void InsertChatRoomDetails(ChatRoomData chatRoomData) {
     {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete("EF_mob_ChatRoom", "id  = " + RoomId, null);
-        db.close();
+
         if (db.isOpen()) {
             db.close();
         }
@@ -1057,6 +1069,9 @@ public void InsertChatRoomDetails(ChatRoomData chatRoomData) {
 
             }
         }
+        if (db.isOpen()) {
+            db.close();
+        }
         return list;
 
     }
@@ -1079,7 +1094,9 @@ public void InsertChatRoomDetails(ChatRoomData chatRoomData) {
                 LastMessageId = 0;
             }
         }
-
+        if (db.isOpen()) {
+            db.close();
+        }
         return LastMessageId;
     }
 
@@ -1130,9 +1147,10 @@ public void InsertChatRoomDetails(ChatRoomData chatRoomData) {
         {
             Output= false;
         }
+        if (db.isOpen()) {
+            db.close();
+        }
         return Output;
 
     }
-
-
 }

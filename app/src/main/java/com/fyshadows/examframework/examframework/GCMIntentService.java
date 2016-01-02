@@ -151,7 +151,7 @@ public class GCMIntentService extends GCMBaseIntentService {
                     Exam_database db=new Exam_database(GCMIntentService.this);
                      RoomId = Integer.parseInt(intent.getExtras().getString("RoomId"));
                      UserName =intent.getExtras().getString("UserName");
-                     RoomName=db.getChatRoomName(RoomId);
+                     RoomName=db.getChatRoomName(RoomId).toUpperCase();
 
                         String MessageTitle = RoomName;
                         String MessageText = intent.getExtras().getString("ChatMessage");
@@ -160,7 +160,6 @@ public class GCMIntentService extends GCMBaseIntentService {
                 generateNotification(context, MessageTitle, MessageText);
             }
         }
-
     }
 
 	/**

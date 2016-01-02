@@ -17,5 +17,16 @@
         android:paddingRight="15dp"
         />
 
+    <ImageButton
+        android:id="@+id/refresh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:background="#00000000"
+        android:src="@drawable/refresh"
+        android:text="VN" />
+
 
 </RelativeLayout>

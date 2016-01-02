@@ -5,12 +5,7 @@
     android:background="#FFFFFF"
     tools:context="com.fyshadows.examframework.examframework.HomeActivity">
 
-    <com.yyxqsg.bsyduo229750.AdView
-        android:id="@+id/myAdViewtop"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_gravity="center_horizontal" />
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -33,7 +28,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="#29b6f6"
-                    android:text="Start"
+                    android:text="Practise Exam"
                     android:textAllCaps="false"
                     android:textColor="#ffffff"
                     android:textSize="16dp" />

@@ -1,7 +1,9 @@
 package com.fyshadows.examframework.examframework;
 
+import android.app.Activity;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -13,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -147,6 +150,8 @@ public class ChatRoom  extends ListActivity {
                 } else {
                         AddLayout.setVisibility(View.VISIBLE);
                         btnAdd.setImageResource(R.drawable.menuclose);
+                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.showSoftInput(editText_RoomName, InputMethodManager.SHOW_IMPLICIT);
                 }
             }
         });
@@ -160,7 +165,8 @@ public class ChatRoom  extends ListActivity {
             public void onClick(View v) {
                 if (masterdetails.isOnline(ChatRoom.this)) {
                     if (editText_RoomName.getText().toString().trim().length() > 0) {
-                         new AsyncCreateRoom().execute(editText_RoomName.getText().toString().trim(),editText_RoomDesc.getText().toString().trim());
+                         new AsyncCreateRoom().execute(editText_RoomName.getText().toString().trim(), editText_RoomDesc.getText().toString().trim());
+
                     } else {
                         Toast.makeText(getBaseContext(), "Please input the Room Name", Toast.LENGTH_SHORT);
                         editText_RoomName.setSelection(0);
@@ -172,7 +178,7 @@ public class ChatRoom  extends ListActivity {
         });
 
 
-        handler.postDelayed(new Runnable() {
+    /*    handler.postDelayed(new Runnable() {
 
             @Override
             public void run() {
@@ -186,7 +192,7 @@ public class ChatRoom  extends ListActivity {
                 isHandlerRunning = false;
             }
         }, 60 * 1000);
-
+*/
     }
 
     @Override
@@ -293,6 +299,13 @@ public class ChatRoom  extends ListActivity {
 
                 editText_RoomDesc.setText("");
                 editText_RoomName.setText("");
+
+                ((InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE))
+                        .toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
+
+             //   editText_RoomDesc.onEditorAction(EditorInfo.IME_ACTION_DONE);
+              //  editText_RoomName.onEditorAction(EditorInfo.IME_ACTION_DONE);
+
 
                 ChatRoomData chatRoomData=new ChatRoomData();
                 chatRoomData.setid(RoomId);

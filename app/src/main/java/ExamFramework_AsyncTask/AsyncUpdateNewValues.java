@@ -17,6 +17,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import ExamFramework_Data.ChatData;
+import ExamFramework_Data.ChatRoomData;
+
 /**
  * Created by Prasanna on 19-11-2015.
  */
@@ -46,6 +49,8 @@ import java.util.List;
                 // To get question details
                 int success;
                 List<NameValuePair> params = new ArrayList<NameValuePair>();
+                JSONObject md;
+                JSONArray QuestionObj;
 
                 JSONObject json = jsonParser.makeHttpRequest(
                         masterdetails.checkForupdate, "GET", params);
@@ -57,9 +62,9 @@ import java.util.List;
                         if (success == 1) {
 
                             // successfully received product details
-                            JSONArray QuestionObj = json.getJSONArray("LastQuestion"); // JSON
+                             QuestionObj = json.getJSONArray("LastQuestion"); // JSON
                             // Array
-                            JSONObject md = QuestionObj.getJSONObject(0);
+                             md = QuestionObj.getJSONObject(0);
 
 
                             MainDBLastQuestion = md.getInt("maxQuestionNo");
@@ -150,6 +155,9 @@ import java.util.List;
                                 //download new questions to database start
 
                             }
+                        }
+                    }
+                }
 
                             //End of getting question detail
                             // //Start :  Get Daily Question-----------------------------------------------------------------------
@@ -210,13 +218,131 @@ import java.util.List;
 
 
 
-                        }
-                    }
-                }
             } catch (JSONException e) {
 
                 e.printStackTrace();
             }
+
+            //Update Chat Room-----------------------
+            try {
+                Log.i("Async", "Executing get chat room");
+
+                db = new Exam_database(this.myCtx);
+
+                List<NameValuePair> params = new ArrayList<NameValuePair>();
+
+                params.clear();
+
+                JSONObject json = jsonParser.makeHttpRequest(
+                        masterdetails.getChatRoom, "GET", params);
+                int success = 0;
+                JSONArray objChatRoom;
+                ChatRoomData chatRoomData;
+                if(json != null) {
+                    if (json.length() > 0) {
+                        // json success tag
+                        success = json.getInt("success");
+                        Log.i("chatinsert", "success" + String.valueOf(success));
+                        if (success == 1) {
+
+                            objChatRoom = json.getJSONArray("MasterChatRoom"); // JSON
+
+                            Log.i("chatinsert", "objChatRoom" + String.valueOf(objChatRoom.length()));
+
+                            for (int i = 0; i < objChatRoom.length(); i++) {
+
+
+                                JSONObject obj = objChatRoom.getJSONObject(i);
+                                Log.i("chatinsert", "RoomName" + String.valueOf(obj.getString("RoomName")));
+                                Log.i("chatinsert", "Id" + String.valueOf(obj.getInt("Id")));
+
+                                chatRoomData = new ChatRoomData();
+                                chatRoomData.setRoomName(obj.getString("RoomName"));
+                                chatRoomData.setDescription(obj.getString("Description"));
+                                chatRoomData.setCreatedBy(obj.getString("CreatedBy"));
+                                chatRoomData.setid(obj.getInt("Id"));
+                                chatRoomData.setChatCount(obj.getInt("ChatCount"));
+
+                                if (chatRoomData.getDescription().trim() == "") {
+                                    chatRoomData.setDescription("No Description available");
+                                }
+
+                                if (db.checkChatRoomId(obj.getInt("Id"))) {
+                                    db.updateChatRoomDetails(chatRoomData);
+                                } else {
+                                    chatRoomData.setNotificationEnabled(0);
+                                    chatRoomData.setFavEnabled(0);
+                                    db.InsertChatRoomDetails(chatRoomData);
+                                }
+                            }
+                        }
+
+                    }
+                }
+            } catch (JSONException e) {
+
+                Log.i("Analysis activity", "Error");
+            }
+
+            //------------------Update New chat Messages
+            try {
+                Log.i("Async", "Executing get chat Message");
+
+                db = new Exam_database(this.myCtx);
+                int LastId = 0;
+
+                LastId = db.getMaxChatMessage();
+
+                List<NameValuePair> params = new ArrayList<NameValuePair>();
+                Log.i("Async", "Executing get chat Message"+String.valueOf(LastId));
+                params.clear();
+                params.add(new BasicNameValuePair("LastId", String.valueOf(LastId)));
+
+                JSONObject json = jsonParser.makeHttpRequest(
+                        masterdetails.getChatMessage, "GET", params);
+                int success = 0;
+                JSONArray objChatMessage;
+                ChatData chatData;
+                if(json != null)
+                {
+                    if (json.length() > 0) {
+                        success = json.getInt("success");
+                        Log.i("chatMessageinsert", "success" + String.valueOf(success));
+                        if (success == 1) {
+
+                            objChatMessage = json.getJSONArray("MasterChatMessage"); // JSON
+
+                            Log.i("chatMessageinsert", "objChatMessage" + String.valueOf(objChatMessage.length()));
+
+                            for (int i = 0; i < objChatMessage.length(); i++) {
+
+                                JSONObject obj = objChatMessage.getJSONObject(i);
+                                Log.i("chatMessageinsert", "ChatMessage" + String.valueOf(obj.getString("ChatMessage")));
+
+                                chatData = new ChatData();
+                                chatData.setChatMessage(obj.getString("ChatMessage"));
+                                chatData.setEmail(obj.getString("Email"));
+                                chatData.setid(obj.getInt("id"));
+                                chatData.setRoomId(obj.getInt("RoomId"));
+                                chatData.setTimeStamp(obj.getString("TimeStamp"));
+                                chatData.setUsername(obj.getString("UserName"));
+
+                                if(!obj.getString("Email").trim().equalsIgnoreCase(db.GetEmailDetails(myCtx).trim()))
+                                {
+                                    db.InsertChatMessage(chatData);
+                                }
+
+                            }
+
+                        }
+
+                    }
+                }
+            } catch (JSONException e) {
+
+                Log.i("Analysis activity", "Error");
+            }
+
             return null;
         }
 

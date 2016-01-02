@@ -3,6 +3,7 @@ package com.fyshadows.examframework.examframework;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
@@ -109,15 +110,19 @@ public class ViewNotification extends ListActivity {
 			public void run() {
 
 				if (masterdetails.isOnline(ViewNotification.this)) {
-					new asyncGetNotification().execute();
+					if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+						new asyncGetNotification().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+					}
+					else
+					{
+						new asyncGetNotification().execute();
+					}
 				} else {
 					TextView txt = (TextView) ViewNotification.this
 							.findViewById(R.id.nonotificationtext);
 					txt.setText("No internet Connection.Please connect to internet");
 					Toast.makeText(ViewNotification.this, "No internet Connection.Please connect to internet..", Toast.LENGTH_LONG).show();
 				}
-
-
 				handler.postDelayed(this, 300 * 500);
 			}
 		}, 300 * 500);

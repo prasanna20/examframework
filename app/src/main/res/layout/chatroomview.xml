@@ -95,7 +95,8 @@
                             android:checked="false"
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp"
-                            android:text="On" />
+                            android:text="On"
+                            />
                     </TableRow>
 
                     <TableRow>
