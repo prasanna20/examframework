@@ -219,6 +219,7 @@ public class ChatWindow   extends ListActivity {
 
         switch (item.getItemId()) {
             case android.R.id.home:
+                UpdateListViewHandler.removeCallbacksAndMessages(null);
                 Intent i = new Intent(ChatWindow.this, ChatRoom.class);
                 startActivity(i);
                 return true;

@@ -2,7 +2,6 @@ package com.fyshadows.examframework.examframework;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -54,7 +53,6 @@ public class HomeActivity extends ActionBarActivity {
         masterdetails.insertAnalysis(this, 1);
         //End : Insert Analysis
 
-
         db = new Exam_database(this);
 
         AppRater.app_launched(this);
@@ -67,7 +65,24 @@ public class HomeActivity extends ActionBarActivity {
             }
         });
 
-        new asyncExecuteAdvertisement().execute();
+        //Initialize Airpush
+        main=new Main(HomeActivity.this);
+
+        //for calling Smartwall ad
+        try {
+            main.showCachedAd(AdConfig.AdType.smartwall);
+        } catch (Exception e) {
+            main.startInterstitialAd(AdConfig.AdType.smartwall);
+        }
+
+
+        adView=(com.yyxqsg.bsyduo229750.AdView) findViewById(R.id.myAdView);
+
+        adView.setBannerType(com.yyxqsg.bsyduo229750.AdView.BANNER_TYPE_IN_APP_AD);
+        adView.setBannerAnimation(com.yyxqsg.bsyduo229750.AdView.ANIMATION_TYPE_FADE);
+        adView.showMRinInApp(false);
+        //adView.setNewAdListener(adListener); //for passing a new listener for inline banner ads.
+        adView.loadAd();
 
         // set the Timer view
 
@@ -212,49 +227,4 @@ public class HomeActivity extends ActionBarActivity {
 
     }
 
-    public class asyncExecuteAdvertisement extends AsyncTask<String, Void, String> {
-
-
-
-        @Override
-        protected void onPreExecute() {
-
-        }
-
-        @Override
-        protected String doInBackground(String... urls) {
-
-            //advertisement start
-            AdConfig.setAppId(280371);  //setting appid.
-            AdConfig.setApiKey("1435945311229750247"); //setting apikey
-            // AdConfig.setTestMode(true);
-            //AdConfig.setAdListener(adListener);  //setting global Ad listener.
-            AdConfig.setCachingEnabled(false); //Enabling SmartWall ad caching.
-            AdConfig.setPlacementId(0); //pass the placement id.
-
-            //Initialize Airpush
-            main=new Main(HomeActivity.this);
-
-            //for calling Smartwall ad
-            main.startInterstitialAd(AdConfig.AdType.smartwall);
-
-            //for calling banner 360
-            // main.start360BannerAd(this);
-
-            return  null;
-
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-
-            adView=(com.yyxqsg.bsyduo229750.AdView) findViewById(R.id.myAdView);
-
-            adView.setBannerType(com.yyxqsg.bsyduo229750.AdView.BANNER_TYPE_IN_APP_AD);
-            adView.setBannerAnimation(com.yyxqsg.bsyduo229750.AdView.ANIMATION_TYPE_FADE);
-            adView.showMRinInApp(false);
-            //adView.setNewAdListener(adListener); //for passing a new listener for inline banner ads.
-            adView.loadAd();
-        }
-    }
 }
