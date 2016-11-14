@@ -36,6 +36,7 @@ public class masterdetails {
     public static int timer=36;
     public static String registeruser ="http://collegemateapp.com/ExamFrameWork/GCMregistration.php";
     public static String getMasterQuestion="http://collegemateapp.com/ExamFrameWork/getExamQuestions.php";
+    public static String getMasterQuestionNew="http://collegemateapp.com/ExamFrameWork/getExamQuestionsNew.php";
     public static String checkForupdate="http://collegemateapp.com/ExamFrameWork/CheckForNewQuestions.php";
     public static String getNewQuestions="http://collegemateapp.com/ExamFrameWork/getNewQuestions.php";
     public static String getDailyTestQuestions="http://collegemateapp.com/ExamFrameWork/getDailyTestQuestions.php";
@@ -50,6 +51,7 @@ public class masterdetails {
     public static String AddChatMessage="http://collegemateapp.com/ExamFrameWork/AddChatMessage.php";
     public static String getChatMessage="http://collegemateapp.com/ExamFrameWork/getChatMessage.php";
     public static String sendChatMessage="http://collegemateapp.com/ExamFrameWork/SendChatNotification.php";
+    public static String getMonthlyTestQuestions="http://collegemateapp.com/ExamFrameWork/getMonthlyTestQuestions.php";
     //http://collegemateapp.com/ExamFrameWork/SendChatNotification.php?RoomId=15&ChatMessage=%22hinow%22&Email=%22watitis%22&UserName=%22that%22
 
 
@@ -86,10 +88,15 @@ on chatWindow 11
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public  void insertAnalysis(Context context,int code)
     {
-        if(isOnline(context))
-        {
-            Code=code;
-           new insertAnalysisAsyncTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        try {
+            if (isOnline(context)) {
+                Code = code;
+                new insertAnalysisAsyncTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            }
+        }
+        catch (Exception e) {
+
+            Log.i("Analysis activity","Error");
         }
     }
 

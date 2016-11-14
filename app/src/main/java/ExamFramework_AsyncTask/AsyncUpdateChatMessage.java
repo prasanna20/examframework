@@ -66,15 +66,6 @@ public class AsyncUpdateChatMessage extends AsyncTask<String, Void, String> {
                 success = json.getInt("success");
                 Log.i("chatMessageinsert", "success" + String.valueOf(success));
                 if (success == 1) {
-
-                    // Start : Generate Notification
-                  //  String MessageTitle = "New message";
-                  //  String MessageText = "You have un-read messages.";
-                  //  Boolean isNotificationEnabled = false;
-
-//                    GCMIntentService.generateNotification(myCtx, MessageTitle, MessageText);
-                    // End  : Generate Notification
-
                     objChatMessage = json.getJSONArray("MasterChatMessage"); // JSON
 
                     Log.i("chatMessageinsert", "objChatMessage" + String.valueOf(objChatMessage.length()));
@@ -96,21 +87,6 @@ public class AsyncUpdateChatMessage extends AsyncTask<String, Void, String> {
                         {
                             db.InsertChatMessage(chatData);
                         }
-
-                      /*//Start : Check is notification enabled
-                        if(!isNotificationEnabled) {
-
-                                isNotificationEnabled = db.checkNotificationEnabledForChatRoom(obj.getInt("RoomId"));
-
-                        }
-                        //End : Check is notification enabled
-
-                        if(objChatMessage.length() == i-1 )
-                        {
-                            if(isNotificationEnabled) {
-                                GCMIntentService.generateNotification(myCtx, MessageTitle, MessageText);
-                            }
-                        }*/
                     }
 
                 }

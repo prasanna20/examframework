@@ -8,12 +8,12 @@ android {
         applicationId "com.fyshadows.examframework.examframework"
         minSdkVersion 9
         targetSdkVersion 22
-        versionCode 19
-        versionName "2"
+        versionCode 20
+        versionName "3"
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }

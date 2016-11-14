@@ -167,7 +167,7 @@ public class ChatWindow   extends ListActivity {
             @Override
             public void run() {
                 Log.i("Updating", "Upd list scroll");
-                if (Scrolling == 0 || scrollChanged == 0) {
+               // if (Scrolling == 0 || scrollChanged == 0) {
                     int index = 0;
                     int top = 0;
                     if (scrollChanged == 1) {
@@ -194,12 +194,12 @@ public class ChatWindow   extends ListActivity {
 
                     isUpdateListViewHandlerRunning = false;
 
-                }
-                UpdateListViewHandler.postDelayed(this, 10 * 50);
+                //}
+                UpdateListViewHandler.postDelayed(this, 50 * 50);
             }
 
 
-        }, 10 * 50);
+        }, 50 * 50);
 
 
         //To Execute first time when the chat window is opened

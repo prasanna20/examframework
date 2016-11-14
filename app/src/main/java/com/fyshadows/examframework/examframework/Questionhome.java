@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import ExamFramework_Data.DailyExam;
+import ExamFramework_Data.MonthlyExamData;
 
 
 public class Questionhome extends ActionBarActivity {
@@ -40,6 +41,7 @@ public class Questionhome extends ActionBarActivity {
     Exam_database ed = new Exam_database(this);
     ArrayList<storequestiondetails> sd;
     ArrayList<DailyExam> DailyExam;
+    ArrayList<MonthlyExamData> MonthlyExamData;
     int rowcount = 0;
     public int disable = 0;
     public int answered = 0;
@@ -79,6 +81,14 @@ public class Questionhome extends ActionBarActivity {
 
     private Main main; //Declare here
     private com.yyxqsg.bsyduo229750.AdView adView;
+
+    //Category
+   public String Subject_selection;
+   /* public int Quantitative_Aptitude;
+    public int Computer_Knowledge;
+    public int English_Language;
+    public int General_Awareness;
+    public int Reasoning;*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -377,11 +387,17 @@ public class Questionhome extends ActionBarActivity {
         Bundle bundle = getIntent().getExtras();
         FromScreen = bundle.getInt("FromScreen");
 
+       /* Computer_Knowledge= bundle.getInt("Computer_Knowledge");
+        English_Language= bundle.getInt("English_Language");
+        General_Awareness= bundle.getInt("General_Awareness");
+        Reasoning= bundle.getInt("Reasoning");*/
+
         if (FromScreen == 0) {
+            Subject_selection= bundle.getString("Subject_selection");
             //total question count
-            totalquestions = db.getQuestionCount();
+            totalquestions = db.getQuestionCountCategoryWise(Subject_selection);
             //get question data from database
-            sd = ed.getQuestionDetails();
+            sd = ed.getQuestionDetailsNew(Subject_selection);
             rowcount = sd.size();
             Log.i("check", String.valueOf(rowcount));
         } else if (FromScreen == 1) {
@@ -397,10 +413,23 @@ public class Questionhome extends ActionBarActivity {
             totalquestions=DailyExam.size();
             rowcount = DailyExam.size();
         }
+        else if (FromScreen == 2) {
+            //Start : Insert Analysis
+            masterdetails masterdetails=new masterdetails(this);
+            masterdetails.insertAnalysis(this, 7);
+            //End : Insert Analysis
+            ExamDate = bundle.getString("ExamDate");
+            Log.i("Into Home Activity", ExamDate);
+            //totalquestions = db.getQuestionCount();
+            //get question data from database
+            MonthlyExamData = ed.getMonthlyExamQuestion(ExamDate);
+            totalquestions=MonthlyExamData.size();
+            rowcount = MonthlyExamData.size();
+        }
 
 
 //set values to text view
-        if ((FromScreen == 0 && !sd.isEmpty()) || (FromScreen==1 && !DailyExam.isEmpty())) {
+        if ((FromScreen == 0 && !sd.isEmpty()) || (FromScreen==1 && !DailyExam.isEmpty()) || (FromScreen==2 && !MonthlyExamData.isEmpty())) {
             setquestion(FromScreen);
         } else {
             txtquestion.setText("you competed the exam. Please reset it to start from first.");
@@ -442,9 +471,13 @@ public class Questionhome extends ActionBarActivity {
                 if(FromScreen==0) {
                      i = new Intent(Questionhome.this, HomeActivity.class);
                 }
-                else {
+                else if(FromScreen==1){
                      i = new Intent(Questionhome.this, DailyExamQuestion.class);
                 }
+                else {
+                    i = new Intent(Questionhome.this, MonthlyExam.class);
+                }
+
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
                         | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(i);
@@ -500,8 +533,8 @@ public class Questionhome extends ActionBarActivity {
         {
             QuestionNumber = sd.get(0).getQuestionNo();
             QuestionNumberDailyExam= sd.get(0).getQuestionNo();
-            actionbar_queststat.setText(QuestionNumber + " of 1000");
-
+          //  actionbar_queststat.setText(QuestionNumber + " of 1000");
+            actionbar_queststat.setVisibility(View.INVISIBLE);
             txtquestion.setText(Html.fromHtml(sd.get(0).getQuestion()));
             txtquestion_details.setText(Html.fromHtml(sd.get(0).getQuestion()));
             txtanswer1.setText(sd.get(0).getChoice1());
@@ -526,25 +559,56 @@ public class Questionhome extends ActionBarActivity {
             Category = DailyExam.get(0).getCategory();
             actionbar_questcategory.setText(Category);
 
-            if(DailyExam.get(0).getCorrectAns()==1)
+         switch (DailyExam.get(0).getCorrectAns())
             {
-                Correctanswer=DailyExam.get(0).getChoice1();
+                case 1:
+                    Correctanswer=DailyExam.get(0).getChoice1();
+                    break;
+                case 2:
+                    Correctanswer=DailyExam.get(0).getChoice2();
+                    break;
+                case 3:
+                    Correctanswer=DailyExam.get(0).getChoice3();
+                    break;
+                case 4:
+                    Correctanswer=DailyExam.get(0).getChoice4();
+                    break;
+                case 5:
+                    Correctanswer=DailyExam.get(0).getChoice5();
+                    break;
             }
-            else if(DailyExam.get(0).getCorrectAns()==2)
+        }
+        else if (Fromflag == 2) {
+            QuestionNumber = MonthlyExamData.get(0).getQuesNo();
+            QuestionNumberDailyExam= MonthlyExamData.get(0).getid();
+            actionbar_queststat.setText( QuestionNumber + " of " + totalquestions);
+            txtquestion.setText(Html.fromHtml(MonthlyExamData.get(0).getQues()));
+            txtquestion_details.setText(Html.fromHtml(MonthlyExamData.get(0).getQues()));
+            txtanswer1.setText(MonthlyExamData.get(0).getChoice1());
+            txtanswer2.setText(MonthlyExamData.get(0).getChoice2());
+            txtanswer3.setText(MonthlyExamData.get(0).getChoice3());
+            txtanswer4.setText(MonthlyExamData.get(0).getChoice4());
+            txtanswer5.setText(MonthlyExamData.get(0).getChoice5());
+            Category = MonthlyExamData.get(0).getCategory();
+            actionbar_questcategory.setText(Category);
+
+            switch (MonthlyExamData.get(0).getCorrectAns())
             {
-                Correctanswer=DailyExam.get(0).getChoice2();
-            }
-            else if(DailyExam.get(0).getCorrectAns()==3)
-            {
-                Correctanswer=DailyExam.get(0).getChoice3();
-            }
-            else if(DailyExam.get(0).getCorrectAns()==4)
-            {
-                Correctanswer=DailyExam.get(0).getChoice4();
-            }
-            else if(DailyExam.get(0).getCorrectAns()==5)
-            {
-                Correctanswer=DailyExam.get(0).getChoice5();
+                case 1:
+                    Correctanswer=MonthlyExamData.get(0).getChoice1();
+                    break;
+                case 2:
+                    Correctanswer=MonthlyExamData.get(0).getChoice2();
+                    break;
+                case 3:
+                    Correctanswer=MonthlyExamData.get(0).getChoice3();
+                    break;
+                case 4:
+                    Correctanswer=MonthlyExamData.get(0).getChoice4();
+                    break;
+                case 5:
+                    Correctanswer=MonthlyExamData.get(0).getChoice5();
+                    break;
             }
         }
     }
@@ -566,26 +630,32 @@ public class Questionhome extends ActionBarActivity {
     }
 
     public void showmessage(int indicator) {
-        messagelayout.setVisibility(View.VISIBLE);
-        showanswer.setVisibility(View.INVISIBLE);
-        if (indicator == 1) {
+        try {
+            messagelayout.setVisibility(View.VISIBLE);
+            showanswer.setVisibility(View.INVISIBLE);
+            if (indicator == 1) {
 
-            myString = res.getStringArray(R.array.correct);
+                myString = res.getStringArray(R.array.correct);
 
-            String q = myString[rgenerator.nextInt(myString.length)];
+                String q = myString[rgenerator.nextInt(myString.length)];
 
-            displaymessage.setText(q);
-        } else if (indicator == 2) {
-            myString = res.getStringArray(R.array.wrong);
+                displaymessage.setText(q);
+            } else if (indicator == 2) {
+                myString = res.getStringArray(R.array.wrong);
 
-            String q = myString[rgenerator.nextInt(myString.length)];
+                String q = myString[rgenerator.nextInt(myString.length)];
 
-            displaymessage.setText(q);
+                displaymessage.setText(q);
 
-        } else if (indicator == 3) {
-            displaymessage.setText("Learn it and Rock it");
-        } else if (indicator == 4) {
-            displaymessage.setText("Time Never Wait!");
+            } else if (indicator == 3) {
+                displaymessage.setText("Learn it and Rock it");
+            } else if (indicator == 4) {
+                displaymessage.setText("Time Never Wait!");
+            }
+        }
+        catch(Exception ex)
+        {
+            Log.i("Error","Error in question home");
         }
     }
 
@@ -594,6 +664,7 @@ public class Questionhome extends ActionBarActivity {
         Bundle bundle = new Bundle();
         if(FromScreen==0) {
             bundle.putInt("FromScreen", FromScreen);
+            bundle.putString("Subject_selection", Subject_selection);
         }
         else {
             bundle.putInt("FromScreen", FromScreen);
@@ -617,8 +688,12 @@ public class Questionhome extends ActionBarActivity {
             {
                 DailyExam.remove(0);
             }
+            else if (FromScreen==2)
+            {
+                MonthlyExamData.remove(0);
+            }
 
-            if ((FromScreen == 0 && !sd.isEmpty()) || (FromScreen==1 && !DailyExam.isEmpty())) {
+            if ((FromScreen == 0 && !sd.isEmpty()) || (FromScreen==1 && !DailyExam.isEmpty()) || (FromScreen==2 && !MonthlyExamData.isEmpty())) {
                 setquestion(FromScreen);
                 messagelayout.setVisibility(View.INVISIBLE);
                 showanswer.setVisibility(View.VISIBLE);
@@ -635,6 +710,8 @@ public class Questionhome extends ActionBarActivity {
             scoreactivity();
         }
     }
+
+
 
 
 }

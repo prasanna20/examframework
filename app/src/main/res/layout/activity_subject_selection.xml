@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
+        >
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
+        android:paddingLeft="10dp"
+
+        android:id="@+id/layout">
+        <TextView
+            android:id="@+id/viewQuestion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/primerdivisor"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:clickable="true"
+            android:text="Select subject and click on start"
+            android:textSize="12sp"
+
+            />
+        <CheckBox android:id="@+id/checkbox_Quantitative_Aptitude"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_centerHorizontal="true"
+            android:text="@string/Quantitative_Aptitude" />
+        <CheckBox android:id="@+id/checkbox_Reasoning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Reasoning"
+            />
+        <CheckBox android:id="@+id/checkbox_General_Awareness"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/General_Awareness"
+            />
+        <CheckBox android:id="@+id/checkbox_English_Language"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/English_Language"
+            />
+        <CheckBox android:id="@+id/checkbox_Computer_Knowledge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Computer_Knowledge"
+            />
+        <Button
+            android:id="@+id/StartExam"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="#29b6f6"
+            android:text="Start Exam"
+            android:textAllCaps="false"
+            android:textColor="#ffffff"
+            android:textSize="16dp" />
+
+    </LinearLayout>
+
+</RelativeLayout>

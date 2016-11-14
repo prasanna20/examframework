@@ -52,7 +52,6 @@ public class GCMIntentService extends GCMBaseIntentService {
 	 **/
 	@Override
 	protected void onRegistered(Context context, String registrationId) {
-		Log.i(TAG, "Device registered: regId = " + registrationId);
         Toast.makeText(GCMIntentService.this, "on registered", Toast.LENGTH_LONG);
         String email = getEmail(this);
         if(email.trim().isEmpty() )
@@ -68,7 +67,6 @@ public class GCMIntentService extends GCMBaseIntentService {
 
         Exam_database edb=new Exam_database(this);
         edb.StoreUserDetails(email,registrationId);
-        Log.i(TAG, String.valueOf(json));
 		// ServerUtilities.register(context, "prasanna", "prasanna",
 		// registrationId);
 	}
@@ -168,10 +166,6 @@ public class GCMIntentService extends GCMBaseIntentService {
 	@Override
 	protected void onDeletedMessages(Context context, int total) {
 		Log.i(TAG, "Received deleted messages notification");
-		//String message = getString(R.string.gcm_deleted, total);
-		///displayMessage(context, message);
-		// notifies user
-		//generateNotification(context, message);
 
 	}
 
@@ -217,70 +211,66 @@ public class GCMIntentService extends GCMBaseIntentService {
     }
 
     public static void generateNotification(Context context,String MessageTitle, String MessageText) {
+try {
+    int icon = R.drawable.logotrans;
+    long when = System.currentTimeMillis();
+    Intent notificationIntent;
 
-        int icon = R.drawable.logotrans;
-        long when = System.currentTimeMillis();
-        Intent notificationIntent;
+    NotificationManager notificationManager = (NotificationManager) context
+            .getSystemService(Context.NOTIFICATION_SERVICE);
+    Notification notification = new Notification(icon, MessageText, when);
 
-        NotificationManager notificationManager = (NotificationManager) context
-                .getSystemService(Context.NOTIFICATION_SERVICE);
-        Notification notification = new Notification(icon, MessageText, when);
+    // String title = context.getString(R.string.app_name);
+    String title = MessageTitle;
+    notificationIntent = new Intent(context, Configuringactivity.class);
 
-       // String title = context.getString(R.string.app_name);
-        String title = MessageTitle;
-        notificationIntent = new Intent(context, Configuringactivity.class);
+    if (identify.trim().equals("chatmessage")) {
+        notificationIntent = new Intent(context, ChatWindow
+                .class);
+        Bundle bundle = new Bundle();
+        bundle.clear();
+        bundle.putInt("RoomId", RoomId);
+        bundle.putString("RoomName", RoomName);
 
-        if(identify.trim().equals("chatmessage")) {
-            notificationIntent = new Intent(context, ChatWindow
-                    .class);
-            Bundle bundle = new Bundle();
-            bundle.clear();
-            bundle.putInt("RoomId", RoomId);
-            Log.i("Message", MessageTitle);
-            bundle.putString("RoomName", RoomName);
-            Log.i("Message2", MessageText);
+        notificationIntent.putExtras(bundle);
+    } else {
 
-            notificationIntent.putExtras(bundle);
-        }
-        else {
-
-            if (ExamReminder != null) {
-                if (ExamReminder.equalsIgnoreCase("Yes")) {
-                    notificationIntent = new Intent(context, Configuringactivity.class);
-                } else {
-                    notificationIntent = new Intent(context, ViewNotification.class);
-                }
+        if (ExamReminder != null) {
+            if (ExamReminder.equalsIgnoreCase("Yes")) {
+                notificationIntent = new Intent(context, DailyExamQuestion.class);
+            } else {
+                notificationIntent = new Intent(context, ViewNotification.class);
             }
-
-            Bundle bundle = new Bundle();
-            bundle.clear();
-            bundle.putString("MessageTitle", MessageTitle);
-            Log.i("Message", MessageTitle);
-            bundle.putString("MessageText", MessageText);
-            Log.i("Message2", MessageText);
-
-            notificationIntent.putExtras(bundle);
         }
 
+        Bundle bundle = new Bundle();
+        bundle.clear();
+        bundle.putString("MessageTitle", MessageTitle);
+        bundle.putString("MessageText", MessageText);
 
-
-        // set intent so it does not start a new activity
-        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
-                | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        int iUniqueId = (int) (System.currentTimeMillis() & 0xfffffff);
-        PendingIntent contentIntent = PendingIntent.getActivity(context, iUniqueId, notificationIntent, 0);
-        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-        notification.setLatestEventInfo(context, title, MessageText, contentIntent);
-        notification.flags |= Notification.FLAG_AUTO_CANCEL;
-
-        // Play default notification sound
-        notification.defaults |= Notification.DEFAULT_SOUND;
-
-        notificationManager.notify(0, notification);
-
+        notificationIntent.putExtras(bundle);
     }
 
+    // set intent so it does not start a new activity
+    notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+            | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+    int iUniqueId = (int) (System.currentTimeMillis() & 0xfffffff);
+    PendingIntent contentIntent = PendingIntent.getActivity(context, iUniqueId, notificationIntent, 0);
+    notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
+    notification.setLatestEventInfo(context, title, MessageText, contentIntent);
+    notification.flags |= Notification.FLAG_AUTO_CANCEL;
+
+    // Play default notification sound
+    notification.defaults |= Notification.DEFAULT_SOUND;
+
+    notificationManager.notify(0, notification);
+}
+catch(Exception ex)
+{
+    Log.i("error","error in GCM intent service");
+}
+
+    }
 
 }

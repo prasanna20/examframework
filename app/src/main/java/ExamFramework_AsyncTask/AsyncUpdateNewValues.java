@@ -73,7 +73,6 @@ import ExamFramework_Data.ChatRoomData;
                                 try {
 
                                     // To get question details
-
                                     params.clear();
                                     params.add(new BasicNameValuePair("lastquestionnumber", String.valueOf(db.getmaxquestionnumber())));
 
@@ -97,9 +96,8 @@ import ExamFramework_Data.ChatRoomData;
                                                 String Choice3 = "";
                                                 String Choice4 = "";
                                                 String Choice5 = "";
-                                                String Correct_Ans = "";
-                                                String Category = "";
-
+                                                int Correct_Ans = 0;
+                                                int Category = 0;
 
                                                 md = QuestionObj.getJSONObject(i);
 
@@ -110,8 +108,8 @@ import ExamFramework_Data.ChatRoomData;
                                                 Choice3 = md.getString("Choice3");
                                                 Choice4 = md.getString("Choice4");
                                                 Choice5 = md.getString("Choice5");
-                                                Correct_Ans = md.getString("Correct_Ans");
-                                                Category = md.getString("Category");
+                                                Correct_Ans = md.getInt("Correct_Ans");
+                                                Category = md.getInt("Category");
 
 
                                                 if (Question.trim() == "") {
@@ -132,13 +130,6 @@ import ExamFramework_Data.ChatRoomData;
                                                 if (Choice5.trim() == "") {
                                                     Choice5 = "NA";
                                                 }
-                                                if (Correct_Ans.trim() == "") {
-                                                    Correct_Ans = "NA";
-                                                }
-                                                if (Category.trim() == "") {
-                                                    Category = "NA";
-                                                }
-
 
                                                 db.InsertQuestionDetails(QuestionNo, Question, Choice1, Choice2, Choice3, Choice4, Choice5, Correct_Ans, Category);
 
@@ -216,6 +207,31 @@ import ExamFramework_Data.ChatRoomData;
                         }
 //End  : Get Daily Question--------------------------------------------------------------------------
 
+                //Start :  Get Monthly Question-----------------------------------------------------------------------
+                params.clear();
+                params.add(new BasicNameValuePair("lastquestionnumber", String.valueOf("0")));
+
+                json = jsonParser.makeHttpRequest(
+                        masterdetails.getMonthlyTestQuestions, "GET", params);
+                Log.i("Exam", "got Daily Ques Json");
+                if (json.length() > 0) {
+                    // json success tag
+                    success = json.getInt("success");
+                    if (success == 1) {
+                        Log.i("Exam", "Check_suc");
+                        // successfully received product details
+                         QuestionObj = json.getJSONArray("MasterDailyQuestion"); // JSON
+                        // Array
+                        for (int i = 0; i < QuestionObj.length(); i++) {
+                             md = QuestionObj.getJSONObject(i);
+
+                            db.InsertMonthlyQuestionDetails(md.getInt("Id"), md.getString("Month"), md.getInt("QuestionNo"),md.getString("QuestionText"), md.getString("Choice1"), md.getString("Choice2"),md.getString("Choice3"),md.getString("Choice4"),md.getString("Choice5") ,md.getInt("Answer"),md.getString("Category") );
+
+                            //End of getting question details
+                        }
+                    }
+                }
+//End  : Get Monthly Question--------------------------------------------------------------------------
 
 
             } catch (JSONException e) {

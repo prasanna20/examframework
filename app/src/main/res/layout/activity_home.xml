@@ -6,7 +6,6 @@
     tools:context="com.fyshadows.examframework.examframework.HomeActivity">
 
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -17,6 +16,23 @@
             android:layout_height="wrap_content"
             android:layout_weight="3"
             android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+                <Button
+                    android:id="@+id/btnDailyExam"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/Start"
+                    android:background="#03a9f4"
+                    android:text="Daily Exam"
+                    android:textAllCaps="false"
+                    android:textColor="#ffffff"
+                    android:textSize="16dp" />
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -35,22 +51,9 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
 
-                <Button
-                    android:id="@+id/btnDailyExam"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_below="@+id/Start"
-                    android:background="#03a9f4"
-                    android:text="Daily Exam"
-                    android:textAllCaps="false"
-                    android:textColor="#ffffff"
-                    android:textSize="16dp" />
-            </LinearLayout>
+
+
         </LinearLayout>
 
         <LinearLayout
@@ -143,11 +146,11 @@
                 android:layout_weight="1">
 
                 <Button
-                    android:id="@+id/Score"
+                    android:id="@+id/MonthlyExam"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="#039be5"
-                    android:text="Score"
+                    android:background="#0288d1"
+                    android:text="Monthly Exam"
                     android:textAllCaps="false"
                     android:textColor="#ffffff"
                     android:textSize="16dp" />
@@ -159,15 +162,17 @@
                 android:layout_weight="1">
 
                 <Button
-                    android:id="@+id/Reset"
+                    android:id="@+id/Score"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="#0288d1"
-                    android:text="Reset"
+                    android:background="#039be5"
+                    android:text="Analysis"
                     android:textAllCaps="false"
                     android:textColor="#ffffff"
                     android:textSize="16dp" />
             </LinearLayout>
+
+
         </LinearLayout>
 
     </LinearLayout>

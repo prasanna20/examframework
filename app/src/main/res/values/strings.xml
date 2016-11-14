@@ -30,7 +30,7 @@
 
 
     //score activity
-    <string name="score_actionbarname">Score</string>
+    <string name="score_actionbarname">Analysis</string>
 
     //correct answer message
     <string-array name="correct">
@@ -66,6 +66,13 @@
     <string name="title_activity_daily_article">DailyArticle</string>
     <string name="title_activity_chat_room">ChatRoom</string>
     <string name="title_activity_chat_window">ChatWindow</string>
+
+    //Category
+    <string name="Quantitative_Aptitude"> Quantitative Aptitude </string>
+    <string name="Reasoning"> Reasoning </string>
+    <string name="English_Language"> English Language </string>
+    <string name="General_Awareness"> General Awareness(Banking) </string>
+    <string name="Computer_Knowledge"> Computer Knowledge </string>
 
 
 </resources>

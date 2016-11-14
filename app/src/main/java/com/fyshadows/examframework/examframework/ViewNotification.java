@@ -47,42 +47,16 @@ public class ViewNotification extends ListActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_notification);
 
-		//advertisement start
-		AdConfig.setAppId(280371);  //setting appid.
-		AdConfig.setApiKey("1435945311229750247"); //setting apikey
-		// AdConfig.setTestMode(true);
-		//AdConfig.setAdListener(adListener);  //setting global Ad listener.
-		AdConfig.setCachingEnabled(false); //Enabling SmartWall ad caching.
-		AdConfig.setPlacementId(0); //pass the placement id.
-
 		//Initialize Airpush
 		main=new Main(this);
-
-		//for calling banner 360
-		//main.start360BannerAd(this);
-
-		//for calling Smartwall ad
-		main.startInterstitialAd(AdConfig.AdType.smartwall);
-
-		adView=(com.yyxqsg.bsyduo229750.AdView) findViewById(R.id.myAdView);
-		adView.setBannerType(com.yyxqsg.bsyduo229750.AdView.BANNER_TYPE_IN_APP_AD);
-		adView.setBannerAnimation(com.yyxqsg.bsyduo229750.AdView.ANIMATION_TYPE_FADE);
-		adView.showMRinInApp(false);
-		//adView.setNewAdListener(adListener); //for passing a new listener for inline banner ads.
-		adView.loadAd();
 
         getActionBar().setDisplayShowTitleEnabled(false);
         getActionBar().setDisplayShowCustomEnabled(true);
         getActionBar().setCustomView(R.layout.actionbar_notification);
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
-
-
         TextView title = (TextView) findViewById(android.R.id.text1);
-        title.setText("Notification Center");
-
-
-
+        title.setText("News Bytes");
 
         if (android.os.Build.VERSION.SDK_INT > 9) {
 			StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()

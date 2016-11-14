@@ -45,6 +45,11 @@
         <activity
             android:name=".HomeActivity"
             android:label="@string/title_activity_home" />
+
+        <activity android:name=".SubjectSelection"
+            android:label="Select the Subject"
+            ></activity>
+        
         <activity
             android:name=".scoreactivity"
             android:label="@string/title_activity_scoreactivity" />
@@ -100,7 +105,13 @@
         <activity
             android:name=".ChatWindow"
             android:label="@string/title_activity_chat_window"
-            android:windowSoftInputMode="stateHidden"
+            android:theme="@android:style/Theme.Holo.Light.DarkActionBar"
+            android:windowSoftInputMode="stateHidden" />
+
+
+
+        <activity android:name=".MonthlyExam"
+            android:label="Monthly Exam"
             android:theme="@android:style/Theme.Holo.Light.DarkActionBar" ></activity>
     </application>
 

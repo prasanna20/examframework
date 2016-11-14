@@ -66,11 +66,12 @@ public class ChatRoom  extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_room);
 
+    getActionBar().setDisplayShowTitleEnabled(false);
+    getActionBar().setDisplayShowCustomEnabled(true);
+    getActionBar().setCustomView(R.layout.actionbar_chatroom);
+    getActionBar().setDisplayHomeAsUpEnabled(true);
 
-        getActionBar().setDisplayShowTitleEnabled(false);
-        getActionBar().setDisplayShowCustomEnabled(true);
-        getActionBar().setCustomView(R.layout.actionbar_chatroom);
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         if (Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
@@ -156,6 +157,7 @@ public class ChatRoom  extends ListActivity {
             }
         });
 
+        btnAdd.setVisibility(View.INVISIBLE);
         editText_RoomName= (EditText) findViewById(R.id.editText_RoomName);
         editText_RoomDesc= (EditText) findViewById(R.id.editText_RoomDesc);
 

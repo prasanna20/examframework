@@ -30,8 +30,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import ExamFramework_AsyncTask.AsyncUpdateChatMessage;
-import ExamFramework_AsyncTask.AsyncUpdateChatRoom;
 import ExamFramework_AsyncTask.AsyncUpdateNewValues;
 
 
@@ -163,7 +161,7 @@ public class Configuringactivity extends ActionBarActivity {
         }
 
         //Start : Get ChatRoom
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+       /* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             new AsyncUpdateChatRoom(Configuringactivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
         else
@@ -181,7 +179,7 @@ public class Configuringactivity extends ActionBarActivity {
             new AsyncUpdateChatMessage(Configuringactivity.this).execute();
         }
         //End : Chat Message
-
+*/
 
 
         logoTimer.start();
@@ -239,11 +237,12 @@ public class Configuringactivity extends ActionBarActivity {
         protected String doInBackground(String... urls) {
             try {
 
-                Log.i("Exam", "into async task");
+                Log.i("Prasanna Exam", "into async task");
                 gcmregistration();
 
                 if (!prefs.getBoolean("Firsttimeactivity", false)) {
                     // This block is used for first time activity
+                    Log.i("Prasanna Exam", "Delete master table");
                     db.deletemastertable();
 
                 }
@@ -253,14 +252,14 @@ public class Configuringactivity extends ActionBarActivity {
                 List<NameValuePair> params = new ArrayList<NameValuePair>();
 
                 JSONObject json = jsonParser.makeHttpRequest(
-                        masterdetails.getMasterQuestion, "GET", params);
-                Log.i("Exam", "got json");
+                        masterdetails.getMasterQuestionNew, "GET", params);
+                Log.i("Prasanna Exam", "Got Json");
                 if (json != null) {
                     if (json.length() > 0) {
                         // json success tag
                         success = json.getInt("success");
                         if (success == 1) {
-                            Log.i("Exam", "Check_suc");
+                            Log.i("Prasanna Exam", "Sucess");
                             // successfully received details
                             JSONArray QuestionObj = json.getJSONArray("MasterQuestion"); // JSON
                             // Array
@@ -273,8 +272,8 @@ public class Configuringactivity extends ActionBarActivity {
                                 String Choice3 = "";
                                 String Choice4 = "";
                                 String Choice5 = "";
-                                String Correct_Ans = "";
-                                String Category = "";
+                                int Correct_Ans = 0;
+                                int Category = 0;
 
                                 JSONObject md = QuestionObj.getJSONObject(i);
 
@@ -285,8 +284,8 @@ public class Configuringactivity extends ActionBarActivity {
                                 Choice3 = md.getString("Choice3");
                                 Choice4 = md.getString("Choice4");
                                 Choice5 = md.getString("Choice5");
-                                Correct_Ans = md.getString("Correct_Ans");
-                                Category = md.getString("Category");
+                                Correct_Ans = md.getInt("Correct_Ans");
+                                Category = md.getInt("Category");
 
                                 if (Question.trim() == "") {
                                     Question = "NA";
@@ -305,13 +304,6 @@ public class Configuringactivity extends ActionBarActivity {
                                 }
                                 if (Choice5.trim() == "") {
                                     Choice5 = "NA";
-                                }
-                                if (Correct_Ans.trim() == "") {
-                                    Correct_Ans = "NA";
-                                }
-
-                                if (Category.trim() == "") {
-                                    Category = "NA";
                                 }
 
 
@@ -372,6 +364,32 @@ public class Configuringactivity extends ActionBarActivity {
                     }
                 }
 //End  : Get Daily Question--------------------------------------------------------------------------
+
+                //Start :  Get Monthly Question-----------------------------------------------------------------------
+                params.clear();
+                params.add(new BasicNameValuePair("lastquestionnumber", String.valueOf("0")));
+
+                json = jsonParser.makeHttpRequest(
+                        masterdetails.getMonthlyTestQuestions, "GET", params);
+                Log.i("Prassy Exam", "got Daily Ques Json");
+                if (json.length() > 0) {
+                    // json success tag
+                    success = json.getInt("success");
+                    if (success == 1) {
+                        Log.i("Exam", "Check_suc");
+                        // successfully received product details
+                        JSONArray QuestionObj = json.getJSONArray("MasterDailyQuestion"); // JSON
+                        // Array
+                        for (int i = 0; i < QuestionObj.length(); i++) {
+                            JSONObject md = QuestionObj.getJSONObject(i);
+
+                            db.InsertMonthlyQuestionDetails(md.getInt("Id"), md.getString("Month"), md.getInt("QuestionNo"),md.getString("QuestionText"), md.getString("Choice1"), md.getString("Choice2"),md.getString("Choice3"),md.getString("Choice4"),md.getString("Choice5") ,md.getInt("Answer"),md.getString("Category") );
+
+                            //End of getting question details
+                        }
+                    }
+                }
+//End  : Get Monthly Question--------------------------------------------------------------------------
 
 
             } catch (JSONException e) {
@@ -446,12 +464,10 @@ public class Configuringactivity extends ActionBarActivity {
 
                                     json = jsonParser.makeHttpRequest(
                                             masterdetails.getNewQuestions, "GET", params);
-                                    Log.i("Exam", "got json");
                                     if (json.length() > 0) {
                                         // json success tag
                                         success = json.getInt("success");
                                         if (success == 1) {
-                                            Log.i("Exam", "Check_suc");
                                             // successfully received product details
                                             QuestionObj = json.getJSONArray("MasterQuestion"); // JSON
                                             // Array
@@ -464,9 +480,8 @@ public class Configuringactivity extends ActionBarActivity {
                                                 String Choice3 = "";
                                                 String Choice4 = "";
                                                 String Choice5 = "";
-                                                String Correct_Ans = "";
-                                                String Category = "";
-
+                                                int Correct_Ans = 0;
+                                                int Category = 0;
 
                                                 md = QuestionObj.getJSONObject(i);
 
@@ -477,9 +492,8 @@ public class Configuringactivity extends ActionBarActivity {
                                                 Choice3 = md.getString("Choice3");
                                                 Choice4 = md.getString("Choice4");
                                                 Choice5 = md.getString("Choice5");
-                                                Correct_Ans = md.getString("Correct_Ans");
-                                                Category = md.getString("Category");
-
+                                                Correct_Ans = md.getInt("Correct_Ans");
+                                                Category = md.getInt("Category");
 
                                                 if (Question.trim() == "") {
                                                     Question = "NA";
@@ -499,13 +513,6 @@ public class Configuringactivity extends ActionBarActivity {
                                                 if (Choice5.trim() == "") {
                                                     Choice5 = "NA";
                                                 }
-                                                if (Correct_Ans.trim() == "") {
-                                                    Correct_Ans = "NA";
-                                                }
-                                                if (Category.trim() == "") {
-                                                    Category = "NA";
-                                                }
-
 
                                                 db.InsertQuestionDetails(QuestionNo, Question, Choice1, Choice2, Choice3, Choice4, Choice5, Correct_Ans, Category);
 
@@ -530,12 +537,11 @@ public class Configuringactivity extends ActionBarActivity {
 
                             json = jsonParser.makeHttpRequest(
                                     masterdetails.getDailyTestQuestions, "GET", params);
-                            Log.i("maximum Exam Daily", String.valueOf(db.getMaxDailyQuestionNumber()));
                             if (json.length() > 0) {
                                 // json success tag
                                 success = json.getInt("success");
                                 if (success == 1) {
-                                    Log.i("Exam", "Check_suc");
+
                                     // successfully received product details
                                     QuestionObj = json.getJSONArray("MasterDailyQuestion"); // JSON
                                     // Array
@@ -575,12 +581,39 @@ public class Configuringactivity extends ActionBarActivity {
                             }
 //End  : Get Daily Question--------------------------------------------------------------------------s
 
+                            // //Start :  Get Monthly Question-----------------------------------------------------------------------
+                            params.clear();
+                            params.add(new BasicNameValuePair("lastquestionnumber", String.valueOf(db.getMaxMonthlyQuestionNumber())));
+
+                            json = jsonParser.makeHttpRequest(
+                                    masterdetails.getMonthlyTestQuestions, "GET", params);
+                            Log.i("maximum Exam Daily", String.valueOf(db.getMaxMonthlyQuestionNumber()));
+                            if (json.length() > 0) {
+                                // json success tag
+                                success = json.getInt("success");
+                                if (success == 1) {
+                                    Log.i("Exam", "Check_suc");
+                                    // successfully received product details
+                                    QuestionObj = json.getJSONArray("MasterDailyQuestion"); // JSON
+                                    // Array
+                                    for (int i = 0; i < QuestionObj.length(); i++) {
+                                        md = QuestionObj.getJSONObject(i);
+
+                                        db.InsertMonthlyQuestionDetails(md.getInt("Id"), md.getString("Month"), md.getInt("QuestionNo"), md.getString("QuestionText"), md.getString("Choice1"), md.getString("Choice2"), md.getString("Choice3"), md.getString("Choice4"), md.getString("Choice5"), md.getInt("Answer"), md.getString("Category"));
+
+                                        //End of getting question details
+                                    }
+                                }
+                            }
+//End  : Get Daily Question--------------------------------------------------------------------------
+
+
                         }
                     }
                 }
             } catch (JSONException e) {
 
-                e.printStackTrace();
+              Log.i("error","eror in async");
             }
             return null;
         }

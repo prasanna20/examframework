@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,7 +21,7 @@ public class HomeActivity extends ActionBarActivity {
 
     Button start;
     Button score;
-    Button reset;
+    Button MonthlyExam;
     Button plus;
     Button minus;
     Button DailyExam;
@@ -39,8 +40,6 @@ public class HomeActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-
-
         //set action bar
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
@@ -50,7 +49,12 @@ public class HomeActivity extends ActionBarActivity {
 
         //Start : Insert Analysis
         masterdetails=new masterdetails(this);
-        masterdetails.insertAnalysis(this, 1);
+        try {
+            masterdetails.insertAnalysis(this, 1);
+        }catch(Exception ex)
+        {
+            Log.i("Error","Error in inserting analysis");
+        }
         //End : Insert Analysis
 
         db = new Exam_database(this);
@@ -81,7 +85,6 @@ public class HomeActivity extends ActionBarActivity {
         adView.setBannerType(com.yyxqsg.bsyduo229750.AdView.BANNER_TYPE_IN_APP_AD);
         adView.setBannerAnimation(com.yyxqsg.bsyduo229750.AdView.ANIMATION_TYPE_FADE);
         adView.showMRinInApp(false);
-        //adView.setNewAdListener(adListener); //for passing a new listener for inline banner ads.
         adView.loadAd();
 
         // set the Timer view
@@ -102,11 +105,11 @@ public class HomeActivity extends ActionBarActivity {
             }
         });
 
-        reset = (Button) findViewById(R.id.Reset);
-        reset.setOnClickListener(new View.OnClickListener() {
+        MonthlyExam = (Button) findViewById(R.id.MonthlyExam);
+        MonthlyExam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                resetexam();
+                MonthlyExamActivity();
 
             }
         });
@@ -200,7 +203,7 @@ public class HomeActivity extends ActionBarActivity {
         //Start : Insert Analysis
         masterdetails.insertAnalysis(HomeActivity.this, 9);
         //End : Insert Analysis
-        Intent i = new Intent(HomeActivity.this, Questionhome.class);
+        Intent i = new Intent(HomeActivity.this, SubjectSelection.class);
         Bundle bundle = new Bundle();
         bundle.putInt("FromScreen", 0);
         i.putExtras(bundle);
@@ -211,8 +214,15 @@ public class HomeActivity extends ActionBarActivity {
 
         Intent i = new Intent(HomeActivity.this, scoreactivity.class);
         Bundle bundle = new Bundle();
-        bundle.putInt("FromScreen", 0);
+        bundle.putInt("FromScreen", 3);
         i.putExtras(bundle);
+        startActivity(i);
+    }
+
+
+    public void MonthlyExamActivity() {
+
+        Intent i = new Intent(HomeActivity.this, MonthlyExam.class);
         startActivity(i);
     }
 

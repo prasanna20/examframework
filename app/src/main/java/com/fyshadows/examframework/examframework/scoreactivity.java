@@ -26,7 +26,7 @@ public class scoreactivity extends ActionBarActivity {
     private com.yyxqsg.bsyduo229750.AdView adView;
     public int FromScreen = 0;
     public String ExamDate="";
-
+    public String Subject_selection = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,32 +80,40 @@ public class scoreactivity extends ActionBarActivity {
         {
             ExamDate = bundle.getString("ExamDate");
         }
+        else if (FromScreen == 0)
+        {
+            Subject_selection= bundle.getString("Subject_selection");
+        }
+        else if (FromScreen == 2)
+        {
+            ExamDate = bundle.getString("ExamDate");
+        }
 
 
 
         score = (TextView) this.findViewById(R.id.score);
-        score.setText( db.getscore(FromScreen,ExamDate));
+        score.setText( db.getscore(FromScreen,ExamDate,Subject_selection));
 
         average = (TextView) this.findViewById(R.id.average);
-        average.setText(db.getAverage(FromScreen,ExamDate));
+        average.setText(db.getAverage(FromScreen,ExamDate,Subject_selection));
 
         skippedCount = (TextView) this.findViewById(R.id.skippedCount);
-        skippedCount.setText(  db.getSkippedCount(FromScreen,ExamDate));
+        skippedCount.setText(  db.getSkippedCount(FromScreen,ExamDate,Subject_selection));
 
         quantitativescore= (TextView) this.findViewById(R.id.quantitativescore);
-        quantitativescore.setText(  db.getCategoryscore("Quantitative apps",FromScreen,ExamDate));
+        quantitativescore.setText(  db.getCategoryscore(1,FromScreen,ExamDate,Subject_selection));
 
         English= (TextView) this.findViewById(R.id.English);
-        English.setText( db.getCategoryscore("English language",FromScreen,ExamDate));
+        English.setText( db.getCategoryscore(2,FromScreen,ExamDate,Subject_selection));
 
         Reasoning= (TextView) this.findViewById(R.id.Reasoning);
-        Reasoning.setText( db.getCategoryscore("Reasoning",FromScreen,ExamDate));
+        Reasoning.setText( db.getCategoryscore(4,FromScreen,ExamDate,Subject_selection));
 
         General= (TextView) this.findViewById(R.id.General);
-        General.setText( db.getCategoryscore("General awareness",FromScreen,ExamDate));
+        General.setText( db.getCategoryscore(5,FromScreen,ExamDate,Subject_selection));
 
         Computer= (TextView) this.findViewById(R.id.Computer);
-        Computer.setText( db.getCategoryscore("Computer knowledge",FromScreen,ExamDate));
+        Computer.setText( db.getCategoryscore(3,FromScreen,ExamDate,Subject_selection));
 
 
     }
@@ -130,14 +138,19 @@ public class scoreactivity extends ActionBarActivity {
             case android.R.id.home:
                 main.startInterstitialAd(AdConfig.AdType.smartwall);
 
-                if(FromScreen==0)
+                if(FromScreen==0 || FromScreen==3)
                 {
                     Intent i = new Intent(scoreactivity.this, HomeActivity.class);
                     startActivity(i);
                 }
-                else
+                else if(FromScreen == 1)
                 {
                     Intent i = new Intent(scoreactivity.this, DailyExamQuestion.class);
+                    startActivity(i);
+                }
+                else if(FromScreen == 2)
+                {
+                    Intent i = new Intent(scoreactivity.this, MonthlyExam.class);
                     startActivity(i);
                 }
 
