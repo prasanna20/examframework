@@ -2,14 +2,14 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+    buildToolsVersion "22"
 
     defaultConfig {
         applicationId "com.fyshadows.examframework.examframework"
         minSdkVersion 9
         targetSdkVersion 22
-        versionCode 20
-        versionName "3"
+        versionCode 21
+        versionName "4"
     }
     buildTypes {
         release {

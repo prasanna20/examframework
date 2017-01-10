@@ -321,12 +321,10 @@ public class Configuringactivity extends ActionBarActivity {
 
                 json = jsonParser.makeHttpRequest(
                         masterdetails.getDailyTestQuestions, "GET", params);
-                Log.i("Exam", "got Daily Ques Json");
                 if (json.length() > 0) {
                     // json success tag
                     success = json.getInt("success");
                     if (success == 1) {
-                        Log.i("Exam", "Check_suc");
                         // successfully received product details
                         JSONArray QuestionObj = json.getJSONArray("MasterDailyQuestion"); // JSON
                         // Array
@@ -371,12 +369,10 @@ public class Configuringactivity extends ActionBarActivity {
 
                 json = jsonParser.makeHttpRequest(
                         masterdetails.getMonthlyTestQuestions, "GET", params);
-                Log.i("Prassy Exam", "got Daily Ques Json");
                 if (json.length() > 0) {
                     // json success tag
                     success = json.getInt("success");
                     if (success == 1) {
-                        Log.i("Exam", "Check_suc");
                         // successfully received product details
                         JSONArray QuestionObj = json.getJSONArray("MasterDailyQuestion"); // JSON
                         // Array
@@ -439,7 +435,6 @@ public class Configuringactivity extends ActionBarActivity {
 
                 JSONObject json = jsonParser.makeHttpRequest(
                         masterdetails.checkForupdate, "GET", params);
-                Log.i("Exam", "got json");
                 if(json != null) {
                     if (json.length() > 0) {
                         // json success tag
@@ -454,7 +449,6 @@ public class Configuringactivity extends ActionBarActivity {
 
                             MainDBLastQuestion = md.getInt("maxQuestionNo");
                             if (MainDBLastQuestion > db.getmaxquestionnumber()) {
-                                Log.i("exam", "we have new set of question");
                                 try {
 
                                     // To get question details
@@ -562,7 +556,6 @@ public class Configuringactivity extends ActionBarActivity {
 
                             json = jsonParser.makeHttpRequest(
                                     masterdetails.getDailyArticle, "GET", params);
-                            Log.i("Maximum Exam Article", String.valueOf(db.getMaxDailyArticle()));
                             if (json.length() > 0) {
                                 // json success tag
                                 success = json.getInt("success");
@@ -587,7 +580,7 @@ public class Configuringactivity extends ActionBarActivity {
 
                             json = jsonParser.makeHttpRequest(
                                     masterdetails.getMonthlyTestQuestions, "GET", params);
-                            Log.i("maximum Exam Daily", String.valueOf(db.getMaxMonthlyQuestionNumber()));
+                            Log.i("maximum Exam monthly", String.valueOf(db.getMaxMonthlyQuestionNumber()));
                             if (json.length() > 0) {
                                 // json success tag
                                 success = json.getInt("success");

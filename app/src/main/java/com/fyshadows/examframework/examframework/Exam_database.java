@@ -36,7 +36,7 @@ public class Exam_database extends SQLiteOpenHelper {
 
     public Exam_database(Context context) {
 
-        super(context, "exam_database", null, 4);// version number is given at
+        super(context, "exam_database", null, 5);// version number is given at
         myCtx = context;
     }
 
@@ -87,7 +87,15 @@ public class Exam_database extends SQLiteOpenHelper {
 
         myDB.execSQL("CREATE TABLE if not exists EF_mob_DailyArticle(ArticleNo int, ArticleDate Date,Topic varchar(300),ArticleDesc text);");
 
-        myDB.execSQL("ALTER TABLE EF_mob_UserDetails ADD COLUMN username  varchar(250);");
+        Cursor cursor = myDB.rawQuery("SELECT * FROM EF_mob_UserDetails", null); // grab cursor for all data
+
+        int deleteStateColumnIndex = cursor.getColumnIndex("username");  // see if the column is there
+        if (deleteStateColumnIndex < 0) {
+            // missing_column not there - add it
+            myDB.execSQL("ALTER TABLE EF_mob_UserDetails ADD COLUMN username  varchar(250);");
+        }
+
+      //  myDB.execSQL("ALTER TABLE EF_mob_UserDetails ADD COLUMN username  varchar(250);");
 
         myDB.execSQL("CREATE TABLE if not exists EF_mob_ChatRoom(id int, RoomName varchar(300),Description varchar(750), CreatedBy  varchar(300),ChatCount int,NotificationEnabled int,favourite int);");
 
@@ -98,7 +106,7 @@ public class Exam_database extends SQLiteOpenHelper {
         myDB.execSQL("CREATE TABLE if not exists EF_mob_MonthlyQues(id  int,Month text,QuesNo int ,Ques text,Choice1 varchar(350),Choice2 varchar(350),Choice3 varchar(350),Choice4 varchar(350),Choice5 varchar(350),CorrectAns varchar(350),Category varchar(250),answeredFlag int,timeTaken int,Rank int);");
 
         myDB.execSQL("DROP TABLE IF EXISTS EF_mob_MasterQuestion" );
-        Log.i("table upgraded", "table upgraded");
+
     }
 
     // Register admin
@@ -599,9 +607,10 @@ public class Exam_database extends SQLiteOpenHelper {
         ArrayList<MonthlyExamData> list = new ArrayList<MonthlyExamData>();
 
         String selectQuery = "SELECT id,Month ,QuesNo  ,Ques ,Choice1 ,Choice2 ,Choice3 ,Choice4 ,Choice5 ,CorrectAns ,Category   FROM EF_mob_MonthlyQues where Month = '" + ExamDate + "' order by QuesNo asc";
+        Log.i("Prassy ",selectQuery);
+
         Cursor cursor = db.rawQuery(selectQuery, null);
-
-
+        list.clear();
         if (null != cursor && cursor.moveToFirst()) {
 
             int _id = cursor.getColumnIndex("id");
@@ -636,6 +645,7 @@ public class Exam_database extends SQLiteOpenHelper {
 
             }
         }
+        Log.i("Prassy count 123", String.valueOf(list.size()));
         return list;
 
     }
@@ -645,6 +655,32 @@ public class Exam_database extends SQLiteOpenHelper {
 
     private storequestiondetails getdata(int QuestionNo, String Question, String Choice1, String Choice2, String Choice3, String Choice4, String Choice5, String Correct_Ans, String Category) {
         return new storequestiondetails(QuestionNo, Question, Choice1, Choice2, Choice3, Choice4, Choice5, Correct_Ans, Category);
+    }
+
+    //get total question count
+    //get questions
+    public int getMonthlyQuestionCount(String ExamDate) {
+        int QuestionCount = 0;
+        SQLiteDatabase db = this.getWritableDatabase();
+        ArrayList<storequestiondetails> list = new ArrayList<storequestiondetails>();
+
+        String selectQuery = "SELECT  count(*) cnt  FROM EF_mob_MonthlyQues where Month = '" + ExamDate + "'";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+
+        if (null != cursor && cursor.moveToFirst()) {
+
+            int _Questioncnt = cursor.getColumnIndex("cnt");
+
+
+            if (cursor.moveToFirst()) {
+                QuestionCount = cursor.getInt(_Questioncnt);
+            } else {
+                QuestionCount = 0;
+            }
+        }
+        return QuestionCount;
+
     }
 
     //get total question count
@@ -749,6 +785,7 @@ public class Exam_database extends SQLiteOpenHelper {
         {
             QuestionCount = getDailyExamCount(ExamDate);
             selectQuery = "SELECT count(*) cnt  FROM EF_mob_MonthlyQues where Month = '" + ExamDate + "' and answeredFlag = 1";
+          Log.i("prassy score",selectQuery );
         }
         else  if(FromScreen==3)
         {
@@ -1004,21 +1041,46 @@ public class Exam_database extends SQLiteOpenHelper {
         int totalquestion = 0;
         int answeredcnt = 0;
         String selectQuery = "";
+        String CategoryText = "";
+        if(FromScreen==1 || FromScreen == 2)
+        {
+            switch (category)
+            {
+                case 1:
+                    CategoryText="Quantitative Aptitude";
+                    break;
+                case 2:
+                    CategoryText="English Language";
+                    break;
+                case 3:
+                    CategoryText="Computer Knowledge";
+                    break;
+                case 4:
+                    CategoryText="Reasoning";
+                    break;
+                case 5:
+                    CategoryText="General Awareness";
+                    break;
+                default:
+                    CategoryText="Question";
+                    break;
+
+            }
+        }
 
         if (FromScreen == 0) {
             selectQuery = "SELECT  count(*) cnt  FROM EF_mob_MasterQuestionNew where category = " + category + " and category in ("+Subject_selection+")  and  answered_flag in (1,2,3) ";
         } else if (FromScreen == 1) {
-            selectQuery = "SELECT  count(*) cnt  FROM EF_mob_DailyQues where Category = " + category + " and quesDate = '" + ExamDate + "'  and  answeredFlag in (1,2,3) ";
+            selectQuery = "SELECT  count(*) cnt  FROM EF_mob_DailyQues where trim(Category) = '" + CategoryText.trim() + "' and quesDate = '" + ExamDate + "'  and  answeredFlag in (1,2,3) ";
         }
          else  if (FromScreen == 3){
             selectQuery = "SELECT  count(*) cnt  FROM EF_mob_MasterQuestionNew where category = " + category + " and answered_flag in (1,2,3) ";
         }
         else if (FromScreen == 2) {
-            selectQuery = "SELECT  count(*) cnt  FROM EF_mob_MonthlyQues where Category = " + category + " and quesDate = '" + ExamDate + "'  and  answeredFlag in (1,2,3) ";
+            selectQuery = "SELECT  count(*) cnt  FROM EF_mob_MonthlyQues where trim(Category) = '" + CategoryText.trim() + "' and Month = '" + ExamDate + "'  and  answeredFlag in (1,2,3) ";
         }
 
         Cursor cursor = db.rawQuery(selectQuery, null);
-
 
         if (null != cursor && cursor.moveToFirst()) {
 
@@ -1027,7 +1089,9 @@ public class Exam_database extends SQLiteOpenHelper {
 
             if (cursor.moveToFirst()) {
                 totalquestion = cursor.getInt(_totalquestion);
+                Log.i("prassy score total",String.valueOf(totalquestion));
             } else {
+                Log.i("prassy score total","here");
                 totalquestion = 0;
             }
 
@@ -1036,15 +1100,16 @@ public class Exam_database extends SQLiteOpenHelper {
         if (FromScreen == 0) {
             selectQuery = "SELECT  count(*) cnt  FROM EF_mob_MasterQuestionNew where category='" + category + "' and  answered_flag in (1)";
         } else if (FromScreen == 1) {
-            selectQuery = "SELECT  count(*) cnt  FROM EF_mob_DailyQues where Category = '" + category + "' and quesDate = '" + ExamDate + "'  and  answeredFlag in (1) ";
+            selectQuery = "SELECT  count(*) cnt  FROM EF_mob_DailyQues where trim(Category) = '" + CategoryText + "' and quesDate = '" + ExamDate + "'  and  answeredFlag in (1) ";
         }
         else if (FromScreen == 2) {
-            selectQuery = "SELECT  count(*) cnt  FROM EF_mob_MonthlyQues where Category = '" + category + "' and quesDate = '" + ExamDate + "'  and  answeredFlag in (1) ";
+            selectQuery = "SELECT  count(*) cnt  FROM EF_mob_MonthlyQues where Category = '" + CategoryText + "' and Month = '" + ExamDate + "'  and  answeredFlag in (1) ";
         }
         else if (FromScreen == 3) {
-            selectQuery = "SELECT  count(*) cnt  FROM EF_mob_MasterQuestionNew where Category = '" + category + "'  and  answered_flag in (1) ";
+            selectQuery = "SELECT  count(*) cnt  FROM EF_mob_MasterQuestionNew where trim(Category) = '" + category + "'  and  answered_flag in (1) ";
         }
 
+        Log.i("prassy score text",selectQuery);
         cursor = db.rawQuery(selectQuery, null);
 
 
@@ -1055,12 +1120,41 @@ public class Exam_database extends SQLiteOpenHelper {
 
             if (cursor.moveToFirst()) {
                 answeredcnt = cursor.getInt(_answeredcnt);
+                Log.i("prassy score answered",String.valueOf(answeredcnt));
             } else {
                 answeredcnt = 0;
+                Log.i("prassy score answered","here");
             }
 
         }
+
+        selectQuery = "SELECT  answeredFlag  FROM EF_mob_DailyQues where quesDate = '" + ExamDate + "'";
+        cursor = db.rawQuery(selectQuery, null);
+
+
+        if (null != cursor && cursor.moveToFirst()) {
+
+            int _answeredcnt = cursor.getColumnIndex("answeredFlag");
+
+
+            if (cursor.moveToFirst()) {
+             int categ = cursor.getInt(_answeredcnt);
+                Log.i("prassy cate answered",String.valueOf(categ));
+            } else {
+                answeredcnt = 0;
+                Log.i("prassy score answered","here");
+            }
+
+        }
+
+
+        if(db.isOpen())
+        {
+            db.close();
+        }
         return String.valueOf(answeredcnt) + " Out of " + String.valueOf(totalquestion);
+
+
     }
 
     // Getting the chat from table of the user

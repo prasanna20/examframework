@@ -73,7 +73,6 @@ public class MonthlyExam   extends ListActivity {
 
         ListView myListView = (ListView) findViewById(android.R.id.list);
         list = db.getMonthlyExamDate();
-        Log.i("Prassyyyy",String.valueOf(list.size()));
         int index = 0;
         int top = 0;
 

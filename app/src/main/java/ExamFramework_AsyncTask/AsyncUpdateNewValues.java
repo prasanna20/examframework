@@ -209,7 +209,7 @@ import ExamFramework_Data.ChatRoomData;
 
                 //Start :  Get Monthly Question-----------------------------------------------------------------------
                 params.clear();
-                params.add(new BasicNameValuePair("lastquestionnumber", String.valueOf("0")));
+                params.add(new BasicNameValuePair("lastquestionnumber", String.valueOf(db.getMaxMonthlyQuestionNumber())));
 
                 json = jsonParser.makeHttpRequest(
                         masterdetails.getMonthlyTestQuestions, "GET", params);

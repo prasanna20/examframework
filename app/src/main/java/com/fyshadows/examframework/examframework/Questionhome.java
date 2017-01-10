@@ -245,15 +245,15 @@ public class Questionhome extends ActionBarActivity {
                     {
                         FinalTimerValue=txt_timer.getText().toString();
                     }
-
+Log.i("Prassy 143",String.valueOf(QuestionNumber));
                     if (Correctanswer.equalsIgnoreCase(txtanswer1.getText().toString())) {
                         txtanswer1.setBackgroundColor(Color.GREEN);
                         showmessage(1);
-                        db.updateScore(QuestionNumberDailyExam, 1, Integer.parseInt(FinalTimerValue),FromScreen);
+                        db.updateScore(QuestionNumber, 1, Integer.parseInt(FinalTimerValue),FromScreen);
                     } else {
                         txtanswer1.setBackgroundColor(Color.RED);
                         showmessage(2);
-                        db.updateScore(QuestionNumberDailyExam, 2, Integer.parseInt(FinalTimerValue),FromScreen);
+                        db.updateScore(QuestionNumber, 2, Integer.parseInt(FinalTimerValue),FromScreen);
                         showanswer();
                     }
                     answered = 1;
@@ -280,11 +280,11 @@ public class Questionhome extends ActionBarActivity {
                     if (Correctanswer.equalsIgnoreCase(txtanswer2.getText().toString())) {
                         showmessage(1);
                         txtanswer2.setBackgroundColor(Color.GREEN);
-                        db.updateScore(QuestionNumberDailyExam, 1, Integer.parseInt(FinalTimerValue),FromScreen);
+                        db.updateScore(QuestionNumber, 1, Integer.parseInt(FinalTimerValue),FromScreen);
                     } else {
                         txtanswer2.setBackgroundColor(Color.RED);
                         showmessage(2);
-                        db.updateScore(QuestionNumberDailyExam, 2, Integer.parseInt(FinalTimerValue),FromScreen);
+                        db.updateScore(QuestionNumber, 2, Integer.parseInt(FinalTimerValue),FromScreen);
 
                         showanswer();
                     }
@@ -311,12 +311,12 @@ public class Questionhome extends ActionBarActivity {
                     if (Correctanswer.equalsIgnoreCase(txtanswer3.getText().toString())) {
                         showmessage(1);
                         txtanswer3.setBackgroundColor(Color.GREEN);
-                        db.updateScore(QuestionNumberDailyExam, 1, Integer.parseInt(FinalTimerValue),FromScreen);
+                        db.updateScore(QuestionNumber, 1, Integer.parseInt(FinalTimerValue),FromScreen);
                     } else {
                         txtanswer3.setBackgroundColor(Color.RED);
                         showmessage(2);
                         showanswer();
-                        db.updateScore(QuestionNumberDailyExam, 2, Integer.parseInt(FinalTimerValue),FromScreen);
+                        db.updateScore(QuestionNumber, 2, Integer.parseInt(FinalTimerValue),FromScreen);
                     }
                     disable = 1;
                     answered = 1;
@@ -341,11 +341,11 @@ public class Questionhome extends ActionBarActivity {
                     if (Correctanswer.equalsIgnoreCase(txtanswer4.getText().toString())) {
                         showmessage(1);
                         txtanswer4.setBackgroundColor(Color.GREEN);
-                        db.updateScore(QuestionNumberDailyExam, 1, Integer.parseInt(FinalTimerValue),FromScreen);
+                        db.updateScore(QuestionNumber, 1, Integer.parseInt(FinalTimerValue),FromScreen);
                     } else {
                         txtanswer4.setBackgroundColor(Color.RED);
                         showmessage(2);
-                        db.updateScore(QuestionNumberDailyExam, 2, Integer.parseInt(FinalTimerValue),FromScreen);
+                        db.updateScore(QuestionNumber, 2, Integer.parseInt(FinalTimerValue),FromScreen);
                         showanswer();
                     }
                     disable = 1;
@@ -371,11 +371,11 @@ public class Questionhome extends ActionBarActivity {
                     if (Correctanswer.equalsIgnoreCase(txtanswer5.getText().toString())) {
                         txtanswer5.setBackgroundColor(Color.GREEN);
                         showmessage(1);
-                        db.updateScore(QuestionNumberDailyExam, 1, Integer.parseInt(FinalTimerValue),FromScreen);
+                        db.updateScore(QuestionNumber, 1, Integer.parseInt(FinalTimerValue),FromScreen);
                     } else {
                         txtanswer5.setBackgroundColor(Color.RED);
                         showmessage(2);
-                        db.updateScore(QuestionNumberDailyExam, 2, Integer.parseInt(FinalTimerValue),FromScreen);
+                        db.updateScore(QuestionNumber, 2, Integer.parseInt(FinalTimerValue),FromScreen);
                         showanswer();
                     }
                     answered = 1;
@@ -423,7 +423,8 @@ public class Questionhome extends ActionBarActivity {
             //totalquestions = db.getQuestionCount();
             //get question data from database
             MonthlyExamData = ed.getMonthlyExamQuestion(ExamDate);
-            totalquestions=MonthlyExamData.size();
+            totalquestions=ed.getMonthlyQuestionCount(ExamDate);
+            Log.i("Prassy count", String.valueOf(totalquestions));
             rowcount = MonthlyExamData.size();
         }
 
@@ -546,9 +547,9 @@ public class Questionhome extends ActionBarActivity {
             actionbar_questcategory.setText(Category);
             Correctanswer = sd.get(0).getCorrect_Ans();
         } else if (Fromflag == 1) {
-            QuestionNumber = DailyExam.get(0).getQuesNo();
-            QuestionNumberDailyExam= DailyExam.get(0).getid();
-            actionbar_queststat.setText( QuestionNumber + " of " + totalquestions);
+            QuestionNumber = DailyExam.get(0).getid();
+            QuestionNumberDailyExam= DailyExam.get(0).getQuesNo();
+            actionbar_queststat.setText( QuestionNumberDailyExam + " of " + totalquestions);
             txtquestion.setText(Html.fromHtml(DailyExam.get(0).getQues()));
             txtquestion_details.setText(Html.fromHtml(DailyExam.get(0).getQues()));
             txtanswer1.setText(DailyExam.get(0).getChoice1());
@@ -579,9 +580,9 @@ public class Questionhome extends ActionBarActivity {
             }
         }
         else if (Fromflag == 2) {
-            QuestionNumber = MonthlyExamData.get(0).getQuesNo();
-            QuestionNumberDailyExam= MonthlyExamData.get(0).getid();
-            actionbar_queststat.setText( QuestionNumber + " of " + totalquestions);
+            QuestionNumber =MonthlyExamData.get(0).getid();
+            QuestionNumberDailyExam= MonthlyExamData.get(0).getQuesNo();
+            actionbar_queststat.setText( QuestionNumberDailyExam + " of " + totalquestions);
             txtquestion.setText(Html.fromHtml(MonthlyExamData.get(0).getQues()));
             txtquestion_details.setText(Html.fromHtml(MonthlyExamData.get(0).getQues()));
             txtanswer1.setText(MonthlyExamData.get(0).getChoice1());
