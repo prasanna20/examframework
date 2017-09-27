@@ -20,53 +20,53 @@ import ExamFramework_Data.notificationtable;
 
 public class notificationcustomadapter extends ArrayAdapter<notificationtable> {
 
-	private final Activity context;
-	private static List<notificationtable> list = null;
-	
+    private final Activity context;
+    private static List<notificationtable> list = null;
 
-	public notificationcustomadapter(Activity context,
-									 List<notificationtable> list) {
-		super(context, R.layout.notification_row, list);
-		this.context = context;
-		this.list = list;
-	}
 
-	@Override
-	public int getCount() {
-		Log.i("a", "a" + list.size());
-		return list.size();
-	}
+    public notificationcustomadapter(Activity context,
+                                     List<notificationtable> list) {
+        super(context, R.layout.notification_row, list);
+        this.context = context;
+        notificationcustomadapter.list = list;
+    }
 
-	public static notificationtable getnotificationtablePosition(int position) {
-		return list.get(position);
-	}
+    @Override
+    public int getCount() {
+        Log.i("a", "a" + list.size());
+        return list.size();
+    }
 
-	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
-		View view = null;
-		Log.i("a", "into get view");
-		if (convertView == null) {
-			LayoutInflater inflator = context.getLayoutInflater();
-			view = inflator.inflate(R.layout.notification_row, null);
-			final ViewHolder viewHolder = new ViewHolder();
-			viewHolder.text = (TextView) view.findViewById(R.id.notitification_text);
-			viewHolder.text.setTextColor(Color.BLACK);
-			viewHolder.text1 = (TextView) view.findViewById(R.id.notitification_time);
-			viewHolder.text1.setTextColor(Color.BLACK);
-			view.setTag(viewHolder);
-		} else {
-			view = convertView;
-		}
+    public static notificationtable getnotificationtablePosition(int position) {
+        return list.get(position);
+    }
 
-		ViewHolder holder = (ViewHolder) view.getTag();
-		holder.text.setText(Html.fromHtml(list.get(position).getMessage()));
-		holder.text1.setText(formateDateFromstring("yyyy-MM-dd hh:mm:ss", "dd MMM yyyy hh:mm:ss", list.get(position).gettimestamp()));
-		
-		return view;
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        View view = null;
+        Log.i("a", "into get view");
+        if (convertView == null) {
+            LayoutInflater inflator = context.getLayoutInflater();
+            view = inflator.inflate(R.layout.notification_row, null);
+            final ViewHolder viewHolder = new ViewHolder();
+            viewHolder.text = (TextView) view.findViewById(R.id.notitification_text);
+            viewHolder.text.setTextColor(Color.BLACK);
+            viewHolder.text1 = (TextView) view.findViewById(R.id.notitification_time);
+            viewHolder.text1.setTextColor(Color.BLACK);
+            view.setTag(viewHolder);
+        } else {
+            view = convertView;
+        }
 
-	}
+        ViewHolder holder = (ViewHolder) view.getTag();
+        holder.text.setText(Html.fromHtml(list.get(position).getMessage()));
+        holder.text1.setText(formateDateFromstring("yyyy-MM-dd hh:mm:ss", "dd MMM yyyy hh:mm:ss", list.get(position).gettimestamp()));
 
-    public static String formateDateFromstring(String inputFormat, String outputFormat, String inputDate){
+        return view;
+
+    }
+
+    public static String formateDateFromstring(String inputFormat, String outputFormat, String inputDate) {
 
         java.util.Date parsed = null;
         String outputDate = "";
@@ -92,12 +92,12 @@ public class notificationcustomadapter extends ArrayAdapter<notificationtable> {
 
     }
 
-	static class ViewHolder {
+    static class ViewHolder {
 
-		protected TextView text;
-		protected TextView text1;
+        protected TextView text;
+        protected TextView text1;
 
-	}
+    }
 
 
 }

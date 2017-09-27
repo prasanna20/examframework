@@ -42,7 +42,7 @@ public class AsyncUpdateUserName extends AsyncTask<String, Void, String> {
     @Override
     protected String doInBackground(String... Values) {
         try {
-            Log.i("Async","Executing Aync task");
+            Log.i("Async", "Executing Aync task");
             String UserName = Values[0];
 
             db = new Exam_database(this.myCtx);

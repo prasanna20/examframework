@@ -5,7 +5,6 @@
     android:orientation="vertical">
 
 
-
     <TextView
         android:id="@android:id/text1"
         android:layout_width="wrap_content"
@@ -15,9 +14,7 @@
         android:textStyle="bold"
         android:text="@string/score_actionbarname"
         android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        />
-
+        android:paddingRight="15dp" />
 
 
 </RelativeLayout>

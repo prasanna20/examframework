@@ -21,7 +21,7 @@ import java.util.List;
  * Created by Prasanna on 12-11-2016.
  */
 
-public class MonthlyExamAdapter  extends ArrayAdapter<String> {
+public class MonthlyExamAdapter extends ArrayAdapter<String> {
     private final Activity context;
     private static List<String> list = null;
 
@@ -30,10 +30,10 @@ public class MonthlyExamAdapter  extends ArrayAdapter<String> {
 
 
     public MonthlyExamAdapter(Activity context,
-                            List<String> list) {
+                              List<String> list) {
         super(context, R.layout.monthlyexamview, list);
         this.context = context;
-        this.list = list;
+        MonthlyExamAdapter.list = list;
     }
 
     @Override
@@ -49,7 +49,7 @@ public class MonthlyExamAdapter  extends ArrayAdapter<String> {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        db= new Exam_database(parent.getContext());
+        db = new Exam_database(parent.getContext());
         View view = null;
         Log.i("a", "into get view");
         if (convertView == null) {
@@ -70,15 +70,12 @@ public class MonthlyExamAdapter  extends ArrayAdapter<String> {
 
         MonthlyExamAdapter.ViewHolder holder = (MonthlyExamAdapter.ViewHolder) view.getTag();
         if (!list.get(position).toString().trim().equalsIgnoreCase("")) {
-            String Score=db.getscore(2, list.get(position).toString(),"");
+            String Score = db.getscore(2, list.get(position).toString(), "");
             holder.Date.setText(list.get(position).toString());
-            if(Score.length() > 0)
-            {
-                holder.Score.setText("Score:"+Score);
-            }
-            else
-            {
-                holder.Score.setVisibility(view.INVISIBLE);
+            if (Score.length() > 0) {
+                holder.Score.setText("Score:" + Score);
+            } else {
+                holder.Score.setVisibility(View.INVISIBLE);
             }
 
         }
@@ -88,7 +85,7 @@ public class MonthlyExamAdapter  extends ArrayAdapter<String> {
             @Override
             public void onClick(View view) {
 
-                Log.i("Selected Date",list.get(position).toString());
+                Log.i("Selected Date", list.get(position).toString());
                 Intent i = new Intent(context, Questionhome.class);
                 Bundle bundle = new Bundle();
                 bundle.putInt("FromScreen", 2);
@@ -106,7 +103,7 @@ public class MonthlyExamAdapter  extends ArrayAdapter<String> {
             @Override
             public void onClick(View view) {
 
-                Log.i("Selected Date",list.get(position).toString());
+                Log.i("Selected Date", list.get(position).toString());
                 Intent i = new Intent(context, Questionhome.class);
                 Bundle bundle = new Bundle();
                 bundle.putInt("FromScreen", 2);

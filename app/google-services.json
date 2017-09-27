@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "950308370344",
+    "firebase_url": "https://ibps-mock-exam.firebaseio.com",
+    "project_id": "ibps-mock-exam",
+    "storage_bucket": "ibps-mock-exam.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:950308370344:android:f1bbf6df756b93ec",
+        "android_client_info": {
+          "package_name": "com.fyshadows.examframework.examframework"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "950308370344-do3acm8ug2267iugutbnqspg9tcgvebr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDkTn1xIkR3CLVeEUbv2YK_7YZ7ze6t74U"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

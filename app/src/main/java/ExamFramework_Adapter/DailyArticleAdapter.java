@@ -1,9 +1,6 @@
 package ExamFramework_Adapter;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.graphics.Color;
-import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -36,7 +33,7 @@ public class DailyArticleAdapter extends ArrayAdapter<DailyArticleData> {
                                List<DailyArticleData> list) {
         super(context, R.layout.dailyarticleview, list);
         this.context = context;
-        this.list = list;
+        DailyArticleAdapter.list = list;
     }
 
     @Override
@@ -46,7 +43,7 @@ public class DailyArticleAdapter extends ArrayAdapter<DailyArticleData> {
     }
 
     public static String getDailyArticlePosition(int position) {
-         return String.valueOf(list.get(position).getArticleNo());
+        return String.valueOf(list.get(position).getArticleNo());
     }
 
 

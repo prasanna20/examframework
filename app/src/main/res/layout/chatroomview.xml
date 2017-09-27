@@ -17,26 +17,26 @@
         android:orientation="vertical"
         android:paddingBottom="0dp"
         android:paddingTop="10dp">
+
         <TableLayout
             android:id="@+id/tblHeading"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal">
 
-        <TextView
-            android:id="@+id/txtRoomName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:gravity="center"
-            android:paddingLeft="20dp"
-            android:text="Room Name"
-            android:textAlignment="center"
-            android:textColor="#269c4d"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
+            <TextView
+                android:id="@+id/txtRoomName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:paddingLeft="20dp"
+                android:text="Room Name"
+                android:textAlignment="center"
+                android:textColor="#269c4d"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
 
             <TableRow
@@ -95,8 +95,7 @@
                             android:checked="false"
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp"
-                            android:text="On"
-                            />
+                            android:text="On" />
                     </TableRow>
 
                     <TableRow>

@@ -101,7 +101,7 @@ public class Configuringactivity extends ActionBarActivity {
                         if (logoTimer >= 12000 && check == 1) {
                             logoTimer = logoTimer - 300;
                         }
-                    };
+                    }
 
                     homeactivity();
 

@@ -5,61 +5,87 @@ package ExamFramework_Data;
  */
 public class ChatData {
 
-    private  int id,RoomId;
-    private String username,Email,ChatMessage,TimeStamp,RoomName;
+    private int id, RoomId;
+    private String username, Email, ChatMessage, TimeStamp, RoomName;
 
     public ChatData() {
     }
 
-    public ChatData(int id, int RoomId,  String username, String Email, String ChatMessage,String TimeStamp)
-        {
+    public ChatData(int id, int RoomId, String username, String Email, String ChatMessage, String TimeStamp) {
         super();
-        this.id=id;
-        this.RoomId=RoomId;
-        this.username=username;
-        this.Email=Email;
-        this.ChatMessage=ChatMessage;
-        this.TimeStamp=TimeStamp;
+        this.id = id;
+        this.RoomId = RoomId;
+        this.username = username;
+        this.Email = Email;
+        this.ChatMessage = ChatMessage;
+        this.TimeStamp = TimeStamp;
     }
 
-    public ChatData(int id, int RoomId,String RoomName,  String username, String Email, String ChatMessage,String TimeStamp)
-    {
+    public ChatData(int id, int RoomId, String RoomName, String username, String Email, String ChatMessage, String TimeStamp) {
         super();
-        this.id=id;
-        this.RoomId=RoomId;
-        this.username=username;
-        this.Email=Email;
-        this.ChatMessage=ChatMessage;
-        this.TimeStamp=TimeStamp;
-        this.RoomName=RoomName;
+        this.id = id;
+        this.RoomId = RoomId;
+        this.username = username;
+        this.Email = Email;
+        this.ChatMessage = ChatMessage;
+        this.TimeStamp = TimeStamp;
+        this.RoomName = RoomName;
     }
 
-    public int getid() {return id;}
+    public int getid() {
+        return id;
+    }
 
-    public void setid(int id) {this.id = id;}
+    public void setid(int id) {
+        this.id = id;
+    }
 
-    public int getRoomId() {return RoomId;}
+    public int getRoomId() {
+        return RoomId;
+    }
 
-    public void setRoomId(int RoomId) {this.RoomId = RoomId;}
+    public void setRoomId(int RoomId) {
+        this.RoomId = RoomId;
+    }
 
-    public String getUsername() {return username;}
+    public String getUsername() {
+        return username;
+    }
 
-    public void setUsername(String username) {this.username = username;}
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-    public String getEmail() {return Email;}
+    public String getEmail() {
+        return Email;
+    }
 
-    public void setEmail(String Email) {this.Email = Email;}
+    public void setEmail(String Email) {
+        this.Email = Email;
+    }
 
-    public String getChatMessage() {return ChatMessage;}
+    public String getChatMessage() {
+        return ChatMessage;
+    }
 
-    public void setChatMessage(String ChatMessage) {this.ChatMessage = ChatMessage;}
+    public void setChatMessage(String ChatMessage) {
+        this.ChatMessage = ChatMessage;
+    }
 
-    public String getTimeStamp() {return TimeStamp;}
+    public String getTimeStamp() {
+        return TimeStamp;
+    }
 
-    public void setTimeStamp(String TimeStamp) {this.TimeStamp = TimeStamp;}
+    public void setTimeStamp(String TimeStamp) {
+        this.TimeStamp = TimeStamp;
+    }
 
-    public String getRoomName() {return RoomName;}
+    public String getRoomName() {
+        return RoomName;
+    }
 
-    public void setRoomName(String RoomName) {this.RoomName = RoomName;}
+    public void setRoomName(String RoomName) {
+        this.RoomName = RoomName;
+    }
 
 }

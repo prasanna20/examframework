@@ -2,8 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/relativeLayout1"
@@ -12,7 +11,7 @@
         android:layout_marginTop="10dp"
         android:background="@drawable/listviewbg"
         android:paddingBottom="10dp"
-        android:paddingTop="10dp" >
+        android:paddingTop="10dp">
 
         <TextView
             android:id="@+id/notitification_text"
@@ -57,7 +56,6 @@
         android:layout_marginLeft="7dp"
         android:layout_marginRight="7dp"
         android:background="#cdcfd2" />
-
 
 
 </RelativeLayout>

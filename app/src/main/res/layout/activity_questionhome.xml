@@ -1,5 +1,4 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_layout"
     android:layout_width="match_parent"
     android:layout_height="fill_parent">
@@ -187,48 +186,46 @@
 
     </ScrollView>
 
-        <RelativeLayout
-            android:id="@+id/top_layout"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:background="#88666666"
-            android:layout_alignParentBottom="true">
+    <RelativeLayout
+        android:id="@+id/top_layout"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="#88666666"
+        android:layout_alignParentBottom="true">
 
 
+        <TextView
+            android:id="@+id/nextmessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:clickable="true"
+            android:text="Tap for next question"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:textStyle="bold"
+
+            />
+
+        <TextView
+            android:id="@+id/displaymessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/nextmessage"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="7dp"
+            android:clickable="true"
+            android:text="@string/correct_Message"
+            android:textColor="#FFFFFF"
+            android:textSize="30dp"
+            android:textStyle="bold"
+
+            />
 
 
-            <TextView
-                android:id="@+id/nextmessage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="15dp"
-                android:clickable="true"
-                android:text="Tap for next question"
-                android:textColor="#FFFFFF"
-                android:textSize="14sp"
-                android:textStyle="bold"
-
-                />
-
-            <TextView
-                android:id="@+id/displaymessage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/nextmessage"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="7dp"
-                android:clickable="true"
-                android:text="@string/correct_Message"
-                android:textColor="#FFFFFF"
-                android:textSize="30dp"
-                android:textStyle="bold"
-
-                />
-
-
-        </RelativeLayout>
+    </RelativeLayout>
 
 
     <RelativeLayout
@@ -255,27 +252,28 @@
             android:layout_height="match_parent"
             android:layout_below="@+id/btnCancel">
 
-     <RelativeLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="80dp">
-        <TextView
-            android:id="@+id/question_details"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:paddingLeft="3dp"
-            android:paddingRight="2dp"
-            android:layout_marginTop="30dp"
-            android:background="#FFFFFF"
-            android:clickable="true"
-            android:text="Sorry .. Something went wrong.."
-            android:textColor="#000000"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/question_details"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="2dp"
+                    android:layout_marginTop="30dp"
+                    android:background="#FFFFFF"
+                    android:clickable="true"
+                    android:text="Sorry .. Something went wrong.."
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
 
-           </RelativeLayout>
+            </RelativeLayout>
         </ScrollView>
     </RelativeLayout>
 

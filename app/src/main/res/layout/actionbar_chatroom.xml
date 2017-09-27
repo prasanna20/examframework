@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <EditText
         android:id="@+id/editText_UserName"
@@ -13,8 +13,7 @@
         android:layout_centerVertical="true"
         android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 "
         android:hint="Enter your display name..."
-        android:padding="10dp" >
-    </EditText>
+        android:padding="10dp"></EditText>
 
     <Button
         android:id="@+id/btnSave"

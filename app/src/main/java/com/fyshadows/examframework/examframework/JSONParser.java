@@ -37,7 +37,7 @@ public class JSONParser {
     // by making HTTP POST or GET mehtod
     public JSONObject makeHttpRequest(String url, String method,
             List<NameValuePair> params) {
- 
+
         // Making HTTP request
         try {
  
@@ -45,6 +45,7 @@ public class JSONParser {
             if(method == "POST"){
                 // request method is POST
                 // defaultHttpClient
+
                 DefaultHttpClient httpClient = new DefaultHttpClient();
                 HttpPost httpPost = new HttpPost(url);
                 httpPost.setEntity(new UrlEncodedFormEntity(params));

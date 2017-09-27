@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#1a1a1a"
-        tools:context="com.fyshadows.examframework.examframework.ChatRoom">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1a1a1a"
+    tools:context="com.fyshadows.examframework.examframework.ChatRoom">
 
     <ListView
         android:id="@id/android:list"
@@ -19,8 +19,7 @@
         android:soundEffectsEnabled="true"
         android:stackFromBottom="false"
 
-        >
-    </ListView>
+        ></ListView>
 
     <RelativeLayout
         android:id="@+id/top_layout"
@@ -63,8 +62,7 @@
                         android:layout_centerVertical="true"
                         android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 "
                         android:hint="Enter Chat Room Name..."
-                        android:padding="10dp" >
-                    </EditText>
+                        android:padding="10dp"></EditText>
 
                 </LinearLayout>
             </LinearLayout>
@@ -98,8 +96,7 @@
                         android:layout_centerVertical="true"
                         android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 "
                         android:hint="Enter Chat Room Description..."
-                        android:padding="10dp" >
-                    </EditText>
+                        android:padding="10dp"></EditText>
 
                 </LinearLayout>
             </LinearLayout>
@@ -111,18 +108,17 @@
                 android:layout_marginTop="20dp">
 
 
-                    <Button
-                        android:id="@+id/btnAddRoom"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="#29b6f6"
-                        android:text="Add Room"
-                        android:textAllCaps="false"
-                        android:layout_marginTop="20dp"
-                        android:gravity="center_horizontal"
-                        android:textColor="#ffffff"
-                        android:textSize="25dp"
-                        />
+                <Button
+                    android:id="@+id/btnAddRoom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#29b6f6"
+                    android:text="Add Room"
+                    android:textAllCaps="false"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center_horizontal"
+                    android:textColor="#ffffff"
+                    android:textSize="25dp" />
 
             </LinearLayout>
         </LinearLayout>

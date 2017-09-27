@@ -37,7 +37,7 @@ public class AsyncUpdateChatMessage extends AsyncTask<String, Void, String> {
 
     @Override
     protected void onPreExecute() {
-        isHandlerRunning=true;
+        isHandlerRunning = true;
     }
 
     @Override
@@ -60,48 +60,47 @@ public class AsyncUpdateChatMessage extends AsyncTask<String, Void, String> {
             int success = 0;
             JSONArray objChatMessage;
             ChatData chatData;
-        if(json != null)
-        {
-            if (json.length() > 0) {
-                success = json.getInt("success");
-                Log.i("chatMessageinsert", "success" + String.valueOf(success));
-                if (success == 1) {
-                    objChatMessage = json.getJSONArray("MasterChatMessage"); // JSON
+            if (json != null) {
+                if (json.length() > 0) {
+                    success = json.getInt("success");
+                    Log.i("chatMessageinsert", "success" + String.valueOf(success));
+                    if (success == 1) {
+                        objChatMessage = json.getJSONArray("MasterChatMessage"); // JSON
 
-                    Log.i("chatMessageinsert", "objChatMessage" + String.valueOf(objChatMessage.length()));
+                        Log.i("chatMessageinsert", "objChatMessage" + String.valueOf(objChatMessage.length()));
 
-                    for (int i = 0; i < objChatMessage.length(); i++) {
+                        for (int i = 0; i < objChatMessage.length(); i++) {
 
-                        JSONObject obj = objChatMessage.getJSONObject(i);
-                        Log.i("chatMessageinsert", "ChatMessage" + String.valueOf(obj.getString("ChatMessage")));
+                            JSONObject obj = objChatMessage.getJSONObject(i);
+                            Log.i("chatMessageinsert", "ChatMessage" + String.valueOf(obj.getString("ChatMessage")));
 
-                        chatData = new ChatData();
-                        chatData.setChatMessage(obj.getString("ChatMessage"));
-                        chatData.setEmail(obj.getString("Email"));
-                        chatData.setid(obj.getInt("id"));
-                        chatData.setRoomId(obj.getInt("RoomId"));
-                        chatData.setTimeStamp(obj.getString("TimeStamp"));
-                        chatData.setUsername(obj.getString("UserName"));
+                            chatData = new ChatData();
+                            chatData.setChatMessage(obj.getString("ChatMessage"));
+                            chatData.setEmail(obj.getString("Email"));
+                            chatData.setid(obj.getInt("id"));
+                            chatData.setRoomId(obj.getInt("RoomId"));
+                            chatData.setTimeStamp(obj.getString("TimeStamp"));
+                            chatData.setUsername(obj.getString("UserName"));
 
-                        if(!obj.getString("Email").trim().equalsIgnoreCase(db.GetEmailDetails(myCtx).trim()))
-                        {
-                            db.InsertChatMessage(chatData);
+                            if (!obj.getString("Email").trim().equalsIgnoreCase(db.GetEmailDetails(myCtx).trim())) {
+                                db.InsertChatMessage(chatData);
+                            }
                         }
+
                     }
 
                 }
-
             }
-        }
         } catch (JSONException e) {
-            isHandlerRunning=false;
+            isHandlerRunning = false;
             Log.i("Analysis activity", "Error");
         }
         return null;
     }
+
     @Override
     protected void onPostExecute(String result) {
-        isHandlerRunning=false;
-         }
+        isHandlerRunning = false;
+    }
 }
 

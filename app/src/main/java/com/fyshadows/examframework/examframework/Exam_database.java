@@ -1320,11 +1320,7 @@ public class Exam_database extends SQLiteOpenHelper {
         Boolean Output = false;
         String selectQuery = "SELECT  id FROM EF_mob_ChatRoom " + " where id ='" + Id + "'";
         Cursor cursor = db.rawQuery(selectQuery, null);
-        if (null != cursor && cursor.moveToFirst()) {
-            Output = true;
-        } else {
-            Output = false;
-        }
+        Output = null != cursor && cursor.moveToFirst();
         if (db.isOpen()) {
             db.close();
         }
@@ -1449,11 +1445,7 @@ public class Exam_database extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(selectQuery, null);
         int _NotificationEnabled = cursor.getColumnIndex("NotificationEnabled");
         if (null != cursor && cursor.moveToFirst()) {
-            if (cursor.getInt(_NotificationEnabled) == 1) {
-                Output = true;
-            } else {
-                Output = false;
-            }
+            Output = cursor.getInt(_NotificationEnabled) == 1;
         } else {
             Output = false;
         }

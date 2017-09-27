@@ -30,10 +30,10 @@ public class DailyExamAdapter extends ArrayAdapter<String> {
 
 
     public DailyExamAdapter(Activity context,
-                              List<String> list) {
+                            List<String> list) {
         super(context, R.layout.dailyexamview, list);
         this.context = context;
-        this.list = list;
+        DailyExamAdapter.list = list;
     }
 
     @Override
@@ -49,7 +49,7 @@ public class DailyExamAdapter extends ArrayAdapter<String> {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        db= new Exam_database(parent.getContext());
+        db = new Exam_database(parent.getContext());
         View view = null;
         Log.i("a", "into get view");
         if (convertView == null) {
@@ -72,15 +72,12 @@ public class DailyExamAdapter extends ArrayAdapter<String> {
 
         ViewHolder holder = (ViewHolder) view.getTag();
         if (!list.get(position).toString().trim().equalsIgnoreCase("")) {
-            String Score=db.getscore(1, list.get(position).toString(),"");
+            String Score = db.getscore(1, list.get(position).toString(), "");
             holder.Date.setText(list.get(position).toString());
-            if(Score.length() > 0)
-            {
-                holder.Score.setText("Score:"+Score);
-            }
-            else
-            {
-                holder.Score.setVisibility(view.INVISIBLE);
+            if (Score.length() > 0) {
+                holder.Score.setText("Score:" + Score);
+            } else {
+                holder.Score.setVisibility(View.INVISIBLE);
             }
 
         }
@@ -90,7 +87,7 @@ public class DailyExamAdapter extends ArrayAdapter<String> {
             @Override
             public void onClick(View view) {
 
-                Log.i("Selected Date",list.get(position).toString());
+                Log.i("Selected Date", list.get(position).toString());
                 Intent i = new Intent(context, Questionhome.class);
                 Bundle bundle = new Bundle();
                 bundle.putInt("FromScreen", 1);
@@ -108,7 +105,7 @@ public class DailyExamAdapter extends ArrayAdapter<String> {
             @Override
             public void onClick(View view) {
 
-                Log.i("Selected Date",list.get(position).toString());
+                Log.i("Selected Date", list.get(position).toString());
                 Intent i = new Intent(context, Questionhome.class);
                 Bundle bundle = new Bundle();
                 bundle.putInt("FromScreen", 1);
@@ -127,7 +124,7 @@ public class DailyExamAdapter extends ArrayAdapter<String> {
             public void onClick(View view) {
 
 
-                Log.i("Selected Date",list.get(position).toString());
+                Log.i("Selected Date", list.get(position).toString());
                 Intent i = new Intent(context, DailyArticle.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("ExamDate", list.get(position).toString());

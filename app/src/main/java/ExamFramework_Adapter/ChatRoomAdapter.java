@@ -38,7 +38,7 @@ public class ChatRoomAdapter extends ArrayAdapter<ChatRoomData> {
                            List<ChatRoomData> list) {
         super(context, R.layout.chatroomview, list);
         this.context = context;
-        this.list = list;
+        ChatRoomAdapter.list = list;
     }
 
     @Override
@@ -54,7 +54,7 @@ public class ChatRoomAdapter extends ArrayAdapter<ChatRoomData> {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        db= new Exam_database(parent.getContext());
+        db = new Exam_database(parent.getContext());
         View view = null;
         Log.i("a", "into get view");
         if (convertView == null) {
@@ -82,20 +82,16 @@ public class ChatRoomAdapter extends ArrayAdapter<ChatRoomData> {
         holder.txtChatCount.setText(String.valueOf(list.get(position).getChatCount()));
         holder.txtCreatedBy.setText(String.valueOf(list.get(position).getCreatedBy()));
 
-        Log.i("not-enabled",String.valueOf(list.get(position).getNotificationEnabled()));
-        if(list.get(position).getNotificationEnabled()==1) {
+        Log.i("not-enabled", String.valueOf(list.get(position).getNotificationEnabled()));
+        if (list.get(position).getNotificationEnabled() == 1) {
             holder.toggleNotification.setChecked(true);
-        }
-        else
-        {
+        } else {
             holder.toggleNotification.setChecked(false);
         }
-        Log.i("nottt-enabled",String.valueOf(list.get(position).getFavEnabled()));
-        if(list.get(position).getFavEnabled()==1) {
+        Log.i("nottt-enabled", String.valueOf(list.get(position).getFavEnabled()));
+        if (list.get(position).getFavEnabled() == 1) {
             holder.FavButton.setChecked(true);
-        }
-        else
-        {
+        } else {
             holder.FavButton.setChecked(false);
         }
 
@@ -108,9 +104,7 @@ public class ChatRoomAdapter extends ArrayAdapter<ChatRoomData> {
         } else if (position % 5 == 0) {
             holder.topbase.setBackgroundColor(Color.parseColor("#53d37e"));
             holder.bottombar.setBackgroundColor(Color.parseColor("#47c772"));
-        }
-        else
-        {
+        } else {
             holder.topbase.setBackgroundColor(Color.parseColor("#7988e5"));
             holder.bottombar.setBackgroundColor(Color.parseColor("#5969c8"));
         }
@@ -122,15 +116,12 @@ public class ChatRoomAdapter extends ArrayAdapter<ChatRoomData> {
             @Override
             public void onClick(View view) {
 
-               if(holder.toggleNotification.isChecked())
-               {
-                   Log.i("sql-noti", "Came in On");
-                   db.updateToggleNotification(list.get(position).getid(),1);
-               }
-                else
-               {
-                   db.updateToggleNotification(list.get(position).getid(),0);
-               }
+                if (holder.toggleNotification.isChecked()) {
+                    Log.i("sql-noti", "Came in On");
+                    db.updateToggleNotification(list.get(position).getid(), 1);
+                } else {
+                    db.updateToggleNotification(list.get(position).getid(), 0);
+                }
 
             }
 
@@ -140,12 +131,9 @@ public class ChatRoomAdapter extends ArrayAdapter<ChatRoomData> {
             @Override
             public void onClick(View view) {
 
-                if(holder.FavButton.isChecked())
-                {
+                if (holder.FavButton.isChecked()) {
                     db.updateToggleFavourite(list.get(position).getid(), 1);
-                }
-                else
-                {
+                } else {
                     db.updateToggleFavourite(list.get(position).getid(), 0);
                 }
 
@@ -167,7 +155,6 @@ public class ChatRoomAdapter extends ArrayAdapter<ChatRoomData> {
             }
 
         });
-
 
 
         return view;

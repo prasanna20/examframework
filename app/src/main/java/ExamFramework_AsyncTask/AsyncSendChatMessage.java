@@ -81,7 +81,7 @@ public class AsyncSendChatMessage extends AsyncTask<String, Void, String> {
                     int success = json.getInt("success");
                     if (success == 1) {
 
-                        Log.i("InsertChat",String.valueOf(json.getInt("Id")));
+                        Log.i("InsertChat", String.valueOf(json.getInt("Id")));
 
                         ChatData chatData = new ChatData();
                         chatData.setChatMessage(ChatMessage);
@@ -95,10 +95,7 @@ public class AsyncSendChatMessage extends AsyncTask<String, Void, String> {
                     }
                 }
             }
-        }
-
-
-    catch (Exception e) {
+        } catch (Exception e) {
 
             Log.i("Analysis activity", "Error");
         }
