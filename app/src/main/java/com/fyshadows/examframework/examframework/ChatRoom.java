@@ -178,23 +178,6 @@ public class ChatRoom  extends ListActivity {
                 }
             }
         });
-
-
-    /*    handler.postDelayed(new Runnable() {
-
-            @Override
-            public void run() {
-                isHandlerRunning = true;
-                Log.i("Refreshing", "Refreshing");
-                list = db.getChatRoomDetails();
-                adapter = new ChatRoomAdapter(ChatRoom.this, list);
-                setListAdapter(adapter);
-                adapter.notifyDataSetChanged();
-                handler.postDelayed(this, 60 * 1000);
-                isHandlerRunning = false;
-            }
-        }, 60 * 1000);
-*/
     }
 
     @Override

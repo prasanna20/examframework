@@ -24,40 +24,38 @@ public class masterdetails {
 
     private Context context;
     Exam_database db;
-    int Code=0;
+    int Code = 0;
 
-    public masterdetails(Context context){
-        this.context=context.getApplicationContext();
-         db=new Exam_database(context);
+
+    public masterdetails(Context context) {
+        this.context = context.getApplicationContext();
+        db = new Exam_database(context);
     }
 
+    public static String ServerAddress ="http://collegemateapp.com/ExamFrameWork/";
+
     JSONParser jsonParser = new JSONParser();
-    public static String sender_id="830753459977";
-    public static int timer=36;
-    public static String registeruser ="http://collegemateapp.com/ExamFrameWork/GCMregistration.php";
-    public static String getMasterQuestion="http://collegemateapp.com/ExamFrameWork/getExamQuestions.php";
-    public static String getMasterQuestionNew="http://collegemateapp.com/ExamFrameWork/getExamQuestionsNew.php";
-    public static String checkForupdate="http://collegemateapp.com/ExamFrameWork/CheckForNewQuestions.php";
-    public static String getNewQuestions="http://collegemateapp.com/ExamFrameWork/getNewQuestions.php";
-    public static String getDailyTestQuestions="http://collegemateapp.com/ExamFrameWork/getDailyTestQuestions.php";
-    public static String getDailyArticle="http://collegemateapp.com/ExamFrameWork/getDailyArticle.php";
-    public static String getnews="http://collegemateapp.com/ExamFrameWork/getnews.php";
-    public static String InsertAnalysis="http://collegemateapp.com/ExamFrameWork/IbpsAnalysis.php";
-    public static String UpdateUserName="http://collegemateapp.com/ExamFrameWork/UpdateUserName.php";
-    public static String AddChatRoom="http://collegemateapp.com/ExamFrameWork/AddChatRoom.php";
-    public static String getChatRoom="http://collegemateapp.com/ExamFrameWork/getChatRoom.php";
-    public static String TriggerUpdate="http://collegemateapp.com/ExamFrameWork/TriggerUpdate.php";
-    public static String TriggerDeleteRoom="http://collegemateapp.com/ExamFrameWork/TriggerDeleteRoom.php";
-    public static String AddChatMessage="http://collegemateapp.com/ExamFrameWork/AddChatMessage.php";
-    public static String getChatMessage="http://collegemateapp.com/ExamFrameWork/getChatMessage.php";
-    public static String sendChatMessage="http://collegemateapp.com/ExamFrameWork/SendChatNotification.php";
-    public static String getMonthlyTestQuestions="http://collegemateapp.com/ExamFrameWork/getMonthlyTestQuestions.php";
+    public static String sender_id = "830753459977";
+    public static int timer = 36;
+    public static String registeruser = ServerAddress + "GCMregistration.php";
+    public static String getMasterQuestion = ServerAddress + "getExamQuestions.php";
+    public static String getMasterQuestionNew = ServerAddress + "getExamQuestionsNew.php";
+    public static String checkForupdate = ServerAddress + "CheckForNewQuestions.php";
+    public static String getNewQuestions = ServerAddress + "getNewQuestions.php";
+    public static String getDailyTestQuestions = ServerAddress + "getDailyTestQuestions.php";
+    public static String getDailyArticle = ServerAddress + "getDailyArticle.php";
+    public static String getnews = ServerAddress + "getnews.php";
+    public static String InsertAnalysis = ServerAddress + "IbpsAnalysis.php";
+    public static String UpdateUserName = ServerAddress + "UpdateUserName.php";
+    public static String AddChatRoom = ServerAddress + "AddChatRoom.php";
+    public static String getChatRoom = ServerAddress + "getChatRoom.php";
+    public static String TriggerUpdate = ServerAddress + "TriggerUpdate.php";
+    public static String TriggerDeleteRoom = ServerAddress + "TriggerDeleteRoom.php";
+    public static String AddChatMessage = ServerAddress + "AddChatMessage.php";
+    public static String getChatMessage = ServerAddress + "getChatMessage.php";
+    public static String sendChatMessage = ServerAddress + "SendChatNotification.php";
+    public static String getMonthlyTestQuestions = ServerAddress + "getMonthlyTestQuestions.php";
     //http://collegemateapp.com/ExamFrameWork/SendChatNotification.php?RoomId=15&ChatMessage=%22hinow%22&Email=%22watitis%22&UserName=%22that%22
-
-
-
-
-
 
     /*
 Screen	                  Code
@@ -86,17 +84,15 @@ on chatWindow 11
 
     //Start :- Insert into analysis
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public  void insertAnalysis(Context context,int code)
-    {
+    public void insertAnalysis(Context context, int code) {
         try {
             if (isOnline(context)) {
                 Code = code;
                 new insertAnalysisAsyncTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
 
-            Log.i("Analysis activity","Error");
+            Log.i("Analysis activity", "Error");
         }
     }
 
@@ -116,15 +112,15 @@ on chatWindow 11
                 List<NameValuePair> params = new ArrayList<NameValuePair>();
 
                 params.clear();
-                params.add(new BasicNameValuePair("email",db.GetEmailDetails(context)));
+                params.add(new BasicNameValuePair("email", db.GetEmailDetails(context)));
                 params.add(new BasicNameValuePair("code", String.valueOf(Code)));
 
-                JSONObject  json = jsonParser.makeHttpRequest(
+                JSONObject json = jsonParser.makeHttpRequest(
                         masterdetails.InsertAnalysis, "GET", params);
 
             } catch (Exception e) {
 
-                Log.i("Analysis activity","Error");
+                Log.i("Analysis activity", "Error");
             }
             return null;
         }
@@ -137,7 +133,7 @@ on chatWindow 11
     //End :- Insert into analysis
 
     //Formating Datetime
-    public static String formateDateFromstring(String inputFormat, String outputFormat, String inputDate){
+    public static String formateDateFromstring(String inputFormat, String outputFormat, String inputDate) {
 
         java.util.Date parsed = null;
         String outputDate = "";

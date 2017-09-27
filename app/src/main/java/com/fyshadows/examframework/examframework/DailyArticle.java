@@ -2,7 +2,6 @@ package com.fyshadows.examframework.examframework;
 
 import android.app.ListActivity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,15 +9,12 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.yyxqsg.bsyduo229750.AdConfig;
 import com.yyxqsg.bsyduo229750.Main;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import ExamFramework_Adapter.DailyArticleAdapter;
-import ExamFramework_Adapter.DailyExamAdapter;
-import ExamFramework_Data.DailyArticleData;
 
 public class DailyArticle extends ListActivity {
 
@@ -30,7 +26,7 @@ public class DailyArticle extends ListActivity {
     int scrolly = 0;
     int first = 0;
     public String ExamDate;
-    TextView  txtNoArticle;
+    TextView txtNoArticle;
     private Main main;
     private com.yyxqsg.bsyduo229750.AdView adView;
 
@@ -47,26 +43,23 @@ public class DailyArticle extends ListActivity {
         Bundle bundle = getIntent().getExtras();
         ExamDate = bundle.getString("ExamDate");
 
-       txtNoArticle = (TextView) this.findViewById(R.id.txtNoArticle);
+        txtNoArticle = (TextView) this.findViewById(R.id.txtNoArticle);
 
         //Start : Insert Analysis
-        masterdetails masterdetails=new masterdetails(this);
+        masterdetails masterdetails = new masterdetails(this);
         masterdetails.insertAnalysis(this, 6);
         //End : Insert Analysis
 
         //Advertisement Start
 
-        //Initialize Airpush
-        main=new Main(this);
-
-
-        adView=(com.yyxqsg.bsyduo229750.AdView) findViewById(R.id.myAdView);
+ //Initialize Airpush
+        main = new Main(this);
+        adView = (com.yyxqsg.bsyduo229750.AdView) findViewById(R.id.myAdView);
         adView.setBannerType(com.yyxqsg.bsyduo229750.AdView.BANNER_TYPE_IN_APP_AD);
         adView.setBannerAnimation(com.yyxqsg.bsyduo229750.AdView.ANIMATION_TYPE_FADE);
         adView.showMRinInApp(false);
-        //adView.setNewAdListener(adListener); //for passing a new listener for inline banner ads.
         adView.loadAd();
-        //Advertisement End
+//Advertisement End
 
         ListView myListView = (ListView) findViewById(android.R.id.list);
         list = db.getDailyArticle(ExamDate);
@@ -82,18 +75,14 @@ public class DailyArticle extends ListActivity {
             }
 
             if (first > 0) {
-                //  myListView.setSelection(scrolly);
                 myListView.setSelectionFromTop(index, top);
             }
-            txtNoArticle.setVisibility(View.INVISIBLE)  ;
-        }
-        else
-        {
+            txtNoArticle.setVisibility(View.INVISIBLE);
+        } else {
 
-            txtNoArticle.setVisibility(View.VISIBLE)  ;
+            txtNoArticle.setVisibility(View.VISIBLE);
 
         }
-
 
 
     }
@@ -104,7 +93,6 @@ public class DailyArticle extends ListActivity {
         getMenuInflater().inflate(R.menu.menu_daily_article, menu);
         return true;
     }
-
 
 
     @Override

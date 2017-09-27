@@ -1,7 +1,6 @@
 package com.fyshadows.examframework.examframework;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -16,23 +15,37 @@ import android.widget.Toast;
 import com.yyxqsg.bsyduo229750.AdConfig;
 import com.yyxqsg.bsyduo229750.Main;
 
+//Advertisement
 
 public class HomeActivity extends ActionBarActivity {
 
+    //Main Home Button
     Button start;
     Button score;
     Button MonthlyExam;
+    Button DailyExam;
+
+    //Adjust Question Time
     Button plus;
     Button minus;
-    Button DailyExam;
+    TextView timer;
+
+    //Menu Button
     ImageButton vn;
     ImageButton chat;
-    TextView timer;
+
+    //Database Declaration
     Exam_database db;
-    SharedPreferences prefs;
-    private Main main; //Declare here
+
+//Start : Advertisement Goes Here
+
+    private Main main;
     private com.yyxqsg.bsyduo229750.AdView adView;
-    public int Timersaved=0;
+    public int Timersaved = 0;
+
+//End :   Advertisement Goes Here
+
+    //Analytics Section
     masterdetails masterdetails;
 
     @Override
@@ -48,15 +61,15 @@ public class HomeActivity extends ActionBarActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         //Start : Insert Analysis
-        masterdetails=new masterdetails(this);
+        masterdetails = new masterdetails(this);
         try {
             masterdetails.insertAnalysis(this, 1);
-        }catch(Exception ex)
-        {
-            Log.i("Error","Error in inserting analysis");
+        } catch (Exception ex) {
+            Log.i("Error", "Error in inserting analysis");
         }
         //End : Insert Analysis
 
+        //Database Intialization
         db = new Exam_database(this);
 
         AppRater.app_launched(this);
@@ -69,8 +82,8 @@ public class HomeActivity extends ActionBarActivity {
             }
         });
 
-        //Initialize Airpush
-        main=new Main(HomeActivity.this);
+//Start Advertisement
+        main = new Main(HomeActivity.this);
 
         //for calling Smartwall ad
         try {
@@ -80,22 +93,47 @@ public class HomeActivity extends ActionBarActivity {
         }
 
 
-        adView=(com.yyxqsg.bsyduo229750.AdView) findViewById(R.id.myAdView);
+        adView = (com.yyxqsg.bsyduo229750.AdView) findViewById(R.id.myAdView);
 
         adView.setBannerType(com.yyxqsg.bsyduo229750.AdView.BANNER_TYPE_IN_APP_AD);
         adView.setBannerAnimation(com.yyxqsg.bsyduo229750.AdView.ANIMATION_TYPE_FADE);
         adView.showMRinInApp(false);
         adView.loadAd();
 
-        // set the Timer view
+//END   Advertisement
 
-        Timersaved= db.getTimer();
-        if(Timersaved == 0)
-        {
+// Start : Set Timer
+
+        Timersaved = db.getTimer();
+        if (Timersaved == 0) {
             Timersaved = 36;
         }
-        timer=(TextView) findViewById(R.id.settimer);
+        timer = (TextView) findViewById(R.id.settimer);
         timer.setText(String.valueOf(Timersaved));
+
+        plus = (Button) findViewById(R.id.plus);
+        plus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Timersaved = Timersaved + 1;
+                timer.setText(String.valueOf(Timersaved));
+                db.updateTimer(Timersaved);
+            }
+        });
+
+        minus = (Button) findViewById(R.id.minus);
+        minus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Timersaved = Timersaved - 1;
+                timer.setText(String.valueOf(Timersaved));
+                db.updateTimer(Timersaved);
+            }
+        });
+
+        // END : Set Timer
 
         score = (Button) findViewById(R.id.Score);
         score.setOnClickListener(new View.OnClickListener() {
@@ -111,28 +149,6 @@ public class HomeActivity extends ActionBarActivity {
             public void onClick(View v) {
                 MonthlyExamActivity();
 
-            }
-        });
-
-        plus = (Button) findViewById(R.id.plus);
-        plus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Timersaved=Timersaved+1;
-                timer.setText(String.valueOf(Timersaved));
-                db.updateTimer(Timersaved);
-            }
-        });
-
-        minus = (Button) findViewById(R.id.minus);
-        minus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Timersaved=Timersaved-1;
-                timer.setText(String.valueOf(Timersaved));
-                db.updateTimer(Timersaved);
             }
         });
 
@@ -155,24 +171,21 @@ public class HomeActivity extends ActionBarActivity {
                 //Start : Insert Analysis
                 masterdetails.insertAnalysis(HomeActivity.this, 4);
                 //End : Insert Analysis
-                Intent i = new Intent(HomeActivity.this , ViewNotification.class);
+                Intent i = new Intent(HomeActivity.this, ViewNotification.class);
                 startActivity(i);
 
             }
         });
 
-        chat= (ImageButton) findViewById(R.id.chat);
+        chat = (ImageButton) findViewById(R.id.chat);
         chat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(HomeActivity.this , ChatRoom.class);
+                Intent i = new Intent(HomeActivity.this, ChatRoom.class);
                 startActivity(i);
 
             }
         });
-
-
-
     }
 
 
@@ -225,7 +238,6 @@ public class HomeActivity extends ActionBarActivity {
         Intent i = new Intent(HomeActivity.this, MonthlyExam.class);
         startActivity(i);
     }
-
 
 
     public void resetexam() {

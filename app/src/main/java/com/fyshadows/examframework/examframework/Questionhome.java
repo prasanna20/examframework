@@ -95,21 +95,17 @@ public class Questionhome extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_questionhome);
 
-        //Advertisement Start
+//Advertisement Start
 
         //Initialize Airpush
         main = new Main(this);
-
-        //for calling Smartwall ad
-        //main.startInterstitialAd(AdConfig.AdType.smartwall);
-
         adView = (com.yyxqsg.bsyduo229750.AdView) findViewById(R.id.myAdView);
         adView.setBannerType(com.yyxqsg.bsyduo229750.AdView.BANNER_TYPE_IN_APP_AD);
         adView.setBannerAnimation(com.yyxqsg.bsyduo229750.AdView.ANIMATION_TYPE_FADE);
         adView.showMRinInApp(false);
-        //adView.setNewAdListener(adListener); //for passing a new listener for inline banner ads.
         adView.loadAd();
-        //Advertisement End
+
+ //Advertisement End
 
         //set action bar
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -213,13 +209,6 @@ public class Questionhome extends ActionBarActivity {
             }
         });
 
-      //  txtquestion_details.setOnClickListener(new View.OnClickListener() {
-      //      @Override
-       //     public void onClick(View v) {
-//
-       //         questiondetails_layout.setVisibility(View.INVISIBLE);
-//      }
-   //    });
 
         QuestionClose = (ImageView) findViewById(R.id.btnCancel);
         QuestionClose.setOnClickListener(new View.OnClickListener() {
@@ -229,7 +218,6 @@ public class Questionhome extends ActionBarActivity {
 
             }
         });
-
 
 
         txtanswer1.setOnClickListener(new View.OnClickListener() {
@@ -245,7 +233,7 @@ public class Questionhome extends ActionBarActivity {
                     {
                         FinalTimerValue=txt_timer.getText().toString();
                     }
-Log.i("Prassy 143",String.valueOf(QuestionNumber));
+
                     if (Correctanswer.equalsIgnoreCase(txtanswer1.getText().toString())) {
                         txtanswer1.setBackgroundColor(Color.GREEN);
                         showmessage(1);
@@ -436,7 +424,6 @@ Log.i("Prassy 143",String.valueOf(QuestionNumber));
             txtquestion.setText("you competed the exam. Please reset it to start from first.");
             txtquestion_details.setText("you competed the exam. Please reset it to start from first.");
             messagelayout.setVisibility(View.INVISIBLE);
-            // Nextquestion.setVisibility(View.INVISIBLE);
             showanswer.setVisibility(View.INVISIBLE);
             txtanswer1.setVisibility(View.INVISIBLE);
             txtanswer2.setVisibility(View.INVISIBLE);
