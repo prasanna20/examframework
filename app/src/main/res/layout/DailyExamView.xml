@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/listviewbg"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -13,7 +13,7 @@
         android:layout_marginRight="@dimen/feed_item_margin"
         android:orientation="vertical"
         android:paddingBottom="@dimen/feed_item_padding_top_bottom"
-        android:paddingTop="@dimen/feed_item_padding_top_bottom" >
+        android:paddingTop="@dimen/feed_item_padding_top_bottom">
 
         <TableLayout
             android:layout_width="fill_parent"
@@ -22,6 +22,7 @@
             <TableRow
                 android:layout_width="fill_parent"
                 android:layout_height="match_parent">
+
                 <TextView
                     android:id="@+id/txtDate"
                     android:layout_width="wrap_content"
@@ -32,8 +33,7 @@
                     android:paddingBottom="5dp"
                     android:textSize="@dimen/feed_item_profile_name"
                     android:text="Dart Part"
-                    android:textStyle="bold"
-                    />
+                    android:textStyle="bold" />
             </TableRow>
 
             <TableRow
@@ -50,8 +50,7 @@
                     android:paddingBottom="5dp"
                     android:textSize="@dimen/feed_item_profile_name"
                     android:text="  Take Exam    "
-                    android:textStyle="bold"
-                    />
+                    android:textStyle="bold" />
 
                 <View
                     android:id="@+id/view2"
@@ -73,7 +72,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_toRightOf="@id/txtDate"
                     android:textSize="@dimen/feed_item_profile_name"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
 
                 <View
@@ -96,14 +95,13 @@
                     android:text="    Score  "
                     android:layout_gravity="right"
                     android:layout_toRightOf="@id/view3"
-                    android:textSize="@dimen/feed_item_profile_name"/>
+                    android:textSize="@dimen/feed_item_profile_name" />
             </TableRow>
 
 
         </TableLayout>
 
     </RelativeLayout>
-
 
 
 </RelativeLayout>

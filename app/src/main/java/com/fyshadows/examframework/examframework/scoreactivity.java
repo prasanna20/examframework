@@ -8,10 +8,11 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.yyxqsg.bsyduo229750.AdConfig;
+import com.yyxqsg.bsyduo229750.AdListener;
 import com.yyxqsg.bsyduo229750.Main;
 
 
-public class scoreactivity extends ActionBarActivity {
+public class scoreactivity extends ActionBarActivity implements AdListener {
 
     Exam_database db;
     TextView score;
@@ -41,26 +42,13 @@ public class scoreactivity extends ActionBarActivity {
         //Advertisement Start
         AdConfig.setAppId(280371);  //setting appid.
         AdConfig.setApiKey("1435945311229750247"); //setting apikey
-        // AdConfig.setTestMode(true);
-        //AdConfig.setAdListener(adListener);  //setting global Ad listener.
-        AdConfig.setCachingEnabled(false); //Enabling SmartWall ad caching.
+        AdConfig.setCachingEnabled(true); //Enabling SmartWall ad caching.
         AdConfig.setPlacementId(0); //pass the placement id.
-        //Initialize Airpush
-        main=new Main(this);
+
+        main=new Main(this, this);
 
         //for calling banner 360
-       // main.start360BannerAd(this);
-
-        //for calling Smartwall ad
-        main.startInterstitialAd(AdConfig.AdType.smartwall);
-
-        adView=(com.yyxqsg.bsyduo229750.AdView) findViewById(R.id.myAdView);
-        adView.setBannerType(com.yyxqsg.bsyduo229750.AdView.BANNER_TYPE_IN_APP_AD);
-        adView.setBannerAnimation(com.yyxqsg.bsyduo229750.AdView.ANIMATION_TYPE_FADE);
-        adView.showMRinInApp(false);
-        //adView.setNewAdListener(adListener); //for passing a new listener for inline banner ads.
-        adView.loadAd();
-
+        main.start360BannerAd(this);
 
         //Advertisement End
 
@@ -136,7 +124,6 @@ public class scoreactivity extends ActionBarActivity {
 
         switch (item.getItemId()) {
             case android.R.id.home:
-                main.startInterstitialAd(AdConfig.AdType.smartwall);
 
                 if(FromScreen==0 || FromScreen==3)
                 {
@@ -159,6 +146,41 @@ public class scoreactivity extends ActionBarActivity {
                 return super.onOptionsItemSelected(item);
         }
 
+
+    }
+
+    @Override
+    public void onError(ErrorType errorType, String s) {
+
+    }
+
+    @Override
+    public void onAdLoading() {
+
+    }
+
+    @Override
+    public void onAdLoaded() {
+
+    }
+
+    @Override
+    public void onAdExpanded() {
+
+    }
+
+    @Override
+    public void onAdClicked() {
+
+    }
+
+    @Override
+    public void onAdClosed() {
+
+    }
+
+    @Override
+    public void onAdCached(AdConfig.AdType adType) {
 
     }
 }

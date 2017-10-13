@@ -195,11 +195,11 @@ public class ChatWindow   extends ListActivity {
                     isUpdateListViewHandlerRunning = false;
 
                 //}
-                UpdateListViewHandler.postDelayed(this, 50 * 50);
+                UpdateListViewHandler.postDelayed(this, 60 * 500);
             }
 
 
-        }, 50 * 50);
+        }, 60 * 500);
 
 
         //To Execute first time when the chat window is opened

@@ -48,7 +48,7 @@ public class ViewNotification extends ListActivity {
 		setContentView(R.layout.activity_notification);
 
 		//Initialize Airpush
-		main=new Main(this);
+		//main=new Main(this);
 
         getActionBar().setDisplayShowTitleEnabled(false);
         getActionBar().setDisplayShowCustomEnabled(true);

@@ -1,28 +1,22 @@
 package com.fyshadows.examframework.examframework;
 
 import android.app.ListActivity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.yyxqsg.bsyduo229750.AdConfig;
+import com.yyxqsg.bsyduo229750.AdListener;
 import com.yyxqsg.bsyduo229750.Main;
-
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +24,7 @@ import java.util.List;
 import ExamFramework_Adapter.DailyExamAdapter;
 import ExamFramework_AsyncTask.AsyncUpdateNewValues;
 
-public class DailyExamQuestion  extends ListActivity {
+public class DailyExamQuestion  extends ListActivity implements AdListener {
     private ListView listView;
     DailyExamAdapter adapter;
     private List<String> ExamData;
@@ -82,26 +76,14 @@ public class DailyExamQuestion  extends ListActivity {
         //Advertisement Start
         AdConfig.setAppId(280371);  //setting appid.
         AdConfig.setApiKey("1435945311229750247"); //setting apikey
-        // AdConfig.setTestMode(true);
-        //AdConfig.setAdListener(adListener);  //setting global Ad listener.
-        AdConfig.setCachingEnabled(false); //Enabling SmartWall ad caching.
+        AdConfig.setCachingEnabled(true); //Enabling SmartWall ad caching.
         AdConfig.setPlacementId(0); //pass the placement id.
 
-        //Initialize Airpush
-        main=new Main(this);
-
-        //for calling Smartwall ad
-        //main.startInterstitialAd(AdConfig.AdType.smartwall);
+        main=new Main(this, this);
 
         //for calling banner 360
-       // main.start360BannerAd(this);
+        main.start360BannerAd(this);
 
-        //for calling Smartwall ad
-        adView=(com.yyxqsg.bsyduo229750.AdView) findViewById(R.id.myAdView);
-        adView.setBannerType(com.yyxqsg.bsyduo229750.AdView.BANNER_TYPE_IN_APP_AD);
-        adView.setBannerAnimation(com.yyxqsg.bsyduo229750.AdView.ANIMATION_TYPE_FADE);
-        adView.showMRinInApp(false);
-        adView.loadAd();
         //Advertisement End
 
         ListView myListView = (ListView) findViewById(android.R.id.list);
@@ -145,7 +127,7 @@ public class DailyExamQuestion  extends ListActivity {
 
         switch (item.getItemId()) {
             case android.R.id.home:
-                main.startInterstitialAd(AdConfig.AdType.smartwall);
+                //main.startInterstitialAd(AdConfig.AdType.smartwall);
                 Intent i = new Intent(DailyExamQuestion.this, HomeActivity.class);
                 startActivity(i);
                 return true;
@@ -154,4 +136,38 @@ public class DailyExamQuestion  extends ListActivity {
         }
     }
 
+    @Override
+    public void onError(ErrorType errorType, String s) {
+
+    }
+
+    @Override
+    public void onAdLoading() {
+
+    }
+
+    @Override
+    public void onAdLoaded() {
+
+    }
+
+    @Override
+    public void onAdExpanded() {
+
+    }
+
+    @Override
+    public void onAdClicked() {
+
+    }
+
+    @Override
+    public void onAdClosed() {
+
+    }
+
+    @Override
+    public void onAdCached(AdConfig.AdType adType) {
+
+    }
 }

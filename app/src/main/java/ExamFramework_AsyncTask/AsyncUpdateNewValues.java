@@ -352,7 +352,7 @@ public class AsyncUpdateNewValues extends AsyncTask<String, Void, String> {
 
                 }
             }
-        } catch (JSONException e) {
+        } catch (Exception e) {
 
             Log.i("Analysis activity", "Error");
         }

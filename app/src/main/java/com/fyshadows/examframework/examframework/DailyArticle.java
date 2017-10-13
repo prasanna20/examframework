@@ -53,11 +53,9 @@ public class DailyArticle extends ListActivity {
         //Advertisement Start
 
  //Initialize Airpush
-        main = new Main(this);
         adView = (com.yyxqsg.bsyduo229750.AdView) findViewById(R.id.myAdView);
         adView.setBannerType(com.yyxqsg.bsyduo229750.AdView.BANNER_TYPE_IN_APP_AD);
         adView.setBannerAnimation(com.yyxqsg.bsyduo229750.AdView.ANIMATION_TYPE_FADE);
-        adView.showMRinInApp(false);
         adView.loadAd();
 //Advertisement End
 

@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Toast;
 
+import com.yyxqsg.bsyduo229750.Main;
+
 public class SubjectSelection extends ActionBarActivity {
     Button startExam;
     CheckBox checkbox_Quantitative_Aptitude;
@@ -16,11 +18,20 @@ public class SubjectSelection extends ActionBarActivity {
     CheckBox checkbox_General_Awareness;
     CheckBox checkbox_English_Language;
     CheckBox checkbox_Computer_Knowledge;
+    private Main main; //Declare here
+    private com.yyxqsg.bsyduo229750.AdView adView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_subject_selection);
+
+       // main = new Main(this);
+        adView = (com.yyxqsg.bsyduo229750.AdView) findViewById(R.id.myAdView);
+        adView.setBannerType(com.yyxqsg.bsyduo229750.AdView.BANNER_TYPE_IN_APP_AD);
+        adView.setBannerAnimation(com.yyxqsg.bsyduo229750.AdView.ANIMATION_TYPE_FADE);
+        //adView.showMRinInApp(false);
+        adView.loadAd();
 
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayUseLogoEnabled(true);

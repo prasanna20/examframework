@@ -10,7 +10,6 @@ import com.fyshadows.examframework.examframework.masterdetails;
 
 import org.apache.http.NameValuePair;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -95,7 +94,7 @@ public class AsyncUpdateChatRoom extends AsyncTask<String, Void, String> {
 
                 }
             }
-        } catch (JSONException e) {
+        } catch (Exception e) {
 
             Log.i("Analysis activity", "Error");
         }

@@ -242,7 +242,7 @@ public class GCMIntentService extends GCMBaseIntentService {
 
             notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
                     | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-    /*
+
      // set intent so it does not start a new activity
     int iUniqueId = (int) (System.currentTimeMillis() & 0xfffffff);
     PendingIntent contentIntent = PendingIntent.getActivity(context, iUniqueId, notificationIntent, 0);
@@ -253,16 +253,16 @@ public class GCMIntentService extends GCMBaseIntentService {
     // Play default notification sound
     notification.defaults |= Notification.DEFAULT_SOUND;
     notificationManager.notify(0, notification);
-    */
-            Notification.Builder builder = new Notification.Builder(context);
+
+         /*   Notification.Builder builder = new Notification.Builder(context);
 
             PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
             builder.setSmallIcon(R.drawable.notification_template_icon_bg)
                     .setContentTitle("Music player")
                     .setContentIntent(pendingIntent);
-            notificationManager.notify(R.drawable.notification_template_icon_bg, notification);
+            notificationManager.notify(R.drawable.notification_template_icon_bg, notification);*/
         } catch (Exception ex) {
-            Log.i("error", "error in GCM intent service");
+            Log.i("error", "error in GCM intent service" + ex.toString());
         }
 
     }

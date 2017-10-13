@@ -91,7 +91,7 @@ public class AsyncUpdateChatMessage extends AsyncTask<String, Void, String> {
 
                 }
             }
-        } catch (JSONException e) {
+        } catch (Exception e) {
             isHandlerRunning = false;
             Log.i("Analysis activity", "Error");
         }

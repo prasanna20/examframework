@@ -18,13 +18,12 @@ import android.widget.Toast;
 
 import com.google.android.gcm.GCMRegistrar;
 import com.yyxqsg.bsyduo229750.AdConfig;
+import com.yyxqsg.bsyduo229750.AdListener;
 import com.yyxqsg.bsyduo229750.AdView;
-import com.yyxqsg.bsyduo229750.Main;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -33,7 +32,7 @@ import java.util.List;
 import ExamFramework_AsyncTask.AsyncUpdateNewValues;
 
 
-public class Configuringactivity extends ActionBarActivity {
+public class Configuringactivity extends ActionBarActivity implements AdListener {
 
     //Declaration
     SharedPreferences prefs;
@@ -44,7 +43,7 @@ public class Configuringactivity extends ActionBarActivity {
     JSONParser jsonParser = new JSONParser();
 
     Exam_database db = new Exam_database(Configuringactivity.this);
-    private Main main;
+
     private com.yyxqsg.bsyduo229750.AdView adView;
 
 
@@ -59,23 +58,21 @@ public class Configuringactivity extends ActionBarActivity {
 
         setContentView(R.layout.activity_configuringactivity);
 
-        main=new Main(this);
-
+       
 //advertisement start
+
         AdConfig.setAppId(280371);  //setting appid.
         AdConfig.setApiKey("1435945311229750247"); //setting apikey
-       // AdConfig.setTestMode(true);
-        //AdConfig.setAdListener(adListener);  //setting global Ad listener.
         AdConfig.setCachingEnabled(true); //Enabling SmartWall ad caching.
         AdConfig.setPlacementId(0); //pass the placement id.
 
        //for calling Smartwall ad
-      //  main.startInterstitialAd(AdConfig.AdType.smartwall);
+       //main.startInterstitialAd(AdConfig.AdType.smartwall);
 
         adView=(AdView) findViewById(R.id.myAdView);
         adView.setBannerType(AdView.BANNER_TYPE_IN_APP_AD);
         adView.setBannerAnimation(AdView.ANIMATION_TYPE_FADE);
-        adView.showMRinInApp(false);
+        AdView.setAdListener(this);
         //adView.setNewAdListener(adListener); //for passing a new listener for inline banner ads.
         adView.loadAd();
 
@@ -95,10 +92,10 @@ public class Configuringactivity extends ActionBarActivity {
             public void run() {
                 try {
                     int logoTimer = 0;
-                    while (logoTimer < 12000) {
-                        sleep(100);
+                    while (logoTimer < 1200) {
+                        sleep(10);
                         logoTimer = logoTimer + 300;
-                        if (logoTimer >= 12000 && check == 1) {
+                        if (logoTimer >= 1200 && check == 1) {
                             logoTimer = logoTimer - 300;
                         }
                     }
@@ -230,6 +227,41 @@ public class Configuringactivity extends ActionBarActivity {
         }
     }
 
+    @Override
+    public void onError(ErrorType errorType, String s) {
+
+    }
+
+    @Override
+    public void onAdLoading() {
+
+    }
+
+    @Override
+    public void onAdLoaded() {
+
+    }
+
+    @Override
+    public void onAdExpanded() {
+
+    }
+
+    @Override
+    public void onAdClicked() {
+
+    }
+
+    @Override
+    public void onAdClosed() {
+
+    }
+
+    @Override
+    public void onAdCached(AdConfig.AdType adType) {
+
+    }
+
     public class asynctask extends AsyncTask<String, Void, String> {
 
 
@@ -335,6 +367,7 @@ public class Configuringactivity extends ActionBarActivity {
 
                             //End of getting question details
                         }
+                        check = 2;
                     }
                 }
 //End  : Get Daily Question--------------------------------------------------------------------------
@@ -388,7 +421,7 @@ public class Configuringactivity extends ActionBarActivity {
 //End  : Get Monthly Question--------------------------------------------------------------------------
 
 
-            } catch (JSONException e) {
+            } catch (Exception e) {
                 check = 1;
                Log.i("Configuring activity","Error");
             }
@@ -514,7 +547,7 @@ public class Configuringactivity extends ActionBarActivity {
                                             }
                                         }
                                     }
-                                } catch (JSONException e) {
+                                } catch (Exception e) {
                                     Log.i("exam", "we have not got any new set of question");
                                 }
                                 //download new question to database ends
@@ -604,7 +637,7 @@ public class Configuringactivity extends ActionBarActivity {
                         }
                     }
                 }
-            } catch (JSONException e) {
+            } catch (Exception e) {
 
               Log.i("error","eror in async");
             }

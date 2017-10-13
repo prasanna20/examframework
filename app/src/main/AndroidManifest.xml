@@ -112,6 +112,7 @@
             android:name=".MonthlyExam"
             android:label="Monthly Exam"
             android:theme="@android:style/Theme.Holo.Light.DarkActionBar"></activity>
+
     </application>
 
 </manifest>

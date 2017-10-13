@@ -16,9 +16,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.yyxqsg.bsyduo229750.AdConfig;
-import com.yyxqsg.bsyduo229750.Main;
-
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -79,8 +76,7 @@ public class Questionhome extends ActionBarActivity {
     private static final Random rgenerator = new Random();
     Exam_database db = new Exam_database(Questionhome.this);
 
-    private Main main; //Declare here
-    private com.yyxqsg.bsyduo229750.AdView adView;
+
 
     //Category
    public String Subject_selection;
@@ -97,13 +93,7 @@ public class Questionhome extends ActionBarActivity {
 
 //Advertisement Start
 
-        //Initialize Airpush
-        main = new Main(this);
-        adView = (com.yyxqsg.bsyduo229750.AdView) findViewById(R.id.myAdView);
-        adView.setBannerType(com.yyxqsg.bsyduo229750.AdView.BANNER_TYPE_IN_APP_AD);
-        adView.setBannerAnimation(com.yyxqsg.bsyduo229750.AdView.ANIMATION_TYPE_FADE);
-        adView.showMRinInApp(false);
-        adView.loadAd();
+        //Main question section no advertisement
 
  //Advertisement End
 
@@ -694,7 +684,6 @@ public class Questionhome extends ActionBarActivity {
                 course_completed_flag = true;
             }
         } else {
-            main.startInterstitialAd(AdConfig.AdType.smartwall);
             scoreactivity();
         }
     }

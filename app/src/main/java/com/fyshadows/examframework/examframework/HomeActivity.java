@@ -13,11 +13,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.yyxqsg.bsyduo229750.AdConfig;
+import com.yyxqsg.bsyduo229750.AdListener;
+import com.yyxqsg.bsyduo229750.AdView;
 import com.yyxqsg.bsyduo229750.Main;
+
 
 //Advertisement
 
-public class HomeActivity extends ActionBarActivity {
+public class HomeActivity extends ActionBarActivity implements AdListener {
 
     //Main Home Button
     Button start;
@@ -39,8 +42,9 @@ public class HomeActivity extends ActionBarActivity {
 
 //Start : Advertisement Goes Here
 
-    private Main main;
+
     private com.yyxqsg.bsyduo229750.AdView adView;
+    private Main main;
     public int Timersaved = 0;
 
 //End :   Advertisement Goes Here
@@ -83,22 +87,25 @@ public class HomeActivity extends ActionBarActivity {
         });
 
 //Start Advertisement
-        main = new Main(HomeActivity.this);
+
+        AdConfig.setAppId(280371);  //setting appid.
+        AdConfig.setApiKey("1435945311229750247"); //setting apikey
+        AdConfig.setCachingEnabled(true); //Enabling SmartWall ad caching.
+        AdConfig.setPlacementId(0); //pass the placement id.
+
+        adView=(AdView) findViewById(R.id.myAdView);
+        adView.setBannerType(AdView.BANNER_TYPE_IN_APP_AD);
+        adView.setBannerAnimation(AdView.ANIMATION_TYPE_FADE);
+        AdView.setAdListener(this);
+
+        //Initialize Airpush
+        main=new Main(this, this);
+
+        //for calling banner 360
+        main.startInterstitialAd(AdConfig.AdType.smartwall,this);
 
         //for calling Smartwall ad
-        try {
-            main.showCachedAd(AdConfig.AdType.smartwall);
-        } catch (Exception e) {
-            main.startInterstitialAd(AdConfig.AdType.smartwall);
-        }
-
-
-        adView = (com.yyxqsg.bsyduo229750.AdView) findViewById(R.id.myAdView);
-
-        adView.setBannerType(com.yyxqsg.bsyduo229750.AdView.BANNER_TYPE_IN_APP_AD);
-        adView.setBannerAnimation(com.yyxqsg.bsyduo229750.AdView.ANIMATION_TYPE_FADE);
-        adView.showMRinInApp(false);
-        adView.loadAd();
+        //main.startInterstitialAd(AdConfig.AdType.smartwall, this);
 
 //END   Advertisement
 
@@ -211,6 +218,45 @@ public class HomeActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onAdClosed() {
+        //This will get called when an ad is closing/resizing from an expanded state.
+    }
+
+    @Override
+    public void onAdCached(AdConfig.AdType adType) {
+        //This will get called when an ad is cached.
+
+    }
+
+    @Override
+    public void onError(AdListener.ErrorType errorCode, String errorMessage) {
+        /* This will get called when any error has occurred. This will also get called if the SDK notices any integration mistakes.
+         You can check the ErrorType to know the error type. */
+    }
+
+
+    @Override
+    public void onAdLoading() {
+        //This will get called when a rich media ad is loading.
+    }
+
+    @Override
+    public void onAdLoaded() {
+        //This will get called when an ad has loaded.
+    }
+
+
+    @Override
+    public void onAdExpanded() {
+        //This will get called when an ad is showing on a user's screen. This may cover the whole UI.
+    }
+
+    @Override
+    public void onAdClicked() {
+        //This will get called when ad is clicked.
+    }
+
     // user defined functions
     public void homeactivity() {
         //Start : Insert Analysis
@@ -248,5 +294,6 @@ public class HomeActivity extends ActionBarActivity {
         db.Resetquestion();
 
     }
+
 
 }

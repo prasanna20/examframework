@@ -74,4 +74,12 @@
 
     </LinearLayout>
 
+
+    <com.yyxqsg.bsyduo229750.AdView
+        android:id="@+id/myAdView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center_horizontal" />
+
 </RelativeLayout>
